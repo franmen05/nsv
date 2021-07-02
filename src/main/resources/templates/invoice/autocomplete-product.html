@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+
+        <script type="text/javascript" th:fragment="javascript">
+            $(document).ready(function () {
+                
+//                $.ajax({
+//                      url: "/nsv/invoice/loadInvoice/"+$("#id-invoice").val()  ,
+//                      dataType: "json",
+////                      data: {
+////                          id: $("#id-invoice").val()
+////                      },
+//                      success: function (data) {
+//                          
+//                          data.items.forEach(function(element) {
+////                            console.log(element);
+//                            var linea = $("#plantillaItemsFactura").html();
+//
+//                            linea = linea.replace(/{ID}/g, element.id);
+//                            linea = linea.replace(/{NOMBRE}/g, element.product.name);
+//                            linea = linea.replace(/{PRECIO}/g, element.product.price);
+//
+//                            $("#cargarItemProductos tbody").append(linea);
+//                            itemsHelper.calcularImporte(element.id, element.product.price, element.quantity);
+//                          });
+////                          response($.map(data, function (item) {
+////                              return {
+////                                  value: item.id,
+////                                  label: item.name,
+////                                  cost: item.cost,
+////                              };
+////                          }));
+//                      },
+//                  });
+
+
+//                $("#find_additional_expense").autocomplete({
+//
+//                    source: function (request, response) {
+//                        $.ajax({
+//                            url: "/nsv/invoice/loadAdditionalExpense/" + request.term,
+//                            dataType: "json",
+//                            data: {
+//                                term: request.term
+//                            },
+//                            success: function (data) {
+//                                response($.map(data, function (item) {
+//                                    return {
+//                                        value: item.id,
+//                                        label: item.name,
+//                                        cost: item.cost,
+//                                    };
+//                                }));
+//                            },
+//                        });
+//                    },
+//                    select: function (event, ui) {
+//                        //$("#buscar_producto").val(ui.item.label);
+//
+//                        if (itemsHelper.hasProducto(ui.item.value)) {
+//                            itemsHelper.incrementaCantidad(ui.item.value, ui.item.precio);
+//                            return false;
+//                        }
+//
+//                        var linea = $("#templateItemsAdditionalExpense").html();
+//
+//                        linea = linea.replace(/{ID}/g, ui.item.value);
+//                        linea = linea.replace(/{NAME}/g, ui.item.label);
+//                        linea = linea.replace(/{COST}/g, ui.item.precio);
+//
+//                        $("#loadItemAdditionalExpense tbody").append(linea);
+//                        itemsHelper.calcularImporte(ui.item.value, ui.item.precio, 1);
+//
+//                        return false;
+//                    }
+//                });
+
+
+
+            });
+
+//            var quantity = 0;
+//            var discount = 0.0;
+//            var total = 0.0;
+
+        </script>
+    </body>
+</html>

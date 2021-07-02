@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <table th:fragment="itemsFactura" class="d-none">
+            <tbody id="plantillaItemsFactura">
+                <tr id="row_{ID}">
+                    <td class="d-none"><input type="hidden" value="{ID}" name="item_id[]" /></td>
+                    <td>{NOMBRE}</td>
+                    <td> <span id="cost_{ID}" >{PRECIO}</span></td>
+                    <td>
+                        <input type="text" value="1" name="cantidad[]" id="cantidad_{ID}" class="form-control " 
+                               onchange="itemsHelper.calcularImporte({ID}, {PRECIO}, this.value);"/>
+                    </td>
+                    <td>
+                        <input type="text" value="0" name="dicount[]" id="discount_{ID}" class="form-control " 
+                               onchange="itemsHelper.calculateDiscount({ID}, {PRECIO}, this.value);"/>
+                    </td>
+                    <td><span id="total_discount_{ID}">0</span></td>
+                    <td><span id="total_importe_{ID}">0</span></td>
+                    <td><a href="#" class="btn btn-danger btn-xs" onclick="itemsHelper.eliminarLineaFactura({ID});">x</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table th:fragment="itemsAdditionalExpense" class="d-none">
+            <tbody id="templateItemsAdditionalExpense">
+                <tr id="ae_row_{ID}">
+                    <td class="d-none">
+                        <input type="hidden" value="{ID}" name="ae_item_id[]" />
+                    </td>
+                    <td>{NAME}</td>
+                    <td>
+                        <input type="text" value="0" name="ae_cost[]" id="ae_cost_{ID}" class="form-control col-sm-4" 
+                               onchange="itemsHelperAddionalExpense.calculateTotal();"/>
+                    </td>
+                    <td><a href="#" class="btn btn-danger btn-xs" onclick="itemsHelperAddionalExpense.deleteItem({ID});">x</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table th:fragment="itemsPayment" class="d-none">
+            <tbody id="templateItemsPayment">
+                <tr id="row_{ID}">
+                    <td class="d-none">
+                        <input type="hidden" value="{ID}"  />
+                    </td>
+                    <td>
+                        <select name="payment_type_[]" id="payment_type_{ID}" class="form-control" >
+                            <option th:each="item: ${paymentsTypes}" th:value="${item.id}" th:text="${item.name}" >1</option>
+                        </select>
+                    </td>
+                    <td>
+                        <div class="input-group ">
+                            <div class="input-group-addon">$</div>
+                            <input type="text" name="payment_value_[]" id="payment_value_{ID}" class="form-control" placeholder="Monto" 
+                                   onchange="itemsHelperPayment.calculateTotal();"  />
+                        </div>
+
+                    </td>
+                    <td><a href="#" class="btn btn-danger btn-xs" onclick="itemsHelperPayment.delete({ID});">x</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </body>
+</html>

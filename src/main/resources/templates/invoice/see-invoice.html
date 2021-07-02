@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/mainLayout2 :: head"></head>
+    <body>
+
+        <header th:replace="layout/mainLayout2 :: header"></header>
+        <div class="container-scroller">
+            <div class="container-fluid page-body-wrapper">
+                <div class="main-panel container">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                
+            <div class="card bg-light">
+                <div class="card-header" th:text="${titulo}"></div>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a th:href="@{'/customer/ver/' + ${invoice.customer.id}}"
+                           class="btn btn-light btn-xs">&laquo; volver</a>
+                    </h4>
+                    
+                    <ul class="list-group my-2">
+                        <li class="list-group-item list-group-item-primary"
+                            th:text="'Datos del cliente'"></li>
+                        <li class="list-group-item" th:text="${invoice.customer.name} + ' ' + ${invoice.customer.lastName}"></li>
+                        <li class="list-group-item" th:text="${invoice.customer.email}"></li>
+                    </ul>
+                    
+                    <ul class="list-group my-2">
+                        <li class="list-group-item list-group-item-success"
+                            th:text="'Datos de la Factura'"></li>
+                        <li class="list-group-item" th:text="'Folio: ' + ${invoice.id}"></li>
+                        <li class="list-group-item"
+                            th:text="'Descripción: ' + ${invoice.description}"></li>
+                        <li class="list-group-item"
+                            th:text="'Fecha: ' + ${invoice.createDate}"></li>
+                    </ul>
+                    <div class="alert alert-info my-4"
+                         th:if="${#lists.isEmpty(invoice.items)}"
+                        th:text="'No hay líneas para la invoice' + ${invoice.description}">
+                    </div>
+
+                    <div class="form-group row bg-dark ">
+                        <label class="col-sm-12 col-form-label text-light">Servicios</label>
+                    </div>
+
+                    <table th:if="${not #lists.isEmpty(invoice.items)}"
+                           class="table table-striped table-hover table-bordered my-3">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item: ${invoice.items}">
+                                <td th:text="${item.product.name}"></td>
+                                <td th:text="${item.product.price}" data-inputmask="'alias': 'currency'"></td>
+                                <td th:text="${item.quantity}"></td>
+                                <td th:text="${item.total()}" data-inputmask="'alias': 'currency'"></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <div th:if="${not #lists.isEmpty(invoice.addtionalExpensesItems)}" class="form-group row bg-dark " >
+                        <label class="col-sm-12 col-form-label text-light">Gastos Adicionales</label>
+                    </div> 
+                    <table th:if="${not #lists.isEmpty(invoice.addtionalExpensesItems)}"
+                           class="table table-striped table-hover table-bordered my-3">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Costo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item: ${invoice.addtionalExpensesItems}">
+                                <td th:text="${item.additionalExpense.name}"></td>
+                                <td th:text="${item.amount}" data-inputmask="'alias': 'currency'"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div th:if="${not #lists.isEmpty(invoice.payments)}" class="form-group row bg-dark " >
+                        <label class="col-sm-12 col-form-label text-light">Pagos</label>
+                    </div> 
+                    <table th:if="${not #lists.isEmpty(invoice.payments)}"
+                           class="table table-striped table-hover table-bordered my-3">
+                        <thead>
+                            <tr>
+                                <th>Metodo de Pago</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item: ${invoice.payments}">
+                                <td th:text="${item.paymentType.name}"></td>
+                                <td th:text="${item.value}" data-inputmask="'alias': 'currency'"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h5 class="float-right">
+                        <span class="total-label">Total Pagado</span> <span th:text="${invoice.totalPayment}" data-inputmask="'alias': 'currency'" class="badge badge-danger"></span>
+                        
+                    <br>
+                        <span class="total-label">Total Factura</span><span th:text="${invoice.total}" data-inputmask="'alias': 'currency'" class="badge badge-danger"></span>
+                        
+                    <br>
+                        <span class="total-label">Deudado</span>
+                        <span th:if="${(invoice.total - invoice.totalPayment )>0}"  th:text="${invoice.total - invoice.totalPayment}" data-inputmask="'alias': 'currency'" class="badge badge-danger"></span>
+                        <span th:if="${(invoice.total - invoice.totalPayment )<=0}" data-inputmask="'alias': 'currency'" class="badge badge-danger">0</span>
+                        
+                    <br>
+                        <span class="total-label">Balance a su favor</span>
+                        <span th:if="${(invoice.totalPayment - invoice.total)>0}"  th:text="${invoice.totalPayment - invoice.total  }" data-inputmask="'alias': 'currency'" class="badge badge-danger"></span>
+                        <span th:if="${(invoice.totalPayment - invoice.total)<=0}" data-inputmask="'alias': 'currency'" class="badge badge-danger">0</span>
+                        
+                    </h5>
+
+                    <div class="card border-info mb-4" style="max-width: 20rem;">
+                        <div class="card-header">Observaciones</div>
+                        <div class="card-body">
+                            <p class="card-text" th:text="${invoice.comment}"
+                               th:if="${not #strings.isEmpty(invoice.comment)}"></p>
+                            <h4 class="card-title"
+                                th:if="${#strings.isEmpty(invoice.comment)}"
+                                th:text="'No tiene observaciones'"></h4>
+                        </div>
+                    </div>
+
+                    <a th:href="@{'/customer/ver/' + ${invoice.customer.id}}" class="btn btn-light btn-xs">&laquo; volver</a>
+                    <a class="btn btn-success btn-xs"  th:href="@{'/invoice/print/' + ${invoice.id}}">Imprimir</a>
+                </div>
+            </div>
+
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <footer th:replace="layout/mainLayout2 :: footer"></footer>
+    </body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:fragment="head">
+        <meta charset="UTF-8" />
+        <title  th:if="${titulo != null}"  th:text="'NSV - ' + ${titulo}"></title>
+        <title  th:unless="${titulo != null}"  > NSV </title>
+        <link rel="stylesheet"   th:href="@{/css/bootstrap.min.css}" />
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
+        <link rel="stylesheet"	th:href="@{/css/menu.css}" />
+        <link rel="stylesheet"	th:href="@{/css/jquery-ui.min.css}" />
+        <link rel="stylesheet"	th:href="@{/css/main.css}" />
+        <link rel="stylesheet"	th:href="@{/js/DataTables-1.10.18/css/dataTables.bootstrap.css}" href ="../../static/js/DataTables-1.10.18/css/dataTables.bootstrap.min.css"/>
+        <link rel="stylesheet"	th:href="@{/js/Responsive-2.2.2/css/responsive.bootstrap.css}" href ="../../static/js/Responsive-2.2.2/css/responsive.bootstrap.css"/>
+        <link rel="stylesheet"	th:href="@{/js/Select-1.2.6/css/select.bootstrap.min.css}" href ="../../static/js/Select-1.2.6/css/select.bootstrap.min.css"/>
+
+
+    </head>
+
+    <body>
+        <header th:fragment="header">
+            <nav class="navbar navbar-expand-md navbar-default navbar-static navbar-dark bg-dark">
+                <div class="navbar-header">   
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+                    <a class="navbar-brand" href="#">NSV</a>
+                </div>
+
+                <div class="collapse navbar-collapse js-navbar-collapse">
+                    <ul class="nav navbar-dark">
+                        <li class="dropdown dropdown-large">
+                            <a href="#" class="dropdown-toggle dropdown-menu-header" data-toggle="dropdown">Menu Usuario <b class=" "></b></a>
+
+                            <ul class="dropdown-menu dropdown-menu-large row ">
+                                <li class="col-sm-3">
+                                    <img src="http://via.placeholder.com/200x250"/>
+                                </li>
+                                <li class=" col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Button groups</li>
+                                        <li><a href="#">Basic example</a></li>
+                                        <li><a href="#">Button toolbar</a></li>
+                                        <li><a href="#">Sizing</a></li>
+                                        <li><a href="#">Nesting</a></li>
+                                        <li><a href="#">Vertical variation</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-header">Button dropdowns</li>
+                                        <li><a href="#">Single button dropdowns</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Input groups</li>
+                                        <li><a href="#">Basic example</a></li>
+                                        <li><a href="#">Sizing</a></li>
+                                        <li><a href="#">Checkboxes and radio addons</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-header">Navs</li>
+                                        <li><a href="#">Tabs</a></li>
+                                        <li><a href="#">Pills</a></li>
+                                        <li><a href="#">Justified</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Navbar</li>
+                                        <li><a href="#">Default navbar</a></li>
+                                        <li><a href="#">Buttons</a></li>
+                                        <li><a href="#">Text</a></li>
+                                        <li><a href="#">Non-nav links</a></li>
+                                        <li><a href="#">Component alignment</a></li>
+                                        <li><a href="#">Fixed to top</a></li>
+                                        <li><a href="#">Fixed to bottom</a></li>
+                                        <li><a href="#">Static top</a></li>
+                                        <li><a href="#">Inverted navbar</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </li>
+                    </ul>
+
+                </div><!-- /.nav-user -->
+                
+                <div class="collapse navbar-collapse js-navbar-collapse">
+                    <ul class="nav navbar-dark">
+                        <li class="dropdown dropdown-large">
+                            <a href="#" class="dropdown-toggle dropdown-menu-header " data-toggle="dropdown">Menu Administracion <b class=" "></b></a>
+
+                            <ul class="dropdown-menu dropdown-menu-large row">
+                                <li class="col-sm-3">
+                                    <img src="http://via.placeholder.com/200x250"/>
+                                </li>
+                                <li class="py-md-3 col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Button groups</li>
+                                        <li><a href="#">Basic example</a></li>
+                                        <li><a href="#">Button toolbar</a></li>
+                                        <li><a href="#">Sizing</a></li>
+                                        <li><a href="#">Nesting</a></li>
+                                        <li><a href="#">Vertical variation</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-header">Button dropdowns</li>
+                                        <li><a href="#">Single button dropdowns</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Input groups</li>
+                                        <li><a href="#">Basic example</a></li>
+                                        <li><a href="#">Sizing</a></li>
+                                        <li><a href="#">Checkboxes and radio addons</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-header">Navs</li>
+                                        <li><a href="#">Tabs</a></li>
+                                        <li><a href="#">Pills</a></li>
+                                        <li><a href="#">Justified</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Navbar</li>
+                                        <li><a href="#">Default navbar</a></li>
+                                        <li><a href="#">Buttons</a></li>
+                                        <li><a href="#">Text</a></li>
+                                        <li><a href="#">Non-nav links</a></li>
+                                        <li><a href="#">Component alignment</a></li>
+                                        <li><a href="#">Fixed to top</a></li>
+                                        <li><a href="#">Fixed to bottom</a></li>
+                                        <li><a href="#">Static top</a></li>
+                                        <li><a href="#">Inverted navbar</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </li>
+                    </ul>
+
+                </div><!-- /.nav-admin -->
+            </nav>
+
+            <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+            <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+            <div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+            <div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+        </header>
+
+        <div class="container"></div>
+
+        <footer th:fragment="footer" class="container ">
+            <hr />
+            <img th:src="@{/images/spring.png}" alt="Spring logo" />
+            <p>
+                Powered by <a href="https://projects.spring.io/spring-boot/">Spring
+                    Boot</a> y <a href="http://www.thymeleaf.org">Thymeleaf</a>.
+            </p>
+            <p>
+                Este proyecto fue desarrollado por Ing. Guillermo De Los Santos.<br /> &copy; Company 2018,
+                Inc. Todos los derechos reservados. Términos de uso y privacidad.<br />
+            </p>
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+            <!--<script th:src="@{/js/bootstrap.min.js}"></script>-->
+            <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+            <script th:src="@{/js/bootstrap.min.js}"></script>
+            <script th:src="@{/js/jquery-ui.min.js}"></script>
+            <script th:src="@{/js/DataTables-1.10.18/js/jquery.dataTables.min.js}" src="../../static/js/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+            <script th:src="@{/js/Responsive-2.2.2//js/dataTables.responsive.min.js}" src="../../static/js/Responsive-2.2.2//js/dataTables.responsive.min.js"></script>
+            <script th:src="@{/js/Select-1.2.6/js/dataTables.select.min.js}" src="../../static/js/Select-1.2.6/js/dataTables.select.min.js"></script>
+        </footer>
+    </body>
+</html>

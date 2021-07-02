@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:fragment="head">
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>NSV</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css}" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" th:href="@{/assets/vendors/iconfonts/puse-icons-feather/feather.css}" href="../assets/vendors/iconfonts/puse-icons-feather/feather.css">
+        <link rel="stylesheet" th:href="@{/assets/vendors/css/vendor.bundle.base.css}" href="../assets/vendors/css/vendor.bundle.base.css">
+        <link rel="stylesheet" th:href="@{/assets/vendors/css/vendor.bundle.addons.css}" href="../assets/vendors/css/vendor.bundle.addons.css">
+        <!-- endinject -->
+        <!-- plugin css for this page -->
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <link rel="stylesheet"  th:href="@{/assets/css/shared/style.css}" href="../assets/css/shared/style.css">
+        <!-- endinject -->
+        <!-- Layout styles -->
+        <link rel="stylesheet"  th:href="@{/assets/css/demo_2/style.css}" href="../assets/css/demo_2/style.css">
+        <!-- End Layout styles -->
+        <link rel="shortcut icon"  th:href="@{/assets/images/favicon.png}" href="../assets/images/favicon.png" />
+        
+        <link rel="stylesheet"	th:href="@{/css/jquery-ui.min.css}" />
+        <link rel="stylesheet"	th:href="@{/js/DataTables-1.10.18/css/dataTables.bootstrap.css}" href ="../../static/js/DataTables-1.10.18/css/dataTables.bootstrap.min.css"/>
+        <link rel="stylesheet"	th:href="@{/js/Responsive-2.2.2/css/responsive.bootstrap.css}" href ="../../static/js/Responsive-2.2.2/css/responsive.bootstrap.css"/>
+        <link rel="stylesheet"	th:href="@{/js/Select-1.2.6/css/select.bootstrap.min.css}" href ="../../static/js/Select-1.2.6/css/select.bootstrap.min.css"/>
+        <link rel="stylesheet"	th:href="@{/css/main.css}" />
+    </head>
+
+    <body>
+        <header th:fragment="header">
+            <nav class="navbar horizontal-layout col-lg-12 col-12 p-0">
+                <div class="container d-flex flex-row nav-top">
+                    <div class="text-center navbar-brand-wrapper d-flex align-items-top">
+                        <a class="navbar-brand brand-logo" href="/home">
+                            <img  th:src="@{/images/Logo_MedinaXargo_negro.png}" alt="logo" /> </a>
+                        <a class="navbar-brand brand-logo-mini" href="/home">
+                            <img  th:src="@{/assets/images/logo-mini.sv}" alt="logo" /> </a>
+                    </div>
+                    <div class="navbar-menu-wrapper d-flex align-items-center">
+<!--                        
+                        <form action="form-action" class="d-none d-sm-block">
+                            <div class="input-group search-box">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="mdi mdi mdi-magnify"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Type to search…">
+                                <i class="mdi mdi mdi-close search-close"></i>
+                            </div>
+                        </form>
+-->
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <i class="mdi mdi-airplay"></i>
+                                    <span class="count bg-danger ">co</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
+                                    <a class="dropdown-item py-3">
+                                        <p class="mb-0 font-weight-medium float-left">Seleccione compañía: </p>
+<!--                                        <span class="badge badge-pill badge-primary float-right">compañías </span>-->
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a th:each="item: ${companies}" th:href="@{/home/selectCompany}+'?company='+${item.name}" class="dropdown-item preview-item">
+<!--                                        
+                                        <div class="preview-thumbnail">
+                                            <img  th:src="@{/assets/images/faces/face10.jpg}" alt="image" class="img-sm profile-pic"> 
+                                        </div>
+-->
+                                        <div class="preview-item-content flex-grow py-2">
+                                            <p th:text="${item.name}" class="preview-subject ellipsis font-weight-medium text-dark" ></p>
+                                            <p th:text="${item.comment}" class="font-weight-light small-text"> </p>
+                                        </div>
+                                    </a>    
+                                </div>
+                            </li>
+<!--                            <li class="nav-item dropdown ml-4">
+                                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                                    <i class="mdi mdi-bell-outline"></i>
+                                    <span class="count bg-success">4</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
+                                    <a class="dropdown-item py-3 border-bottom">
+                                        <p class="mb-0 font-weight-medium float-left">You have 4 new notifications </p>
+                                        <span class="badge badge-pill badge-primary float-right">View all</span>
+                                    </a>
+                                    <a class="dropdown-item preview-item py-3">
+                                        <div class="preview-thumbnail">
+                                            <i class="mdi mdi-alert m-auto text-primary"></i>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
+                                            <p class="font-weight-light small-text mb-0"> Just now </p>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item preview-item py-3">
+                                        <div class="preview-thumbnail">
+                                            <i class="mdi mdi-settings m-auto text-primary"></i>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
+                                            <p class="font-weight-light small-text mb-0"> Private message </p>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item preview-item py-3">
+                                        <div class="preview-thumbnail">
+                                            <i class="mdi mdi-airballoon m-auto text-primary"></i>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
+                                            <p class="font-weight-light small-text mb-0"> 2 days ago </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>-->
+                            <li class="nav-item dropdown d-none d-xl-inline-block">
+                                <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">Hola,
+                                    <span sec:authentication="name"></span>
+                                    <!--<img class="img-xs rounded-circle ml-3"  th:src="@{/assets/images/faces/face8.jpg}" alt="Profile image">-->
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+<!--                                    <a class="dropdown-item p-0">
+                                        <div class="d-flex border-bottom">
+                                            <div class="py-3 px-4 d-flex align-items-center justify-content-center">
+                                                <i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
+                                            </div>
+                                            <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
+                                                <i class="mdi mdi-account-outline mr-0 text-gray"></i>
+                                            </div>
+                                            <div class="py-3 px-4 d-flex align-items-center justify-content-center">
+                                                <i class="mdi mdi-alarm-check mr-0 text-gray"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item mt-2"> Manage Accounts </a>
+                                    <a class="dropdown-item"> Change Password </a>
+                                    <a class="dropdown-item"> Check Inbox </a>-->
+                                    <form id="logoutForm" th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out</button>
+                                    </form>
+                                    
+                                </div>
+                            </li>
+                        </ul>
+                        <button class="navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                            <span class="mdi mdi-menu"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="nav-bottom">
+                    <div class="container">
+                        <ul class="nav page-navigation">
+                            <li class="nav-item">
+                                <a href="/home" class="nav-link">
+                                    <i class="link-icon mdi mdi-airplay"></i>
+                                    <span class="menu-title"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/quotation" class="nav-link">
+                                    <i class="link-icon mdi mdi-apple-safari"></i>
+                                    <span class="menu-title">Cotizacion</span>
+                                </a>
+                            </li>
+<!--                            <li class="nav-item">
+                                <a href="/customer/ver/1" class="nav-link">
+                                    <i class="link-icon mdi mdi-apple-safari"></i>
+                                    <span class="menu-title">Tracking</span>
+                                </a>
+                            </li>-->
+                            
+                            <li class="nav-item mega-menu">
+                                <a href="#" class="nav-link">
+                                    
+                                    <span class="menu-title">Mantenimientos</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="submenu">
+                                    <div class="col-group-wrapper row">
+                                        <div class="col-group col-md-3">
+                                            <p class="category-heading">Generales</p>
+                                            <ul class="submenu-item">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/customer">Clientes</a>
+                                                </li>   
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/product/">Servicios </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/additionalexpense">Gastos  Adicionales</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-group col-md-3">
+                                            <p class="category-heading">Financiero</p>
+                                            <ul class="submenu-item">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/ncf">NCF</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-group col-md-3">
+                                            <p class="category-heading">Administracion</p>
+                                            <ul class="submenu-item">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/user">Usuario</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/company">Compañia</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/currency">Monedas</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+            <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+            <div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+            <div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+        </header>
+        <div class="container"></div>
+
+        <footer th:fragment="footer" class=" footer" >
+            <!-- partial:../../partials/_footer.html -->
+
+            <div class="container clearfix">
+                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2019
+                    <a href="https://www.linkedin.com/in/franmen-guillermo-de-los-santos-4773b120/?locale=en_US" target="_blank">Guillermo De Los Santos</a>. All rights reserved.</span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> made with
+                    <i class="mdi mdi-heart text-danger"></i> in Java
+                </span>
+            </div>
+
+            <!-- partial -->
+            <!-- container-scroller -->
+            <!-- plugins:js -->
+            <script  th:src="@{/assets/vendors/js/vendor.bundle.base.js}"></script>
+            <script  th:src="@{/assets/vendors/js/vendor.bundle.addons.js}"></script>
+            <!-- endinject -->
+            <!-- Plugin js for this page-->
+            <!-- End plugin js for this page-->
+            <!-- inject:js -->
+            <script th:src="@{/assets/js/shared/off-canvas.js}"></script>
+            <script  th:src="@{/assets/js/shared/hoverable-collapse.js}"></script>
+            <script  th:src="@{/assets/js/shared/misc.js}"></script>
+            <script  th:src="@{/assets/js/shared/settings.js}"></script>
+            <script  th:src="@{/assets/js/shared/todolist.js}"></script>
+            <!-- endinject -->
+            <!-- Custom js for this page-->
+            <script  th:src="@{/assets/js/shared/widgets.js}"></script>
+            <script  th:src="@{/assets/js/demo_2/dashboard.js}"></script>
+            <script  th:src="@{/assets/js/demo_2/script.js}"></script>
+
+            <script th:src="@{/js/jquery-ui.min.js}"></script>
+            <script th:src="@{/js/DataTables-1.10.18/js/jquery.dataTables.min.js}" src="../../static/js/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+            <script th:src="@{/js/Responsive-2.2.2/js/dataTables.responsive.min.js}" src="../../static/js/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+            <script th:src="@{/js/Select-1.2.6/js/dataTables.select.min.js}" src="../../static/js/Select-1.2.6/js/dataTables.select.min.js"></script>
+            <!-- End custom js for this page-->
+        </footer>
+    </body>
+</html>

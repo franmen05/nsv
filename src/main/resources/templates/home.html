@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/mainLayout2 :: head"></head>
+    <body>
+        <header th:replace="layout/mainLayout2 :: header"></header>
+        <div class="container-scroller">
+
+            <div class="container-fluid page-body-wrapper">
+                <div class="main-panel container">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="card-body">
+                                                <h4 th:if="${ #lists.isEmpty(company)}" class="card-title">Seleccione compañía: </h4>
+                                                <h4 th:if="${not #lists.isEmpty(company)}"  th:text="'Bienvenido a '+${company.name}" class="card-title"></h4>
+<!--                                                <div th:if="${not #lists.isEmpty(company)}">-->
+
+<!--                                                    <br>-->
+<!--                                                    <h4  class="card-title">Cambiar compañía: </h4>-->
+<!--                                                </div>-->
+                                                <form  th:if="${ #lists.isEmpty(company)}"  th:action="@{/home/selectCompany}"  method="GET">
+                                                    <div class="form-group row template-demo">
+                                                        <input th:each="item: ${companies}"  type="submit" name="company" th:value="${item.name}" class="btn btn-primary btn-fw"  />
+                                                    </div>
+                                                </form>
+
+                                                <div th:if="${not #lists.isEmpty(company)}" >
+                                                    <form id="find_customer_form" th:action="@{/customer/ver/}" method="get">
+<!--
+                                                        <div class="form-group row">
+                                                            <label for="find-client" class="col-sm-3 col-form-label" >Tipo de Busqueda</label>
+                                                            <div class="col-sm-8 radio">
+                                                                <label><input type="radio" name="optradio" value="rnc"checked>RNC</label>
+                                                                <label><input type="radio" name="optradio" value="passport">Cedula/Pasaporte</label>
+                                                                <label><input type="radio" name="optradio" value="clientId">ID cliente</label>
+                                                                <label><input type="radio" name="optradio" value="phone">Telefono</label>
+                                                            </div>
+                                                        </div>
+-->
+
+                                                        <div class="form-group row">
+
+                                                            <label for="find_customer" class="col-sm-3 col-form-label"  > Buscar Cliente</label>
+                                                            <div class="col-sm-9">
+                                                                <!--<input type="hidden" id="customer" name="customer" class="form-control" />-->
+                                                                <input type="text" id="find_customer" name="find_customer" class="form-control" title="Busqueda por ID de cliente o RNC o nombre" autofocus />
+                                                            </div>
+                                                            <!--<button  type="button" class="btn bt n-primary" id="find_button" name="find_button" >Buscar</button>-->
+                                                        </div>
+                                                    </form>
+                                                    <div class="form-group row" >
+                                                        <div class="col-sm-12">
+                                                            <a class="btn btn-warning btn-xs"th:href="@{'/quotation/new'}">Cotizaciones (para cliente  sin registrar)</a>
+                                                            <a class="btn btn-secondary btn-xs"th:href="@{'/quotation'}">Ver Cotizaciones (de cliente  sin registrar)</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!--Seleccion de compañia-->
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        <footer th:replace="layout/mainLayout2 :: footer"></footer>
+        <script th:src="@{/js/app/home.js}"></script>
+    </body>
+</html>

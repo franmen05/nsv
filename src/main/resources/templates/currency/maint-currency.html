@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/mainLayout2 :: head"></head>
+    <body>
+
+        <header th:replace="layout/mainLayout2 :: header"></header>
+        <div class="container-scroller">
+            <div class="container-fluid page-body-wrapper">
+                <div class="main-panel container">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                
+            <div class="card bg-light">
+                <div class="card-header"> Moneda </div>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a class="btn btn-light btn-xs"
+                           th:href="@{/}"
+                           th:text="'&laquo; volver'"></a>
+                    </h4>
+
+                    <form  id="form-currency" th:action="@{/currency/add/}" th:object="${currency}" method="post">
+
+                        <input th:field="${currency.status}" type="hidden" class="form-control" />
+                        <!--<input th:field="${currency.createDate}" type="hidden" class="form-control" />-->
+                        
+                        <div  th:if="${currency.id!=0}" class="form-group row">
+                            <label for="id" class="col-sm-2 col-form-label" th:text="'ID'"></label>
+                            <div class="col-sm-6">  
+                                <input th:field="${currency.id}" readonly="true" class="form-control" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-2 col-form-label" th:text="'Nombre'"></label>
+                            <div class="col-sm-6">
+                                <input th:field="${currency.name}" class="form-control" />
+                            </div>
+                        </div>                      
+                        
+                        <div class="form-group row">
+                            <label for="code" class="col-sm-2 col-form-label"> Codigo </label>
+                            <div class="col-sm-6">
+                                <input th:field="${currency.code}" class="form-control" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-warning " > <span class="glyphicon glyphicon-ok"></span> Guardar</button>
+                                <a href="#" class="btn btn-danger " th:onclick="'itemsHelper.inactiveItem();'"><span class="glyphicon glyphicon-remove"></span> Inactivar</a>
+                                <a href="#" class="btn btn-primary " th:onclick="'itemsHelper.activeItem();'"><span class="glyphicon glyphicon-check"></span> Activar</a>
+                                <a href="#" class="btn btn-secondary " th:onclick="'itemsHelper.clearForm();'"><span class="glyphicon glyphicon-erase"></span> Limpiar</a>
+                            </div>
+                        </div>
+                        </form>
+                        <table th:replace="currency/template-items-currency :: itemsCurrency"></table>
+                        
+                        <table id="itemsCurrency"  class="table table-striped table-bordered dt-responsive nowrap ">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th> 
+                                    <th>RNC</th>
+                                    <th>Email</th>
+                                    <th>Estado</th>
+                                    <th>Fecha Creacion</th>
+                                    <th>Fecha Actualizacion</th>
+                                    <th>Direccion</th>
+                                    <th>Nota</th>
+                                </tr>   
+                            </thead>
+                            <tbody>
+                                <tr th:each="item: ${currencys}">
+                                    <td  th:text="${item.id}"></td>
+                                    <td th:text="${item.name}"></td>
+                                    <td th:text="${item.RNC}"></td>
+                                    <td th:text="${item.email}"></td>
+                                    <td th:text="${item.status}"></td>
+                                    <td th:text="${item.createDate}"></td>
+                                    <td th:text="${item.lastUpdateDate}"></td>
+                                    <td th:text="${item.address}"></td>
+                                    <td th:text="${item.comment}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    
+
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        <footer th:replace="layout/mainLayout2 :: footer"></footer>
+        <!--<script th:replace="invoice/autocomplete-currency :: javascript"></script>-->
+        <script src="../../static/js/app/currency.js" th:src="@{/js/app/currency.js}"></script>
+        
+    </body>
+</html>

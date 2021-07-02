@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/mainLayout2 :: head"></head>
+    <body>
+        <header th:replace="layout/mainLayout2 :: header"></header>
+
+        <div class="container-scroller">
+            <div class="container-fluid page-body-wrapper">
+                <div class="main-panel container">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+        
+            <div class="card bg-light">
+                <div class="card-header" th:text="${titulo}"></div>
+                <div class="card-body">
+
+                    <form id="form-quotation" th:action="@{/quotation/save/}" th:object="${quotation}" method="post">
+
+                        <input type="hidden" th:field="${quotation.id}" id="id-quotation" class="form-control" />
+                        <div class="form-group row">
+                            <label for="descripcion" class="col-sm-2 col-form-label" >Descripción</label>
+                            <div class="col-sm-6">
+                                <input type="text" th:field="${quotation.description}" class="form-control" th:errorclass="'form-control is-invalid'" disabled='disabled'/>
+                                <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>-->
+                            </div>
+                        </div>
+               
+
+                        <div th:if="${not #lists.isEmpty(quotation.customer)}" class="form-group row">
+                            <label  for="cliente" class="col-sm-2 col-form-label" >Cliente</label>
+                            <div class="col-sm-6">
+                                <input name="cliente" th:value="${quotation.customer.name} + ' ' + ${quotation.customer.lastName}" class="form-control"  disabled='disabled'/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="descripcion" class="col-sm-2 col-form-label" >A nombre de</label>
+                            <div class="col-sm-6">
+                                <input type="text" th:field="${quotation.contact}" class="form-control" th:errorclass="'form-control is-invalid'" />
+                                <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>-->
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            
+                            <label for="cliente" class="col-sm-2 col-form-label" >Email Cliente</label>
+                            <div class="col-sm-6">
+                                <input th:field="${quotation.email}"  class="form-control"   />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="find_product" class="col-sm-2 col-form-label" >Moneda</label>
+                            <div class="col-sm-3">
+                                <select th:field="${quotation.currency.id}" class="form-control" >
+                                    <option th:each="item: ${currencies}" th:value="${item.id}" th:text="${item.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="comment" class="col-sm-2 col-form-label" >Observaciones</label>
+                            <div class="col-sm-6">
+                                <textarea th:field="${quotation.comment}" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row bg-dark ">
+                            <label class="col-sm-12 col-form-label text-light">Servicios</label>
+                        </div>
+                        
+                        <div class="form-group row template-demo">
+                            <button th:each="item: ${topProduct}" name="b_product" th:text="${item.name}" class="btn btn-primary " ></button>     
+                        </div> 
+
+                        <div class="form-group row">
+                            <label for="find_product" class="col-sm-2 col-form-label" th:text="'Buscar'"></label>
+                            <div class="col-sm-6">
+                                <input type="text" name="find_product" id="find_product" class="form-control" />
+                            </div>
+                        </div>
+
+                        <table th:replace="invoice/template-items :: itemsFactura"></table>
+
+                        <table id="cargarItemProductos"  class="table table-sm table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>   
+                                    <th>Descuento(%)</th>   
+                                    <th>Monto Desc</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>   
+                            </thead>
+                            <tbody>
+                                 <tr th:each="item,row: ${quotation.items}" th:id="'row_'+${item.product.id}">
+                                    <td class="d-none">
+                                        <input type="hidden" th:value="${item.product.id}" name="item_id[]" />
+                                    </td>
+                                    <td th:text="${item.product.name} "></td>
+                                    <td <span th:text="${item.cost}" th:id="'cost_'+${item.product.id}" ></span></td>
+                                    <td>
+                                        <input type="text" th:value="${item.quantity}" name="cantidad[]" th:id="'cantidad_'+${item.product.id}" class="form-control " 
+                                               th:onchange="'itemsHelper.calcularImporte('+${item.id}+', '+${item.cost}+', this.value);'"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" th:value="${#numbers.formatDecimal((item.discount*100),1,0)}" name="dicount[]" th:id="'discount_'+${item.product.id}" class="form-control " 
+                                               th:onchange="'itemsHelper.calculateDiscount('+${item.product.id}+', '+${item.cost}+', this.value);'"/>
+                                    </td>
+                                    <td><span th:text="${#numbers.formatDecimal(item.discountTotal(),1,2)}"  th:id="'total_discount_'+${item.product.id}">0</span></td>
+                                    <td><span th:text="${#numbers.formatDecimal(item.total(),1,2)}" th:id="'total_importe_'+${item.product.id}">0</span></td>
+                                    <td><a href="#" class="btn btn-danger btn-xs" th:onclick="'itemsHelper.eliminarLineaFactura('+${item.product.id}+');'">x</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h5>Total <span class="badge badge-danger" id="gran_total" th:text="${#numbers.formatDecimal(quotation.calculateTotalItem(),1,2)}">0</span></h5>
+
+                        <div class="form-group row bg-dark ">
+                            <label class="col-sm-12 col-form-label text-light">Gastos Adicionales</label>
+                        </div>
+                        <div class="form-group row template-demo">
+                            <button th:each="item: ${topExpensive}" name="b_additionalExpense" th:text="${item.name}" class="btn btn-primary " ></button>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="find_additional_expense" class="col-sm-2 col-form-label" th:text="'Buscar Gasto'"></label>
+                            <div class="col-sm-6">
+                                <input type="text" name="find_additional_expense" id="find_additional_expense" class="form-control" />
+                            </div>
+                        </div>
+
+                        <table th:replace="invoice/template-items :: itemsAdditionalExpense"></table>
+
+                        <table id="loadItemAdditionalExpense"  class="table table-sm table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Costo</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  th:each="item,row: ${quotation.items}" th:id="'ae_row_'+${item.additionalExpense.id}">
+                                    <td class="d-none">
+                                        <input type="hidden" th:value="${item.additionalExpense.id}" name="ae_item_id[]" />
+                                    </td>
+                                    <td th:text='${item.additionalExpense.name}'></td>
+                                    <td>
+                                        <input type="text" th:value="${item.cost}" name="ae_cost[]" th:id="'ae_cost_'+${item.additionalExpense.id}" class="form-control col-sm-4" 
+                                               onchange="itemsHelperAddionalExpense.calculateTotal();"/>
+                                    </td>
+                                    <td><a href="#" class="btn btn-danger btn-xs" th:onclick="'itemsHelperAddionalExpense.deleteItem('+${item.additionalExpense.id}+');'">x</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+<!--                        <h5>Total <span th:text="${#numbers.formatDecimal(quotation.calculeTotalAdtionalExpensive(0),1,2)}"  id="ae_gran_total" class="badge badge-secondary">0</span></h5>-->
+
+                        
+                        <h5 title="total con impuestos y descuentos" >Total <span class="badge badge-danger" id="total"  th:text="${#numbers.formatDecimal(quotation.total,1,2)}" >0</span></h5>                        
+                        
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input type="submit" name="btn-save" id="btn-save" th:value="Guardar  " class="btn btn-secondary" />
+                                <input type="submit" name="btn-print"  id="btn-print" value="Imprimir" class="btn btn-success" />
+                                <!--<input type="submit" name="btn-send"  id="btn-send" value="Enviar" class="btn btn-success" />-->
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        <footer th:replace="layout/mainLayout2 :: footer"></footer>
+        <script th:replace="invoice/autocomplete-product :: javascript"></script>
+        <script src="../../static/js/app/invoice.js" th:src="@{/js/app/invoice.js}"></script>
+    </body>
+</html>

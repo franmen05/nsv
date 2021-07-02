@@ -1,0 +1,248 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 30, 2018, 12:44:10 AM
+    Author     : you_k
+*/
+
+@media print {
+    .actions {
+        display: none !important;;
+    }
+}
+
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    /*             line-height: 1.5; */
+}
+
+label{    
+    font-weight: bold;
+}
+
+
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    /*! margin-right: -15px; */
+    /*! margin-left: -15px; */
+}
+
+fieldset {
+    min-width: 0;
+    padding: 0;
+    margin: 10px;
+    width: 50%;
+    border-radius: 6px;
+
+    /*             border: 0; */
+}
+
+
+.fieldset-right {
+    width: 40%;
+    margin-left:  45px;
+
+    margin-right: 0px;
+}
+.fieldset-left {
+    /*             width: 40%; */
+    margin-left:  0px;
+
+    /*             margin-right: 0px; */
+}
+
+
+legend {
+    padding: 0;
+    margin-bottom: 0.5rem; 
+    margin-left:   0.5rem; 
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+ul {
+    margin-block-start: 0em;
+    /*! margin-block-end: 0.5em; */
+
+    padding-left: 4px;
+}
+
+.list-group-item {
+
+    background-color: #fff;
+    border: 0px solid rgba(0,0,0,.125) !important; 
+    padding: 3px ;
+    margin-left: 1px; 
+    display: block;
+
+}
+
+
+
+.table {
+    width: 100%;
+    /*! max-width: 100%; */
+    margin-bottom: 0.5rem;
+    /*! background-color: #c5494900; */
+}
+.table-bordered {
+    border: 1px solid #e9ecef;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: right;
+}
+
+table .item_desc{
+
+    text-align: left;
+}
+
+*, ::after, ::before {
+    box-sizing: inherit;
+}
+
+/*        table {
+            display: table;
+            border-collapse: separate;
+            border-spacing: 2px;
+            border-color: grey;
+            text-align: center;
+                
+        } */
+
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    /*             padding: 1.25rem; */
+}
+
+.custom-title  {
+    /*             display: block; */
+    /*             width: 100%; */
+    /*             max-width: 100%; */
+    /*             padding: 0; */
+    /* margin-bottom: -0.8rem; */
+    /*             margin-left:   0.5rem;  */
+    font-size: 16px;
+    font-weight: bold;
+    /*             line-height: inherit; */
+    /*             color: inherit; */
+    /*             white-space: normal; */
+    /* width: 100%; */
+}
+.total label {
+    display:inline-block;
+    width: 110px;
+    /*             min-width: 100px; */
+    /*             padding: 0; */
+    /* margin-bottom: -0.8rem; */
+    margin-bottom: 0.1rem; 
+    /*             font-size: 16px; */
+    font-weight: bold;
+    /*             line-height: inherit; */
+    /*             color: inherit; */
+    /*             white-space: normal; */
+    /* width: 100%; */
+}
+
+.custom-title-obs {
+    margin-bottom: -0.8rem;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+.btn:focus, .btn:hover {
+    text-decoration: none;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    border-radius: .25rem;
+    transition: all .15s ease-in-out;
+}
+
+.btn-light {
+    color:#111;
+    background-color:#f8f9fa;
+    border-color:#f8f9fa
+}
+.btn-light:hover {
+    color:#111;
+    background-color:#e2e6ea;
+    border-color:#dae0e5
+}
+.btn-light.focus,.btn-light:focus {
+    box-shadow:0 0 0 3px rgba(248,249,250,.5)
+}
+.btn-light.disabled,.btn-light:disabled {
+    background-color:#f8f9fa;
+    border-color:#f8f9fa
+}
+.btn-light.active,.btn-light:active,.show>.btn-light.dropdown-toggle {
+    background-color:#e2e6ea;
+    background-image:none;
+    border-color:#dae0e5
+}
+
+
+.table td, .table th,.card-header, .card-body {
+    padding: 4px !important;
+}
+
+
+.custom-table-title{
+    font-weight: bold;
+    border: 1px solid #e9ecef;
+    text-align: right;
+
+}
+.card-heater{
+/*     width: 600px; */
+/*     text-align: center; */
+}
+.card-heater div{
+    display: inline;
+    
+}
+.card-heater .invoice {
+     float: right;
+    margin-right:  45px;
+        font-size: 36px;
+    font-weight: bold;
+/*     width: 335px% !important;
+   text-align: right !important; */
+}

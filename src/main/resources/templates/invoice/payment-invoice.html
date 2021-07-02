@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/mainLayout2 :: head"></head>
+    <body>
+
+        <header th:replace="layout/mainLayout2 :: header"></header>
+        <div class="container-scroller">
+            <div class="container-fluid page-body-wrapper">
+                <div class="main-panel container">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                
+            <div class="card bg-light">
+                <div class="card-header" th:text="${titulo}"></div>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a class="btn btn-light btn-xs"
+                           th:href="@{/customer/ver/}+''+${invoice.customer.id}"
+                           th:text="'&laquo; volver'"></a>
+                    </h4>
+
+                    <form   th:action="@{/invoice/formSavePayment/}" th:object="${payment}" method="post">
+
+                        <div class="form-group row">
+                            <label for="descripcion" class="col-sm-3 col-form-label" >ID Factura</label>
+                            <div class="col-sm-3">
+                                <input type="text" id="id-invoice" th:field="${invoice.id}" class="form-control" th:errorclass="'form-control is-invalid'" disabled='disabled'/>
+                                <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>-->
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="find_product" class="col-sm-3 col-form-label" >Moneda Factura</label>
+                            <div class="col-sm-6">
+                                <input type="text" th:field="${invoice.currency.name}" class="form-control" th:errorclass="'form-control is-invalid'" disabled='disabled'/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row bg-dark ">
+                            <label class="col-sm-12 col-form-label text-light">Servicios</label>
+                        </div>
+
+                        <table th:if="${not #lists.isEmpty(invoice.items)}"
+                               class="table table-striped table-hover table-bordered my-3">
+                            <thead>
+                                <tr class=" bg-dark  text-light">
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item: ${invoice.items}">
+                                    <td th:text="${item.product.name}"></td>
+                                    <td th:text="${item.product.price}" data-inputmask="'alias': 'currency'"></td>
+                                    <td th:text="${item.quantity}"></td>
+                                    <td th:text="${item.total()}" data-inputmask="'alias': 'currency'"></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <div th:if="${not #lists.isEmpty(invoice.addtionalExpensesItems)}" class="form-group row bg-dark " >
+                            <label class="col-sm-12 col-form-label text-light">Gastos Adicionales</label>
+                        </div>
+
+                        <table th:if="${not #lists.isEmpty(invoice.addtionalExpensesItems)}"
+                               class="table table-striped table-hover table-bordered my-3">
+                            <thead>
+                                <tr>
+                                    <th>Gasto</th>
+                                    <th>Costo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item: ${invoice.addtionalExpensesItems}">
+                                    <td  th:text="${item.additionalExpense.name}"></td>
+                                    <td th:text="${item.amount}" data-inputmask="'alias': 'currency'"  ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:if="${not #lists.isEmpty(invoice.taxItems)}" class="form-group row bg-dark " >
+                            <label class="col-sm-12 col-form-label text-light">Impuestos</label>
+                        </div>
+
+                        <table th:if="${not #lists.isEmpty(invoice.taxItems)}"
+                               class="table table-striped table-hover table-bordered my-3">
+                            <thead>
+                                <tr>
+                                    <th>Impuesto</th>
+                                    <th>Valor</th>
+                                    <th>total</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                <tr th:each="item: ${invoice.taxItems}">
+                                    <td th:text ="${item.description}"></td>
+                                    <td th:text="${#numbers.formatDecimal((item.value*100),1,0)}"></td>
+                                    <td th:text="'$ '+${#numbers.formatDecimal(invoice.total * item.value,1,2)}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="form-group row bg-dark ">
+                            <label class="col-sm-12 col-form-label text-light">Pagos</label>
+                        </div>
+                        <!--
+                        <div class="form-group row">
+                            <label for="find_product" class="col-sm-2 col-form-label" >Moneda</label>
+                            <div class="col-sm-3">
+                                <select th:field="${invoice.currency.id}" class="form-control" >
+                                    <option th:each="item: ${currencies}" th:value="${item.id}" th:text="${item.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        -->
+                        <table th:replace="invoice/template-items :: itemsPayment"></table>
+
+                        <table id="loadItemPayment"  class="table table-sm table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Monto</th>
+                                    <th></th>
+                                </tr>   
+                            </thead>
+                            <tbody>
+                                <tr th:each="item: ${invoice.payments}">
+                                    <!--<td th:text ="${item.paymentType.name}"></td>-->
+                                    <!--<td th:text="${#numbers.formatDecimal((item.value),1,2)}"></td>-->
+                            
+                                    <td class="d-none">
+                                         <input type="hidden" th:value="${item.id}" />
+                                     </td>
+                                     <td>
+                                         <select name="payment_type_[]" th:id="'payment_type_'+${item.id}" class="form-control" >
+                                             <option th:value="${item.paymentType.id}" th:text="${item.paymentType.name}"  selected></option>
+                                             <option th:each="item2: ${paymentsTypes}" th:if="${item2.id!=item.paymentType.id}" th:value="${item2.id}" th:text="${item2.name}" >1</option>
+                                         </select>
+                                     </td>
+                                     <td>
+                                         <div class="input-group ">
+                                             <div class="input-group-addon">$</div>
+                                             <input type="text" th:value="${#numbers.formatDecimal((item.value),1,2)}" name="payment_value_[]" th:id="'payment_value_'+${item.id}" 
+                                                    onchange="itemsHelperPayment.calculateTotal();" class="form-control" placeholder="Monto"  />
+                                         </div>
+                                     </td>
+                                    <td>
+                                        <a href="#" class="btn btn-danger btn-xs" onclick="itemsHelperPayment.delete({ID});">x</a>
+                                    </td>
+                                 </tr>
+                            </tbody>
+                        </table>
+
+
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <button name="add_payment" id="add_payment" class="btn btn-primary"  >Add</button>
+                            </div>
+                        </div>
+
+                        <h5>Total Factura: <span class="badge badge-danger" id="total_invoice" th:text="${#numbers.formatDecimal(invoice.total,1,2)}" data-inputmask="'alias': 'currency'" >0</span></h5>                        
+                        <h5>Total Pagado: <span class="badge badge-danger" id="total_pay" th:text="${#numbers.formatDecimal(invoice.totalPayment,1,2)}"  >0</span></h5>                        
+                        <h5>Cambio: <span class="badge badge-danger" id="change" th:text="${#numbers.formatDecimal(invoice.change(),1,2)}" data-inputmask="'alias': 'currency'" >0</span></h5>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input type="submit" id="b_payment" value="Pagar" class="btn btn-success" disabled/>
+                                <input type="submit" id="b_partial_payment" name="b_partial_payment" value="Abonar" class="btn btn-primary" />
+                                <input type="submit" id="b_edit_invoice" value="Modificar Factura" class="btn btn-warning" />
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <footer th:replace="layout/mainLayout2 :: footer"></footer>
+        <script th:replace="invoice/autocomplete-product :: javascript"></script>
+        <script src="../../static/js/app/invoice.js" th:src="@{/js/app/invoice.js}"></script>
+    </body>
+</html>
