@@ -28,7 +28,7 @@ import javax.validation.Valid;
 @SessionAttributes({"quotation", "titulo", "currencies","customerId","companies"})
 public class QuotationController {
 
-    private static Log log = LogFactory.getLog(QuotationController.class);
+    private static final Log log = LogFactory.getLog(QuotationController.class);
 
     @Autowired
     private ICustomerService customerService;
@@ -114,12 +114,12 @@ public class QuotationController {
         return "quotation/new-quotation";
     }
 
-//    @RequestMapping("/delete/{id}")
-//    public String delete(@PathVariable(name = "id") Long id, Model model) {
-//        invoiceService.deleteInvoice(id);
-//        model.addAttribute("attribute", "value");
-//        return "redirect:/";
-//    }
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable(name = "id") Long id, Model model) {
+//        quotationService.delete(id);
+        model.addAttribute("quotation", id);
+        return "redirect:/quotation";
+    }
 
     
     private void genericInit(Model model, Quotation o, boolean onInit) {
