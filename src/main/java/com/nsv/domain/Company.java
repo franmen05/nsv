@@ -49,7 +49,6 @@ public class Company implements Serializable {
     @Enumerated(EnumType.STRING)
     private GenericStatus status;
 
-    
 //    @DateTimeFormat(pattern = "yyy-mm-ddd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
@@ -197,10 +196,7 @@ public class Company implements Serializable {
 //        }
         final Company other = (Company) obj;
         System.out.println("com.nsv.domain.Company.equals() :: "+other.getId());
-        if (!Objects.equals(this.id, other.getId())) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.getId());
     }
     
 }

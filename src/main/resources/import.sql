@@ -182,7 +182,7 @@ INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_USER');
 INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ADMIN');
 
 
-INSERT INTO  roles ( rol) VALUES( 'ROLE_ADMIN');
-INSERT INTO  roles ( rol) VALUES( 'ROLE_USER');
-INSERT INTO  roles ( rol) VALUES( 'ROLE_SALER');
-INSERT INTO  roles ( rol) VALUES( 'ROLE_OPERATIONS');
+INSERT INTO  roles ( authority) VALUES( 'ROLE_ADMIN');
+INSERT INTO  roles ( authority) VALUES( 'ROLE_USER');
+INSERT INTO  roles ( authority) VALUES( 'ROLE_SALER');
+INSERT INTO  roles ( authority) VALUES( 'ROLE_OPERATIONS');
