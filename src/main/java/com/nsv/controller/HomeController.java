@@ -29,21 +29,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 //@SessionScope
 public class HomeController {
     
-    private static Log log = LogFactory.getLog(HomeController.class);    
+    private final static Log log = LogFactory.getLog(HomeController.class);
     
-    @Autowired
-    private IInvoiceService invoiceService;
-    
-    
-    @Autowired
-    private IInventoryService inventoryService;
-    
-    
-    @Autowired
-    private ICompanyService companyService;
+    private final IInvoiceService invoiceService;
+    private final IInventoryService inventoryService;
+    private final ICompanyService companyService;
     
     private Company company;
-    
+
+    public HomeController(IInvoiceService invoiceService, IInventoryService inventoryService, ICompanyService companyService) {
+        this.invoiceService = invoiceService;
+        this.inventoryService = inventoryService;
+        this.companyService = companyService;
+    }
+
     @GetMapping(value={"/",""})
     public String page(Model model) {
         

@@ -30,28 +30,31 @@ public class QuotationController {
 
     private static final Log log = LogFactory.getLog(QuotationController.class);
 
-    @Autowired
-    private ICustomerService customerService;
+    private final ICustomerService customerService;
+    private final IInvoiceService invoiceService;
+    private final IInventoryService inventoryService;
+    private final IQuotationService quotationService;
+    private final ICurrencyService currencyService;
 
-    @Autowired
-    private IInvoiceService invoiceService;
+//    private Invoice invoice;
 
-    @Autowired
-    private IInventoryService inventoryService;
+    public QuotationController(ICustomerService customerService, IInvoiceService invoiceService,
+                               IInventoryService inventoryService, IQuotationService quotationService,
+                               ICurrencyService currencyService) {
 
-    @Autowired
-    private IQuotationService quotationService;
-    
-    @Autowired
-    private ICurrencyService currencyService;
+        this.customerService = customerService;
+        this.invoiceService = invoiceService;
+        this.inventoryService = inventoryService;
+        this.quotationService = quotationService;
+        this.currencyService = currencyService;
+    }
 
-    private Invoice invoice;
-
-    
     @GetMapping({"/",""})
-    public String home(@SessionAttribute( name = "company", required = false) Company c
-            ,Model model) {
-
+    public String home(@SessionAttribute( name = "company", required = false) Company c, Model model) {
+        if (c==null) {
+            model.addAttribute("error", "Error: Debe seleccionar una compañia!");
+            return "home";
+        }
         Quotation o = initQuotation(c);
         genericInit(model, o, true);
         model.addAttribute("quotations", quotationService.findAll());

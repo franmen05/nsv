@@ -22,19 +22,23 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     
-    private static Log log = LogFactory.getLog(SecurityConfig.class);
-	@Autowired
-	private LoginSuccessHandler successHandler;
+    private final static Log log = LogFactory.getLog(SecurityConfig.class);
+	private final LoginSuccessHandler successHandler;
 
 //	@Qualifier("UserService")
-	@Autowired
-	private IUserService userService;
+	private final IUserService userService;
 
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    //
+	public SecurityConfig(LoginSuccessHandler successHandler, IUserService userService,
+						  PasswordEncoder passwordEncoder) {
+		this.successHandler = successHandler;
+		this.userService = userService;
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	//
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
             
