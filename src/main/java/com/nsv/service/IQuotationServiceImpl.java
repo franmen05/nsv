@@ -35,6 +35,10 @@ public class IQuotationServiceImpl implements IQuotationService {
     public List<Quotation> findAll(Long customerID,Company co) {
        return quotationDao.findAllByCustomerAndCompany(customerID, co.getId());
     }
+    @Override
+    public List<Quotation> findByCompany(Company co) {
+       return quotationDao.findAllByCompany( co);
+    }
     
     @Override
     public List<Quotation> findAll() {

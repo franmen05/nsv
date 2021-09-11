@@ -57,7 +57,7 @@ public class QuotationController {
         }
         Quotation o = initQuotation(c);
         genericInit(model, o, true);
-        model.addAttribute("quotations", quotationService.findAll());
+        model.addAttribute("quotations", quotationService.findByCompany(c));
         model.addAttribute("isCustomer", false);
 
         return "quotation/home-quotation";

@@ -23,6 +23,7 @@ public interface IQuotationService {
     List<Quotation> findAll();
     List<Quotation> findByCustomerId(Long id);
     List<Quotation> findAll(Long customerID,Company co);
+    List<Quotation> findByCompany(Company co);
 
     void delete(Long id);
 //    
