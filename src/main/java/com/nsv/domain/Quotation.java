@@ -9,20 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -88,7 +75,10 @@ public class Quotation implements Serializable {
     // TODO: hacer que fetch sea Lazy
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true)
     @JoinColumn(name = "quotation_id")
-    private List<QuotationItem> items; 
+    private List<QuotationItem> items;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Invoice invoice;
 
     public Quotation() {
         
@@ -273,5 +263,13 @@ public class Quotation implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }
