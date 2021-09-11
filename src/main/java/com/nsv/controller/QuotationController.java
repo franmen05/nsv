@@ -55,7 +55,7 @@ public class QuotationController {
             model.addAttribute("error", "Error: Debe seleccionar una compañia!");
             return "home";
         }
-        Quotation o = initQuotation(c);
+        var o = initQuotation(c);
         genericInit(model, o, true);
         model.addAttribute("quotations", quotationService.findByCompany(c));
         model.addAttribute("isCustomer", false);

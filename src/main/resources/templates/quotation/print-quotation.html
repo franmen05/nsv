@@ -40,6 +40,7 @@
                             <ul th:if="${ #lists.isEmpty(quotation.customer)}" class="list-group custom-padding my-2">
                                 <li class="list-group-item" th:text="${quotation.contact}"></li>
                                 <li class="list-group-item" th:text="'Email: '+${quotation.email}"></li>
+                                <li class="list-group-item" th:text="'Telefono: '+${quotation.phone}"></li>
                             </ul>
                         </fieldset>
                         <fieldset class="fieldset-right">

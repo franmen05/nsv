@@ -41,6 +41,27 @@
                                 <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>-->
                             </div>
                         </div>
+                        <div th:if="${ #lists.isEmpty(quotation.customer)}" class="form-group row">
+                            <label for="phone" class="col-sm-2 col-form-label" >Telefono</label>
+                            <div class="col-sm-6">
+                                <input type="text" th:field="${quotation.phone}" class="form-control" th:errorclass="'form-control is-invalid'" />
+                                <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>-->
+                            </div>
+                        </div>
+                        <div th:if="${not #lists.isEmpty(quotation.customer)}" class="form-group row">
+                            <label for="phone" class="col-sm-2 col-form-label" >Telefono</label>
+                            <div class="col-sm-6">
+                                <input type="text" th:field="${quotation.customer.phone}" class="form-control" th:errorclass="'form-control is-invalid'" />
+                                <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>-->
+                            </div>
+                        </div>
+                        <div th:if="${not #lists.isEmpty(quotation.customer)}" class="form-group row">
+                            <label for="phone2" class="col-sm-2 col-form-label" >Telefono</label>
+                            <div class="col-sm-6">
+                                <input type="text" th:field="${quotation.customer.phone2}" class="form-control" th:errorclass="'form-control is-invalid'" />
+                                <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>-->
+                            </div>
+                        </div>
                         <div class="form-group row">
                             
                             <label for="cliente" class="col-sm-2 col-form-label" >Email Cliente</label>

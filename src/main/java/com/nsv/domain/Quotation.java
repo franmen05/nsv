@@ -2,6 +2,9 @@ package com.nsv.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.format.annotation.NumberFormat;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +33,7 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "Quotations")
 public class Quotation implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -40,6 +44,12 @@ public class Quotation implements Serializable {
     private String description;
     
     private String comment;
+    /**
+     * numero de contacto
+     */
+    @NumberFormat(pattern = "###-###-####")
+    private String phone;
+
     private String contact;
     private String email;
     /**
@@ -122,7 +132,7 @@ public class Quotation implements Serializable {
     
     public Double calculateTotalItem(){
 //       Double _total=0;
-        return items.stream().map((i) -> i.total()).reduce(0.0, (accumulator, _item) -> accumulator + _item);
+        return items.stream().map(QuotationItem::total).reduce(0.0, Double::sum);
         
     }
 
@@ -256,5 +266,12 @@ public class Quotation implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }
