@@ -48,7 +48,7 @@ public class AdditionalExprenseController {
     }
     
     public String getAdditionalExpense(@PathVariable(name = "id") Long id,Model model) {
-        model.addAttribute("additionalExpense", invoiceService.findAdditonalExpense(id));
+        model.addAttribute("additionalExpense", invoiceService.findAdditionalExpense(id));
         model.addAttribute("additionalExpenses",invoiceService.findAllAdditionalExpenses());
         return "additional-expense/maint-additionalexpense";
     }

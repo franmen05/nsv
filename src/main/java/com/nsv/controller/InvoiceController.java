@@ -30,7 +30,7 @@ import java.util.List;
 @SessionAttributes({"invoice", "titulo", "currencies","paymentsTypes"})
 public class InvoiceController {
 
-    private static Log log = LogFactory.getLog(InvoiceController.class);
+    private static final Log log = LogFactory.getLog(InvoiceController.class);
     
     private static final String REDIRECT_CUSTOMER= "redirect:/customer/ver/";
 
@@ -73,7 +73,7 @@ public class InvoiceController {
     @ResponseBody
     @GetMapping(value = "/loadAdditionalExpense/{term}", produces = {"application/json"})
     public List<AdditionalExpense> loadAdditionalExpense(@PathVariable String term) {
-        return invoiceService.findAdditonalExpenseByName(term);
+        return invoiceService.findAdditionalExpenseByName(term);
     }
 
     @ResponseBody
@@ -202,8 +202,8 @@ public class InvoiceController {
         if (!ArrayUtils.isEmpty(aeItemId)) {
             for (int i = 0; i < aeItemId.length; i++) {
 
-                AdditionalExpense ae = invoiceService.findAdditonalExpense(aeItemId[i]);
-                AdditionalExpenseItem item = new AdditionalExpenseItem();
+                var ae = invoiceService.findAdditionalExpense(aeItemId[i]);
+                var item = new AdditionalExpenseItem();
                 item.setAmount(aeCost[i]);
                 item.setAdditionalExpense(ae);
                 _invoice.addAddtionalExpenseItem(item);
@@ -212,10 +212,8 @@ public class InvoiceController {
             }
         }
         if(_invoice.getHasTax()){
-            List<Tax> taxes = invoiceService.findTaxesByTaxGroup(1l);    
-            taxes.forEach((t) -> {
-                _invoice.addTaxItems(new TaxItem(t));
-            });
+            List<Tax> taxes = invoiceService.findTaxesByTaxGroup(1L);    //TODO cambiar este valor fijo
+            taxes.forEach((t) -> _invoice.addTaxItems(new TaxItem(t)));
         }
         
         _invoice.calculeTotalPayment();

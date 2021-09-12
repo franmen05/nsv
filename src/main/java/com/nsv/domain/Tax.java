@@ -33,7 +33,9 @@ public class Tax  implements Serializable{
     private String name;
     
     private String description;
-    
+    /**
+     * valor % del impuesto
+     */
     @NotEmpty
     private Double value;
     

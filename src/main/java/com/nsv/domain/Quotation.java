@@ -31,9 +31,7 @@ public class Quotation implements Serializable {
     private String description;
     
     private String comment;
-    /**
-     * numero de contacto
-     */
+
     @NumberFormat(pattern = "###-###-####")
     private String phone;
 
@@ -43,11 +41,10 @@ public class Quotation implements Serializable {
      * is a %
      */
     private Float discount;
-    
-    
+
     private Double total;
-    
-    
+    private Double totalWithTaxes=0.0;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
         
@@ -80,8 +77,9 @@ public class Quotation implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     private Invoice invoice;
 
+    private Boolean hasTax=false;
+
     public Quotation() {
-        
         init();
     }
  
@@ -123,7 +121,6 @@ public class Quotation implements Serializable {
     public Double calculateTotalItem(){
 //       Double _total=0;
         return items.stream().map(QuotationItem::total).reduce(0.0, Double::sum);
-        
     }
 
     public void setTotal(Double total) {
@@ -131,7 +128,6 @@ public class Quotation implements Serializable {
     } 
     
     public void clear() {
-        
         this.items.clear();
     }
     
@@ -271,5 +267,21 @@ public class Quotation implements Serializable {
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
+    }
+
+    public Boolean getHasTax() {
+        return hasTax;
+    }
+
+    public void setHasTax(Boolean hasTax) {
+        this.hasTax = hasTax;
+    }
+
+    public Double getTotalWithTaxes() {
+        return totalWithTaxes;
+    }
+
+    public void setTotalWithTaxes(Double totalWithTaxes) {
+        this.totalWithTaxes = totalWithTaxes;
     }
 }

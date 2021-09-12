@@ -136,9 +136,7 @@ public class Invoice implements Serializable {
     
     public void calculeTotalPayment(){
         totalPayment=0.0;
-        payments.forEach((t) -> {
-            totalPayment+=t.getValue();
-        });
+        payments.forEach((t) -> totalPayment += t.getValue());
         setTotalPayment(totalPayment);
     }
     
@@ -156,9 +154,9 @@ public class Invoice implements Serializable {
     
     
     public Double calculeTotalWithTaxes(){
-        Double total=0.0;
+        Double total;
         Double totalWithoutTaxes= calculeTotalWithoutTaxes();
-        total = taxItems.stream().map((i) -> i.getValue()).reduce(
+        total = taxItems.stream().map(TaxItem::getValue).reduce(
                 totalWithoutTaxes, (accumulator, _item) -> accumulator + (totalWithoutTaxes * _item)
         );
         setTotalWithTaxes(total);
@@ -188,9 +186,9 @@ public class Invoice implements Serializable {
     }
     
     public Double calculeTotalAdtionalExpensive(Double _total){
-        return addtionalExpensesItems.stream().map((i) -> i.total()).reduce(
-                _total, (accumulator, _item) -> accumulator + _item
-        );
+        return addtionalExpensesItems.stream()
+                .map(AdditionalExpenseItem::total)
+                .reduce(_total, Double::sum);
         
     }
     

@@ -60,7 +60,17 @@ public class InvoiceServiceImpl implements IInvoiceService {
     public List<Tax> findTaxesByTaxGroup(Long id) {
       return taxDao.findByTaxGroup(id);
     }
-
+    @Override
+    public Double totalTaxesByTaxGroup(Long id) {
+        return taxDao.findByTaxGroup(id)
+                .stream()
+                .reduce((tax, tax2) -> {
+                      tax.setValue(tax.getValue()+tax2.getValue());
+                      return tax;
+                  })
+                .orElse(new Tax())
+                .getValue();
+    }
     
     @Override
     public Invoice saveInvoice(Invoice invoice) {
@@ -78,12 +88,12 @@ public class InvoiceServiceImpl implements IInvoiceService {
     }
 
     @Override
-    public List<AdditionalExpense> findAdditonalExpenseByName(String term) {
+    public List<AdditionalExpense> findAdditionalExpenseByName(String term) {
         return additionalExpenseDao.findByNameContainingIgnoreCase(term);
     }
 
     @Override
-    public AdditionalExpense findAdditonalExpense(Long aLong) {
+    public AdditionalExpense findAdditionalExpense(Long aLong) {
         return additionalExpenseDao.findById(aLong).get();
     }
 

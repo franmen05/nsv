@@ -4,7 +4,6 @@ import com.nsv.domain.*;
 import com.nsv.service.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.ArrayUtils;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  *
@@ -59,6 +59,8 @@ public class QuotationController {
         genericInit(model, o, true);
         model.addAttribute("quotations", quotationService.findByCompany(c));
         model.addAttribute("isCustomer", false);
+        model.addAttribute("customerId", null);
+
 
         return "quotation/home-quotation";
     }
@@ -138,9 +140,9 @@ public class QuotationController {
     }
 
     private Quotation initQuotation(Company c) {
-        Quotation o = new Quotation();
+        var o = new Quotation();
         o.setDescription("Cotizacion");
-        o.setComment("Impuestos no incluidos");
+//        o.setComment("Impuestos no incluidos");
         o.setCompany(c);
         
         return o;
@@ -155,10 +157,13 @@ public class QuotationController {
             @RequestParam(name = "ae_cost[]", required = false) Double[] aeCost,
             @RequestParam(name = "btn-save", required = false) String btnSave,
             @SessionAttribute(name = "customerId",required = false) Long customerId,
+           @SessionAttribute("topProduct") Page<Product> pp,
+           @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
             RedirectAttributes flash, SessionStatus status) {
         
         log.info("########save");
-
+        model.addAttribute("topProduct", pp);
+        model.addAttribute("topExpensive", pae);
         if (result.hasErrors()) {
             model.addAttribute("error", "Error: El formualario tiene errores!");
             return "quotation/new-quotation";
@@ -170,13 +175,14 @@ public class QuotationController {
         }
 
         _quotation.clear();
+
         saveQuotation(_quotation, itemId, cantidad, aeItemId, aeCost);
 //        status.setComplete();
         
 
         flash.addFlashAttribute("success", "Cotizacion creada con éxito!");
         
-        if(StringUtils.isEmpty(btnSave))
+        if(!StringUtils.hasText(btnSave))
             return "redirect:/quotation/print/"+_quotation.getId();
         else
             if(customerId!=null)
@@ -201,7 +207,7 @@ public class QuotationController {
         if (!ArrayUtils.isEmpty(aeItemId)) {
             for (int i = 0; i < aeItemId.length; i++) {
 
-                AdditionalExpense ae = invoiceService.findAdditonalExpense(aeItemId[i]);
+                AdditionalExpense ae = invoiceService.findAdditionalExpense(aeItemId[i]);
                 QuotationItem item = new QuotationItem();
                 item.setQuantity(cantidad[i]);
                 item.addAdditionalExpense(ae, aeCost[i]);
@@ -209,6 +215,10 @@ public class QuotationController {
 
                 log.info("ID: " + aeItemId[i].toString() + ", costo: " + aeCost[i]);
             }
+        }
+        if(_quotation.getHasTax()){
+            var taxes = invoiceService.totalTaxesByTaxGroup(1L);    //TODO cambiar este valor fijo
+            _quotation.setTotalWithTaxes(_quotation.getTotal()+taxes);
         }
 
         return quotationService.save(_quotation);

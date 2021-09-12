@@ -63,7 +63,7 @@ public class QuotationItem implements Serializable{
     public Double total(){
         
         if(cost==null)return 0.0d;
-        Double total= subTotal();
+        var total= subTotal();
         
         if(discount!=null)
             return  total-discountTotal();
@@ -73,7 +73,7 @@ public class QuotationItem implements Serializable{
     
     public Double subTotal(){
         
-        if(cost==null)return 0.0d;
+        if(cost==null) return 0.0d;
         Double total= cost*quantity;
         return total;
     }

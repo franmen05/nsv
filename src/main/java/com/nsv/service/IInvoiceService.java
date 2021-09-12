@@ -23,25 +23,23 @@ import org.springframework.data.domain.Pageable;
 public interface IInvoiceService {    
 
     Invoice saveInvoice(Invoice invoice);
-
-     Invoice findInvoiceById(Long id);
-
+    Invoice findInvoiceById(Long id);
     void deleteInvoice(Long id);
     
-    List<AdditionalExpense> findAdditonalExpenseByName(String term) ;
+    List<Tax> findTaxesByTaxGroup(Long aLong);
+    Double totalTaxesByTaxGroup(Long aLong);
 
-    public AdditionalExpense findAdditonalExpense(Long aLong);
-    public List<Tax> findTaxesByTaxGroup(Long aLong);
-    public List<Payment> findPaymentByInvoice(Long  id);
-    public Iterable<PaymentType> findAllPaymentType();
-    public Optional<PaymentType> findPaymentType(Long id);
-    
-//    
+    List<Payment> findPaymentByInvoice(Long  id);
+    Iterable<PaymentType> findAllPaymentType();
+    Optional<PaymentType> findPaymentType(Long id);
+
+//
 //    public Iterable<Currency> findAllCurrencies() ;
 //    public Optional<Currency> findCurrency(Long id) ;
 
-    public List<AdditionalExpense> findAllAdditionalExpenses();
-    public Page<AdditionalExpense> findAllAdditionalExpenses(Pageable pageable);
-
-    public void saveAdditionalExpense(AdditionalExpense additionalExpense);
+    List<AdditionalExpense> findAdditionalExpenseByName(String term) ;
+    AdditionalExpense findAdditionalExpense(Long aLong);
+    List<AdditionalExpense> findAllAdditionalExpenses();
+    Page<AdditionalExpense> findAllAdditionalExpenses(Pageable pageable);
+    void saveAdditionalExpense(AdditionalExpense additionalExpense);
 }
