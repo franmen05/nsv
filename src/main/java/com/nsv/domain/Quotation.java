@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
@@ -114,9 +115,11 @@ public class Quotation implements Serializable {
         return total;
     }
     
-//    public Double calculeTotalAdtionalExpensive(Double _total){
-//        return addtionalExpensesItems.stream().map((i) -> i.total()).reduce(_total, (accumulator, _item) -> accumulator + _item);    
-//    }
+    public Double calculateTotalAdtionalExpensive(){
+        return items.stream().filter(quotationItem -> quotationItem.getAdditionalExpense()!=null)
+                .collect(Collectors.toSet())
+                .stream().map(QuotationItem::total).reduce(0.0, Double::sum);
+    }
     
     public Double calculateTotalItem(){
 //       Double _total=0;

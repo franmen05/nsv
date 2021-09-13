@@ -66,8 +66,15 @@ public class InvoiceController {
 
     @ResponseBody
     @GetMapping(value = "/loadProduct/{term}", produces = {"application/json"})
-    public List<Product> cargarProductos(@PathVariable String term) {
+    public List<Product> loadProduct(@PathVariable String term) {
         return inventoryService.findProductByName(term);
+    }
+
+    //TODO mover esto a controlador aparte junto con el con las llamadas del servicio al dao
+    @ResponseBody
+    @GetMapping(value = "/loadTaxes", produces = {"application/json"})
+    public Double loadTaxes() {
+        return invoiceService.totalTaxesByTaxGroup(1L);
     }
 
     @ResponseBody

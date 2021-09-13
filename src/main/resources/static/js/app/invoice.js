@@ -1,4 +1,67 @@
+const itemsHelperPayment = {
+
+    id: 0,
+    hasProducto: function (id) {
+
+        var resultado = false;
+
+        $('input[name="payment_item_id[]"]').each(function () {
+            if (parseInt(id) === parseInt($(this).val())) {
+                resultado = true;
+            }
+        });
+
+        return resultado;
+    },
+//                incrementaCantidad: function (id, precio) {
+//                    var cantidad = $("#ae_cost_" + id).val() ? parseInt($("#ae_cost_" + id).val()) : 0;
+//                    $("#ae_cost_" + id).val(++cantidad);
+//                    this.calcularImporte(id, precio, cantidad);
+//                },
+    delete: function (id) {
+        $("#row_" + id).remove();
+        this.calculateTotal();
+    },
+    calculateTotal: function () {
+        var tempTotal = 0;
+
+        $('input[id^="payment_value_"]').each(function () {
+//var v = parseFloat($(this).inputmask('unmaskedvalue'), 10);
+            var v = parseFloat($(this).val(), 10);
+            if (!isNaN(v)) {
+//                console.debug(v);
+                tempTotal += v;
+            }
+        });
+        $('#total_pay').html(tempTotal);
+        this.calculateChange(tempTotal);
+
+    },
+    calculateChange: function (_total) {
+        const totalInvoice = $('#total_invoice').inputmask('unmaskedvalue');
+        const change = _total - totalInvoice;
+        $('#change').html(change);
+
+        if(change<=0){
+            $('#b_payment').attr('disabled',true);
+        }else{
+            $('#b_payment').attr('disabled',false);
+        }
+    }
+
+};
+
+function hasTaxes() {
+    if ($("#set_tax").is(":checked"))
+        $("#total_taxes_div").show();
+    else
+        $("#total_taxes_div").hide();
+}
+
 $(document).ready(function () {
+
+    let taxes = 0.0;
+    hasTaxes();
 
     $("#find_product").autocomplete({
 
@@ -28,14 +91,14 @@ $(document).ready(function () {
     $("form").submit(function () {
         $("#plantillaItemsFactura").remove();
         $("#templateItemsAdditionalExpense").remove();
-        return;
+        // return;
     });
 
 
-    $("form").submit(function () {
-        $("#templateItemsAdditionalExpense").remove();
-        return;
-    });
+    // $("form").submit(function () {
+    //     $("#templateItemsAdditionalExpense").remove();
+    //     return;
+    // });
     
     $("button[name*='b_product']").click(function (e) {
         e.preventDefault();
@@ -55,7 +118,7 @@ $(document).ready(function () {
     
     $("button[name*='b_additionalExpense']").click(function (e) {
         e.preventDefault();
-        var t = $(this).text();
+        const t = $(this).text();
         $.ajax({
             url: "/invoice/loadAdditionalExpense/" + t,
             dataType: "json",
@@ -93,7 +156,7 @@ $(document).ready(function () {
         select: function (event, ui) {
             
             return addAddionalExpense(ui.item.value,ui.item.label,ui.item.precio);
-        }
+        },
     });
 
     $("#add_payment").click(function (e) {
@@ -120,6 +183,21 @@ $(document).ready(function () {
 //      $("#form-invoice").attr("action","/invoice/payment/doPayment").submit();
 
         return false;
+    });
+
+    $("#set_tax").change( () => hasTaxes());
+
+    $("#total_invoice").on('DOMSubtreeModified', () => {
+        if(taxes===0.0)
+            $.ajax({
+                url: "/invoice/loadTaxes",
+                dataType: "json",
+                success: (d)=> taxes=d ,
+            });
+
+        let total=$("#total_invoice").html();
+        total = total*taxes;
+        $("#total_taxes").html(total)
     });
 });
 
@@ -149,14 +227,14 @@ function addAddionalExpense(id, name, price) {
                 return false;
             }
 
-    var linea = $("#templateItemsAdditionalExpense").html();
+    let linea = $("#templateItemsAdditionalExpense").html();
 
     linea = linea.replace(/{ID}/g, id);
     linea = linea.replace(/{NAME}/g, name);
     linea = linea.replace(/{COST}/g, price);
 
     $("#loadItemAdditionalExpense tbody").append(linea);
-    //            itemsHelperAddionalExpense.calculateTotal();
+    itemsHelperAddionalExpense.calculateTotal();
     return false;
 }
 
@@ -207,15 +285,15 @@ var itemsHelper = {
         this.calcularGranTotal();
     },
     calcularGranTotal: function () {
-        var tempTotal = 0;
+        let tempTotal = 0;
 
         $('span[id^="total_importe_"]').each(function () {
             tempTotal += parseFloat($(this).html());
         });
 
         $('#gran_total').html(tempTotal);
-                
-        var t=parseInt($('#ae_gran_total').html());
+
+        const t = parseInt($('#ae_gran_total').html());
 //        alert(t);
         $('#total_invoice').html(tempTotal+t);
     }
@@ -273,62 +351,10 @@ var itemsHelperAddionalExpense = {
         });
 
         $('#ae_gran_total').html(tempTotal);
-        
-        var t=parseInt($('#gran_total').html());
+
+        const t = parseInt($('#gran_total').html());
         $('#total_invoice').html(tempTotal+t);
     }
 }
 
 
-var itemsHelperPayment = {
-
-    id: 0,
-    hasProducto: function (id) {
-
-        var resultado = false;
-
-        $('input[name="payment_item_id[]"]').each(function () {
-            if (parseInt(id) == parseInt($(this).val())) {
-                resultado = true;
-            }
-        });
-
-        return resultado;
-    },
-//                incrementaCantidad: function (id, precio) {
-//                    var cantidad = $("#ae_cost_" + id).val() ? parseInt($("#ae_cost_" + id).val()) : 0;
-//                    $("#ae_cost_" + id).val(++cantidad);
-//                    this.calcularImporte(id, precio, cantidad);
-//                },
-    delete: function (id) {
-        $("#row_" + id).remove();
-        this.calculateTotal();
-    },
-    calculateTotal: function () {
-        var tempTotal = 0;
-
-        $('input[id^="payment_value_"]').each(function () {
-//var v = parseFloat($(this).inputmask('unmaskedvalue'), 10);
-            var v = parseFloat($(this).val(), 10);
-            if (!isNaN(v)) {
-//                console.debug(v);
-                tempTotal += v;
-            }
-        });
-        $('#total_pay').html(tempTotal);
-        this.calculateChange(tempTotal);
-
-    },
-    calculateChange: function (_total) {
-        var totalInvoice=$('#total_invoice').inputmask('unmaskedvalue');
-        var  change=_total - totalInvoice;
-        $('#change').html(change);
-        
-        if(change<=0){
-            $('#b_payment').attr('disabled',true);
-        }else{
-            $('#b_payment').attr('disabled',false);
-        }
-    }
-    
-}

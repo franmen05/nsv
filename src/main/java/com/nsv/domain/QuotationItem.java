@@ -56,7 +56,7 @@ public class QuotationItem implements Serializable{
     public void addAdditionalExpense(AdditionalExpense ae,Double cost) {
         setAdditionalExpense(ae);
         setDescription(ae.getName());
-        setQuantity(1l);
+        setQuantity(1L);
         setCost(cost);
     }
     

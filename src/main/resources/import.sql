@@ -4,15 +4,14 @@ INSERT INTO customers (id, address, comment, create_date, email, last_name, last
 INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc) VALUES(2, 'Rosa Roja numero 232423', 'comentario', '2017-08-28 00:00:00', 'profesor@bolsadeideas.com', 'De Los Santos', '2017-08-28 00:00:00', 'Guillermo', '222324242342', '809-34-2-421', '2312' );
 /* Populate tabla productos */
 INSERT INTO products (name, price, create_date) VALUES('Flete', 250, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Compra por Internet', 1, NOW());
+INSERT INTO products (name, price, create_date) VALUES('Apple iPod shuffle', 1499990, NOW());
+INSERT INTO products (name, price, create_date) VALUES('Sony Notebook Z110', 37990, NOW());
+INSERT INTO products (name, price, create_date) VALUES('Hewlett Packard Multifuncional F2280', 69990, NOW());
+INSERT INTO products (name, price, create_date) VALUES('Bianchi Bicicleta Aro 26', 69990, NOW());
+INSERT INTO products (name, price, create_date) VALUES('Mica Comoda 5 Cajones', 299990, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Compra por Amazon', 123490, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Compra por Ebay', 123490, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Compra en China', 123490, NOW());
--- INSERT INTO products (name, price, create_date) VALUES('Apple iPod shuffle', 1499990, NOW());
--- INSERT INTO products (name, price, create_date) VALUES('Sony Notebook Z110', 37990, NOW());
--- INSERT INTO products (name, price, create_date) VALUES('Hewlett Packard Multifuncional F2280', 69990, NOW());
--- INSERT INTO products (name, price, create_date) VALUES('Bianchi Bicicleta Aro 26', 69990, NOW());
--- INSERT INTO products (name, price, create_date) VALUES('Mica Comoda 5 Cajones', 299990, NOW());
 
 
 INSERT INTO invoices (description, comment, customer_id,currency_id,  create_date) VALUES('Factura Bicicleta', 'Alguna nota importante!', 1,1, NOW());
@@ -20,7 +19,7 @@ INSERT INTO invoice_items (quantity,cost, invoice_id, product_id,description) VA
 INSERT INTO invoice_items (quantity,cost,discount, invoice_id, product_id,description) VALUES(3,250,0.1, 1, 2,'item de apple');
 
 
-INSERT INTO additional_expenses (name, create_date) VALUES('Compra en China',  NOW());
+INSERT INTO additional_expenses (name, create_date) VALUES('Gestion',  NOW());
 INSERT INTO additional_expenses (name, create_date) VALUES('Transporte',  NOW());
 INSERT INTO additional_expenses (name, create_date) VALUES('Abogado',  NOW());
 

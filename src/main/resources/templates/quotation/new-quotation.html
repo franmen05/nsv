@@ -136,6 +136,7 @@
                                 </tr>
                             </tbody>
                         </table>
+
                         <h5>Total <span class="badge badge-danger" id="gran_total" th:text="${#numbers.formatDecimal(quotation.calculateTotalItem(),1,2)}">0</span></h5>
 
                         <div class="form-group row bg-dark ">
@@ -176,7 +177,8 @@
                                 </tr>
                             </tbody>
                         </table>
-<!--                        <h5>Total <span th:text="${#numbers.formatDecimal(quotation.calculeTotalAdtionalExpensive(0),1,2)}"  id="ae_gran_total" class="badge badge-secondary">0</span></h5>-->
+                        <h5>Total <span th:text="${#numbers.formatDecimal(quotation.calculateTotalAdtionalExpensive(),1,2)}"  id="ae_gran_total" class="badge badge-info">0</span></h5>
+
                         <div class="form-group row bg-dark ">
                             <label class="col-sm-12 col-form-label text-light">Total </label>
                         </div>
@@ -188,10 +190,10 @@
                         </div>
 
                         <h5 title="Total sin impuestos y descuentos" >Total sin impuestos &nbsp;&nbsp;:
-                            <span class="badge badge-danger" id="total"  th:text="${#numbers.formatDecimal(quotation.total,1,2)}" >0</span>
+                            <span class="badge badge-danger" id="total_invoice" th:text="${#numbers.formatDecimal(quotation.total,1,2)}" >0</span>
                         </h5>
-                        <h5 th:if="${not quotation.hasTax}"  title="Total con impuestos y descuentos" >Total con impuestos :
-                            <span class="badge badge-danger" id="totalTaxes"  th:text="${#numbers.formatDecimal(quotation.totalWithTaxes,1,2)}" >0</span>
+                        <h5 id="total_taxes_div" title="Total con impuestos y descuentos" >Total con impuestos :
+                            <span class="badge badge-danger" id="total_taxes"  th:text="${#numbers.formatDecimal(quotation.totalWithTaxes,1,2)}" >0</span>
                         </h5>
 
                         <div class="form-group row">
