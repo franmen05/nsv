@@ -34,6 +34,9 @@ public class QuotationItem implements Serializable{
     private Double cost;
 
     @Column(precision = 10,scale = 2)
+    private Double discountAmount;
+
+    @Column(precision = 10,scale = 2)
     private Float discount;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -63,9 +66,11 @@ public class QuotationItem implements Serializable{
         
         if(cost==null)return 0.0d;
         var total= subTotal();
-        
-        if(discount!=null)
-            return  total-discountTotal();
+        var discountTotal = discountTotal();
+        setDiscountAmount(discountTotal);
+        if(discount!=null) {
+            return  total- discountTotal;
+        }
         
         return total;
     }
@@ -73,8 +78,7 @@ public class QuotationItem implements Serializable{
     public Double subTotal(){
         
         if(cost==null) return 0.0d;
-        Double total= cost*quantity;
-        return total;
+        return cost*quantity;
     }
     
     public Double discountTotal(){
@@ -142,7 +146,12 @@ public class QuotationItem implements Serializable{
     public void setAdditionalExpense(AdditionalExpense additionalExpense) {
         this.additionalExpense = additionalExpense;
     }
-    
-    
 
+    public Double getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(Double discountAmount) {
+        this.discountAmount = discountAmount;
+    }
 }
