@@ -32,8 +32,7 @@ public class QuotationItem implements Serializable{
      */
     @Column(precision = 10,scale = 2)
     private Double cost;
-    
-    
+
     @Column(precision = 10,scale = 2)
     private Float discount;
 
@@ -84,6 +83,13 @@ public class QuotationItem implements Serializable{
         return subTotal()*discount;
     }
 
+    public Float getDiscount() {
+        if(discount==null)
+            return 0.0f;
+
+        return discount;
+    }
+
     public Long getId() {
         return id;
     }
@@ -116,12 +122,6 @@ public class QuotationItem implements Serializable{
         this.product = product;
     }
 
-    public Float getDiscount() {
-        if(discount==null)
-            return 0.0f;
-        
-        return discount;
-    }
 
     public void setDiscount(Float discount) {
         this.discount = discount;

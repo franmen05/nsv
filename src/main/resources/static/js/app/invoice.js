@@ -102,8 +102,8 @@ $(document).ready(function () {
     
     $("button[name*='b_product']").click(function (e) {
         e.preventDefault();
-        var t = $(this).text();
-        
+        const t = $(this).text();
+
         $.ajax({
             url: "/invoice/loadProduct/" + t,
             dataType: "json",
@@ -245,8 +245,8 @@ var itemsHelper = {
 //                total = 0.0,
     calcularImporte: function (_id, precio, cantidad) {
 //                    var quantity = cantidad;
-        var discount = $("#discount_" + _id).val();
-        var total = parseInt(precio) * parseInt(cantidad);
+        const discount = $("#discount_" + _id).val();
+        const total = parseInt(precio) * parseInt(cantidad);
         $("#total_importe_" + _id).html(total);
         this.calculateDiscount(_id, precio, discount);
         this.calcularGranTotal();

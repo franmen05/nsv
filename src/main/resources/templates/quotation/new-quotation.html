@@ -121,13 +121,13 @@
                                         <input type="hidden" th:value="${item.product.id}" name="item_id[]" />
                                     </td>
                                     <td th:text="${item.product.name} "></td>
-                                    <td <span th:text="${item.cost}" th:id="'cost_'+${item.product.id}" ></span></td>
+                                    <td> <span th:text="${item.cost}" th:id="'cost_'+${item.product.id}" > </span> </td>
                                     <td>
                                         <input type="text" th:value="${item.quantity}" name="cantidad[]" th:id="'cantidad_'+${item.product.id}" class="form-control " 
                                                th:onchange="'itemsHelper.calcularImporte('+${item.id}+', '+${item.cost}+', this.value);'"/>
                                     </td>
                                     <td>
-                                        <input type="text" th:value="${#numbers.formatDecimal((item.discount*100),1,0)}" name="dicount[]" th:id="'discount_'+${item.product.id}" class="form-control " 
+                                        <input type="text" th:value="${#numbers.formatDecimal((item.discount*100),1,0)}" name="dicount[]" th:id="'discount_'+${item.product.id}" class="form-control "
                                                th:onchange="'itemsHelper.calculateDiscount('+${item.product.id}+', '+${item.cost}+', this.value);'"/>
                                     </td>
                                     <td><span th:text="${#numbers.formatDecimal(item.discountTotal(),1,2)}"  th:id="'total_discount_'+${item.product.id}">0</span></td>

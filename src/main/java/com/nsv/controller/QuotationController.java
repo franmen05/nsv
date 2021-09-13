@@ -152,13 +152,13 @@ public class QuotationController {
     public String save(@Valid Quotation _quotation, BindingResult result, Model model,
             @RequestParam(name = "item_id[]", required = false) Long[] itemId,
             @RequestParam(name = "cantidad[]", required = false) Long[] cantidad,
-            @RequestParam(name = "dicount[]", required = false) Long[] dicounts,
+            @RequestParam(name = "dicount[]", required = false) Float[] dicounts,
             @RequestParam(name = "ae_item_id[]", required = false) Long[] aeItemId,
             @RequestParam(name = "ae_cost[]", required = false) Double[] aeCost,
             @RequestParam(name = "btn-save", required = false) String btnSave,
             @SessionAttribute(name = "customerId",required = false) Long customerId,
-           @SessionAttribute("topProduct") Page<Product> pp,
-           @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
+            @SessionAttribute("topProduct") Page<Product> pp,
+            @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
             RedirectAttributes flash, SessionStatus status) {
         
         log.info("########save");
@@ -176,7 +176,7 @@ public class QuotationController {
 
         _quotation.clear();
 
-        saveQuotation(_quotation, itemId, cantidad, aeItemId, aeCost);
+        saveQuotation(_quotation, itemId, cantidad,dicounts, aeItemId, aeCost);
 //        status.setComplete();
         
 
@@ -191,13 +191,15 @@ public class QuotationController {
                 return "redirect:/quotation/";
     }
 
-    private Quotation saveQuotation(Quotation _quotation, Long[] itemId, Long[] cantidad, Long[] aeItemId, Double[] aeCost) {
+    private Quotation saveQuotation(Quotation _quotation, Long[] itemId, Long[] cantidad,
+                                    Float[] discount, Long[] aeItemId, Double[] aeCost) {
 
         for (int i = 0; i < itemId.length; i++) {
             Product product = inventoryService.findProduct(itemId[i]);
 
             QuotationItem item = new QuotationItem();
             item.setQuantity(cantidad[i]);
+            item.setDiscount(discount[i]);
             item.addProduct(product);
             _quotation.addItem(item);
 
