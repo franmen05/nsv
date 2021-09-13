@@ -199,7 +199,7 @@ public class QuotationController {
 
             QuotationItem item = new QuotationItem();
             item.setQuantity(cantidad[i]);
-            item.setDiscount(discount[i]);
+            item.setDiscount(discount[i]/100);
             item.addProduct(product);
             _quotation.addItem(item);
 
