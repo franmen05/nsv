@@ -66,6 +66,7 @@
                                 <th>Cantidad</th>
                                 <th>Unidad</th>
                                 <th>Precio</th>
+                                <th>Descuento</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
@@ -79,6 +80,7 @@
                                 <!--<td th:if="${item.product!=null}" th:text="${item.product.price}"></td>-->
                                 <!--<td th:if="${item.additionalExpense!=null}"  th:text="${item.cost}"></td>-->
                                 <td th:text="${item.cost}" data-inputmask="'alias': 'currency'"></td>
+                                <td th:text="${item.discountTotal()}" data-inputmask="'alias': 'currency'"></td>
                                 <td th:text="${item.total()}" data-inputmask="'alias': 'currency'"></td>
                             </tr>
                         </tbody>
@@ -94,6 +96,8 @@
                     <div class="total">
                         <div class="">
                             <label>Total : </label><span th:text="${quotation.total}" data-inputmask="'alias': 'currency'" class="badge badge-secondary"></span>
+                        </div>
+                        <div th:if="${quotation.hasTax}" class="">
                             <label>Total con impuestos : </label><span th:text="${quotation.totalWithTaxes}" data-inputmask="'alias': 'currency'" class="badge badge-secondary"></span>
                         </div>
                     </div>
