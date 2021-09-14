@@ -10,6 +10,6 @@ package com.nsv.domain;
  * @author you_k
  */
 public enum InvoiceStatus {
-    creates,process,billed,paid,refund
+    creates,process,billed,paid,refund,delete
     
 }

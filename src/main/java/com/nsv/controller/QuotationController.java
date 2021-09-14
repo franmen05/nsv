@@ -121,7 +121,7 @@ public class QuotationController {
 
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable(name = "id") Long id, Model model) {
-//        quotationService.delete(id);
+        quotationService.delete(id);
         model.addAttribute("quotation", id);
         return "redirect:/quotation";
     }

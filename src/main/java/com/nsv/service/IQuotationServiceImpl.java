@@ -13,9 +13,12 @@ import org.springframework.stereotype.Service;
 public class IQuotationServiceImpl implements IQuotationService {
 
     
-    @Autowired
-    private IQuotationDao quotationDao;
-    
+    private final IQuotationDao quotationDao;
+
+    public IQuotationServiceImpl(IQuotationDao quotationDao) {
+        this.quotationDao = quotationDao;
+    }
+
     @Override
     public Quotation save(Quotation q) {
         return quotationDao.save(q);
@@ -48,10 +51,6 @@ public class IQuotationServiceImpl implements IQuotationService {
 
     @Override
     public void delete(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       quotationDao.deleteById(id);
     }
-
-    
-    
-    
 }

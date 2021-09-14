@@ -38,8 +38,13 @@ public class Quotation implements Serializable {
 
     private String contact;
     private String email;
+
+
+    @Enumerated(EnumType.STRING)
+    private GenericStatus status;
+
     /**
-     * is a %
+     * is a decimal represent a  %
      */
     private Float discount;
 
@@ -286,5 +291,13 @@ public class Quotation implements Serializable {
 
     public void setTotalWithTaxes(Double totalWithTaxes) {
         this.totalWithTaxes = totalWithTaxes;
+    }
+
+    public GenericStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(GenericStatus status) {
+        this.status = status;
     }
 }

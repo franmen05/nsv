@@ -10,6 +10,6 @@ package com.nsv.domain;
  * @author you_k
  */
 public enum GenericStatus {
-    INACTIVE,ACTIVE
+    INACTIVE,ACTIVE,DELETE
     
 }
