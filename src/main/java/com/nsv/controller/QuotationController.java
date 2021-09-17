@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.ArrayUtils;
 
@@ -62,6 +63,7 @@ public class QuotationController {
         model.addAttribute("customerId", null);
 
 
+
         return "quotation/home-quotation";
     }
      
@@ -109,12 +111,14 @@ public class QuotationController {
             @SessionAttribute(name = "company",required = false) Company c,
             @SessionAttribute("topProduct") Page<Product> pp,
             @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
-            Model model) {
+            Model model, WebRequest request) {
 
-        Quotation o = initQuotation(c);
+        var o = initQuotation(c);
         genericInit(model, o, true);
         model.addAttribute("topProduct", pp);
         model.addAttribute("topExpensive", pae);
+        request.removeAttribute("customerId", WebRequest.SCOPE_SESSION);
+        model.addAttribute("customerId", null);
 
         return "quotation/new-quotation";
     }
@@ -130,7 +134,7 @@ public class QuotationController {
     private void genericInit(Model model, Quotation o, boolean onInit) {
 
         model.addAttribute("isQuotation", true);
-        model.addAttribute("topProduct", true);
+//        model.addAttribute("topProduct", true);
 
         if (onInit) {
             model.addAttribute("currencies", currencyService.findAll());
