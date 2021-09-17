@@ -136,7 +136,7 @@
 
         <div class="actions">
             <button onclick="print2()" class="btn btn-primary" >Imprimir</button>    
-            <a  th:href="@{'/quotation'}" class="btn btn-light btn-xs">&laquo; volver</a>
+            <button  onclick="window.history.back();" class="btn btn-light btn-xs">&laquo; volver</button>
             <!--<a th:if="${ #lists.isEmpty(quotation.customer)}" th:href="@{'/quotation'}" class="btn btn-light btn-xs">&laquo; volver</a>-->
             <!--<a th:if="${not #lists.isEmpty(quotation.customer)}" th:href="@{'/customer/ver/' + ${quotation.customer.id}}" class="btn btn-light btn-xs">&laquo; volver</a>-->
             <script  th:src="@{/assets/vendors/js/vendor.bundle.base.js}"></script>
