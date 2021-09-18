@@ -173,6 +173,7 @@ INSERT INTO currencies (name, code, symbol, create_date) VALUES ('Yuan Renminbi'
 INSERT INTO companies ( rnc, address, comment, create_date, email, last_update_date, name, status, currency_id) VALUES ( '383423-32101-01', 'rosa roja #25 / El Rosan', '', '2018-12-08 18:18:31', 'you_know08@hotmail.com', NULL, 'Andres S.A.', 'ACTIVE', 1);
 INSERT INTO companies ( rnc, address, comment, create_date, email, last_update_date, name, status, currency_id) VALUES ( '383423-32101-01', 'rosa roja #25 / El Rosan', '', '2018-12-08 18:18:31', 'you_know08@hotmail.com', NULL, 'Juan S.A.', 'ACTIVE', 1);
 
+--     12345
 INSERT INTO users (username, password, enabled) VALUES('andres', '$2a$10$O9wxmH/AeyZZzIS09Wp8YOEMvFnbRVJ8B4dmAMVSGloR62lj.yqXG', 1);
 INSERT INTO users (username, password, enabled) VALUES('admin', '$2a$10$DOMDxjYyfZ/e7RcBfUpzqeaCs8pLgcizuiQWXPkU35nOhZlFcE9MS', 1);
 
