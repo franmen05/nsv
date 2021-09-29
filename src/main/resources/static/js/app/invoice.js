@@ -51,11 +51,19 @@ const itemsHelperPayment = {
 
 };
 
+let taxesChecked = false;
+
 function hasTaxes() {
-    if ($("#set_tax").is(":checked"))
+
+    taxesChecked=$("#set_tax").is(":checked")
+    if (taxesChecked){
+        granTotalWithTaxes(taxesChecked)
         $("#total_taxes_div").show();
-    else
+    }else{
+        granTotalWithTaxes(taxesChecked)
         $("#total_taxes_div").hide();
+
+    }
 }
 
 $(document).ready(function () {
@@ -199,6 +207,10 @@ $(document).ready(function () {
         total = total*taxes;
         $("#total_taxes").html(total)
     });
+
+    $("#total_taxes").on('DOMSubtreeModified', () => {
+        granTotalWithTaxes(taxesChecked);
+    });
 });
 
 function addProduct(id, name, price) {
@@ -238,6 +250,17 @@ function addAddionalExpense(id, name, price) {
     return false;
 }
 
+function granTotalWithTaxes(checked) {
+
+    let total = parseFloat($("#total_invoice").html());
+    let taxes = parseFloat($("#total_taxes").html());
+
+    if(checked)
+        $("#total").html(total+taxes);
+    else
+        $("#total").html(total);
+
+}
 
 var itemsHelper = {
 //                quantity = 0, 

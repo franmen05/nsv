@@ -169,7 +169,12 @@ public class InvoiceController {
             @RequestParam(name = "dicount[]", required = false) Long[] dicounts,
             @RequestParam(name = "ae_item_id[]", required = false) Long[] aeItemId,
             @RequestParam(name = "ae_cost[]", required = false) Double[] aeCost,
+            @SessionAttribute("topProduct") Page<Product> pp,
+            @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
             RedirectAttributes flash, SessionStatus status) {
+
+        model.addAttribute("topProduct", pp);
+        model.addAttribute("topExpensive", pae);
 
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Crear Factura (tiene errores)");

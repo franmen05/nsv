@@ -135,8 +135,9 @@
                                     </td>
                                     <td th:text='${item.additionalExpense.name}'></td>
                                     <td>
-                                        <input type="text" th:value="${item.amount}" name="ae_cost[]" th:id="'ae_cost_'+${item.additionalExpense.id}" class="form-control col-sm-4" 
+                                        <input type="text" th:value="${item.amount}" name="ae_cost[]" th:id="'ae_cost_'+${item.additionalExpense.id}" class="form-control col-sm-4"
                                                onchange="itemsHelperAddionalExpense.calculateTotal();"/>
+
                                     </td>
                                     <td><a href="#" class="btn btn-danger btn-xs" th:onclick="'itemsHelperAddionalExpense.deleteItem('+${item.additionalExpense.id}+');'">x</a></td>
                                 </tr>
@@ -168,8 +169,10 @@
                         </div>
 
                         <h5>SubTotal  :<span class="badge badge-danger" id="total_invoice" th:text="${#numbers.formatDecimal(invoice.totalWithoutTaxes,1,2)}" data-inputmask="'alias': 'currency'">0</span></h5>                        
-                        <h5>Impuestos :<span class="badge badge-danger" id="total_invoice2" th:text="${#numbers.formatDecimal(invoice.totalTaxes(),1,2)}" data-inputmask="'alias': 'currency'">0</span></h5>                        
-                        <h5 title="total con impuestos y descuentos" >Total :<span class="badge badge-danger" id="total"  th:text="${#numbers.formatDecimal(invoice.total,1,2)}" data-inputmask="'alias': 'currency'">0</span></h5>                        
+                        <h5 id="total_taxes_div">
+                            Impuestos :<span class="badge badge-danger"  id="total_taxes" th:text="${#numbers.formatDecimal(invoice.totalTaxes(),1,2)}" data-inputmask="'alias': 'currency'">0</span>
+                        </h5>
+                        <h5 title="total con impuestos y descuentos" >Total :<span class="badge badge-danger" id="total"  th:text="${#numbers.formatDecimal(invoice.total,1,2)}" data-inputmask="'alias': 'currency'">0</span></h5>
                         
                         <div class="form-group row">
                             <div class="col-sm-6">
