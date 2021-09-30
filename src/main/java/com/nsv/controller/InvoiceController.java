@@ -128,7 +128,7 @@ public class InvoiceController {
         model.addAttribute("topProduct", pp);
         model.addAttribute("topExpensive", pae);
         genericLoad(model);
-        Invoice i = new Invoice();
+        var i = new Invoice();
         i.setCustomer(customerService.find(idCustomer));
         i.setDescription("Facturacion Carga");
         i.setCurrency(c.getCurrency());
@@ -176,18 +176,7 @@ public class InvoiceController {
         model.addAttribute("topProduct", pp);
         model.addAttribute("topExpensive", pae);
 
-        if (result.hasErrors()) {
-            model.addAttribute("titulo", "Crear Factura (tiene errores)");
-            return "invoice/new-invoice";
-        }
-
-        if (ArrayUtils.isEmpty(itemId)) {
-            model.addAttribute("titulo", "Crear Factura");
-            model.addAttribute("error", "Error: La factura esta vacia!");
-            return "invoice/new-invoice";
-        }
-
-        _invoice.clear();
+        if (hasErrors(_invoice, result, model, itemId)) return "invoice/new-invoice";
         saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost);
 //        model.addAttribute("invoice", invoice);
 //        status.setComplete();
@@ -229,7 +218,7 @@ public class InvoiceController {
         }
         
         _invoice.calculeTotalPayment();
-        Invoice r= invoiceService.saveInvoice(_invoice);
+        var r= invoiceService.saveInvoice(_invoice);
         return  r;
     }
 
@@ -240,8 +229,9 @@ public class InvoiceController {
             @RequestParam(name = "ae_item_id[]", required = false) Long[] aeItemId,
             @RequestParam(name = "ae_cost[]", required = false) Double[] aeCost,
             RedirectAttributes flash, SessionStatus status) {
-        
-        _invoice.clear();
+
+        if (hasErrors(_invoice, result, model, itemId))  return "invoice/new-invoice";
+
         Invoice i= saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost);
         
         if(i==null){
@@ -254,6 +244,23 @@ public class InvoiceController {
         model.addAttribute("paymentsTypes", invoiceService.findAllPaymentType());
 
         return "invoice/payment-invoice";
+    }
+
+    private boolean hasErrors(@Valid Invoice _invoice, BindingResult result, Model model,
+                              @RequestParam(name = "item_id[]", required = false) Long[] itemId) {
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", "Crear Factura (tiene errores)");
+            return true;
+        }
+
+        if (ArrayUtils.isEmpty(itemId)) {
+            model.addAttribute("titulo", "Crear Factura");
+            model.addAttribute("error", "Error: La factura esta vacia!");
+            return true;
+        }
+
+        _invoice.clear();
+        return false;
     }
 
     @RequestMapping("/payment/{idInvoice}")

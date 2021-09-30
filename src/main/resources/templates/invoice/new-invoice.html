@@ -81,7 +81,7 @@
                                         <input type="hidden" th:value="${item.product.id}" name="item_id[]" />
                                     </td>
                                     <td th:text="${item.product.name} "></td>
-                                    <td <span th:text="${item.cost}" th:id="'cost_'+${item.product.id}" ></span></td>
+                                    <td> <span th:text="${item.cost}" th:id="'cost_'+${item.product.id}" ></span></td>
                                     <td>
                                         <input type="text" th:value="${item.quantity}" name="cantidad[]" th:id="'cantidad_'+${item.product.id}" class="form-control " 
                                                th:onchange="'itemsHelper.calcularImporte('+${item.id}+', '+${item.cost}+', this.value);'"/>
@@ -172,7 +172,9 @@
                         <h5 id="total_taxes_div">
                             Impuestos :<span class="badge badge-danger"  id="total_taxes" th:text="${#numbers.formatDecimal(invoice.totalTaxes(),1,2)}" data-inputmask="'alias': 'currency'">0</span>
                         </h5>
-                        <h5 title="total con impuestos y descuentos" >Total :<span class="badge badge-danger" id="total"  th:text="${#numbers.formatDecimal(invoice.total,1,2)}" data-inputmask="'alias': 'currency'">0</span></h5>
+                        <h5 title="total con impuestos y descuentos" >
+                            Total :<span class="badge badge-danger" id="total"  th:text="${#numbers.formatDecimal(invoice.totalWithTaxes,1,2)}" data-inputmask="'alias': 'currency'">0</span>
+                        </h5>
                         
                         <div class="form-group row">
                             <div class="col-sm-6">
