@@ -1,20 +1,6 @@
 package com.nsv.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -23,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
  */ 
 @Entity
 @Table(name = "subsidiaries")
-public class Subsidiary implements Serializable {
+public class Subsidiary  extends AbstractBaseEntity {
 
     private static final long serialVersionUID = 1L;
     
@@ -45,36 +31,12 @@ public class Subsidiary implements Serializable {
     @Enumerated(EnumType.STRING)
     private GenericStatus status;
 
-    @NotEmpty
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
     
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
     public Subsidiary() {    }
-    
-    @PrePersist
-    public void prePersist(){
-       createDate= new Date();
-    }
-    
-    
-    @PreUpdate
-    public void preUpdate(){
-       
-       lastUpdateDate= new Date(); 
-    }
-    
-//    get and set 
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-    
     
     public Long getId() {
         return id;
@@ -106,15 +68,6 @@ public class Subsidiary implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
     }
 
     public String getAddress() {

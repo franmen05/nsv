@@ -1,25 +1,9 @@
 package com.nsv.domain;
 
-import java.io.Serializable;
-import java.util.Date;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
 
 /**
  *
@@ -27,9 +11,7 @@ import javax.validation.constraints.NotEmpty;
  */ 
 @Entity
 @Table(name = "companies")
-public class Company implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Company  extends AbstractBaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,12 +32,6 @@ public class Company implements Serializable {
     private GenericStatus status;
 
 //    @DateTimeFormat(pattern = "yyy-mm-ddd")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
-    
     @OneToMany( fetch = FetchType.LAZY,mappedBy = "company",cascade = CascadeType.ALL)
     private List<Subsidiary> subsidiaries;
     
@@ -71,26 +47,7 @@ public class Company implements Serializable {
         
     }
     
-    @PrePersist
-    public void prePersist(){
-        setCreateDate(new Date());
-    }
-    
-    
-    @PreUpdate
-    public void preUpdate(){
-        lastUpdateDate= new Date(); 
-    }
-    
-//    get and set 
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    private void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
     
     public Long getId() {
         return id;
@@ -124,14 +81,6 @@ public class Company implements Serializable {
         this.comment = comment;
     }
 
-    
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
 
     public String getAddress() {
         return address;
@@ -156,14 +105,6 @@ public class Company implements Serializable {
     public void setRNC(String RNC) {
         this.RNC = RNC;
     }
-    
-//    public List<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
 
     public GenericStatus getStatus() {
         return status;

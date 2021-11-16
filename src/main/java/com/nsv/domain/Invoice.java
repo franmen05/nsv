@@ -7,9 +7,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,7 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "invoices")
-public class Invoice implements Serializable {
+public class Invoice extends  AbstractBaseEntity {
 
     private static final long serialVersionUID = 1L;
     
@@ -52,13 +50,6 @@ public class Invoice implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private InvoiceStatus status;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-    
-        
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
     
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -111,19 +102,6 @@ public class Invoice implements Serializable {
         this.customer = c;
         init();   
     }
-    
-    @PrePersist
-    public void prePersist(){
-       createDate= new Date();
-    }
-    
-    
-    @PreUpdate
-    public void preUpdate(){
-        
-        lastUpdateDate= new Date();
-    }
-    
 
     public void  init() {
         
@@ -276,13 +254,13 @@ public class Invoice implements Serializable {
         this.comment = comment;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+//    public Date getCreateDate() {
+//        return createDate;
+//    }
+//
+//    public void setCreateDate(Date createDate) {
+//        this.createDate = createDate;
+//    }
 
     public Customer getCustomer() {
         return customer;
@@ -370,14 +348,6 @@ public class Invoice implements Serializable {
 
     public void setStatus(InvoiceStatus status) {
         this.status = status;
-    }
-
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
     }
 
     public Double getTotalRefund() {

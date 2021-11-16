@@ -2,24 +2,10 @@ package com.nsv.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany; 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  *
@@ -27,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "customers")
-public class Customer implements Serializable {
+public class Customer  extends AbstractBaseEntity {
 
     private static final long serialVersionUID = 1L;
     
@@ -58,12 +44,6 @@ public class Customer implements Serializable {
     private GenericStatus status;
 
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
-    
     //TODO: Analizar si estas  lista  de  factura se debe mantener en  aqui
 //    @JsonManagedReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -75,17 +55,6 @@ public class Customer implements Serializable {
 //        invoices = new ArrayList<>();
     }
     
-    @PrePersist
-    public void prePersist(){
-       createDate= new Date();
-    }
-    
-    
-    @PreUpdate
-    public void preUpdate(){
-        lastUpdateDate= new Date();
-    }
-    
     public void addInvoice(Invoice invoice){
         invoices.add(invoice);
     }
@@ -94,11 +63,7 @@ public class Customer implements Serializable {
         invoices.remove(invoice);
     }
     
-//    get and set 
-
-    public Date getCreateDate() {
-        return createDate;
-    }
+//    get and set
     
     
     public Long getId() {
@@ -148,15 +113,6 @@ public class Customer implements Serializable {
     public void setInvoices(List<Invoice> invoices) {
         this.invoices = invoices;
     }
-
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
     public String getPhone() {
         return phone;
     }

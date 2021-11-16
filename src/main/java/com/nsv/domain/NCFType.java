@@ -1,16 +1,6 @@
 package com.nsv.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -19,10 +9,9 @@ import javax.validation.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "ncf_types")
-public class NCFType implements Serializable{
+public class NCFType  extends AbstractBaseEntity{
     
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotEmpty
     private String id;
     
@@ -30,25 +19,9 @@ public class NCFType implements Serializable{
                    
     @Enumerated(EnumType.STRING)
     private GenericStatus status;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-        
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
+
 
     public NCFType() {
-    }
-    
-    @PrePersist
-    public void prePersist(){
-       createDate= new Date();
-    }
-    
-    
-    @PreUpdate
-    public void preUpdate(){
-        lastUpdateDate= new Date();
     }
 
     public String getId() {
@@ -74,21 +47,4 @@ public class NCFType implements Serializable{
     public void setStatus(GenericStatus status) {
         this.status = status;
     }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-    
 }

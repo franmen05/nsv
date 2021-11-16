@@ -4,18 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 /**
- *
- * @author you_k 
+ * @author you_k
  */
 @Entity
 @Table(name = "Quotations")
@@ -23,14 +21,14 @@ public class Quotation implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotEmpty
     private String description;
-    
+
     private String comment;
 
     @NumberFormat(pattern = "###-###-####")
@@ -49,104 +47,86 @@ public class Quotation implements Serializable {
     private Float discount;
 
     private Double total;
-    private Double totalWithTaxes=0.0;
+    private Double totalWithTaxes = 0.0;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-        
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
-    
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
-    
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
-    private Subsidiary subsidiary;   
-    
+    private Subsidiary subsidiary;
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
-    private Currency currency;      
-    
+    private Currency currency;
+
     // TODO: hacer que fetch sea Lazy
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "quotation_id")
     private List<QuotationItem> items;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Invoice invoice;
 
-    private Boolean hasTax=false;
+    private Boolean hasTax = false;
 
     public Quotation() {
         init();
     }
- 
+
     public Quotation(Customer c) {
         this.customer = c;
-        init();   
+        init();
     }
-    
-    @PrePersist
-    public void prePersist(){
-       createDate= new Date();
-    }
-    
-    
-    @PreUpdate
-    public void preUpdate(){
-        lastUpdateDate= new Date();
-    }
-    
 
-    public void  init() {
-        
-        this.items= new ArrayList<>();
+    public void init() {
+
+        this.items = new ArrayList<>();
     }
-    
-    public Double getTotal(){
-        total=  calculateTotalItem();
+
+    public Double getTotal() {
+        total = calculateTotalItem();
 //        Double total=0.0;
-        if(discount==null) return total;
-        if(discount>0)
-            total=total-(total*discount);
+        if (discount == null) return total;
+        if (discount > 0)
+            total = total - (total * discount);
         return total;
     }
-    
-    public Double calculateTotalAdtionalExpensive(){
-        return items.stream().filter(quotationItem -> quotationItem.getAdditionalExpense()!=null)
+
+    public Double calculateTotalAdtionalExpensive() {
+        return items.stream().filter(quotationItem -> quotationItem.getAdditionalExpense() != null)
                 .collect(Collectors.toSet())
                 .stream().map(QuotationItem::total).reduce(0.0, Double::sum);
     }
-    
-    public Double calculateTotalItem(){
+
+    public Double calculateTotalItem() {
 //       Double _total=0;
         return items.stream().map(QuotationItem::total).reduce(0.0, Double::sum);
     }
 
     public void setTotal(Double total) {
         this.total = total;
-    } 
-    
+    }
+
     public void clear() {
         this.items.clear();
     }
-    
-    public void addItem(QuotationItem item){  
+
+    public void addItem(QuotationItem item) {
         items.add(item);
     }
-    
-    public void removeItem(int item){
+
+    public void removeItem(int item) {
         items.remove(item);
     }
-    
+
     public Float getDiscount() {
         return discount;
     }
@@ -155,7 +135,7 @@ public class Quotation implements Serializable {
         this.discount = discount;
     }
 
-    
+
     public String getDescription() {
         return description;
     }
@@ -163,21 +143,13 @@ public class Quotation implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
     }
 
     public Customer getCustomer() {
@@ -187,7 +159,7 @@ public class Quotation implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -195,7 +167,7 @@ public class Quotation implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public User getUser() {
         return user;
     }
@@ -219,14 +191,6 @@ public class Quotation implements Serializable {
 
     public void setSubsidiary(Subsidiary subsidiary) {
         this.subsidiary = subsidiary;
-    }
-
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
     }
 
     public Currency getCurrency() {

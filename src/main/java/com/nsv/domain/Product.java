@@ -1,22 +1,9 @@
 package com.nsv.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
 import org.springframework.util.StringUtils;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 /**
  *
@@ -24,7 +11,7 @@ import org.springframework.util.StringUtils;
  */
 @Entity
 @Table(name = "products")
-public class Product  implements Serializable{
+public class Product extends AbstractBaseEntity{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +31,6 @@ public class Product  implements Serializable{
     private GenericStatus status;
 
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
-    
     @ManyToOne(fetch = FetchType.LAZY)
     private TaxGroup taxGroup;
     
@@ -58,32 +39,13 @@ public class Product  implements Serializable{
 
     public Product() {
     }
-    
-    @PrePersist
-    public void prePersist(){
-       createDate= new Date();
-    }
-    
-    
-    @PreUpdate
-    public void preUpdate(){
-        lastUpdateDate= new Date(); 
-    }
-    
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-    
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
     }
 
     public String getName() {
@@ -109,14 +71,6 @@ public class Product  implements Serializable{
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
     }
 
     public TaxGroup getTaxGroup() {

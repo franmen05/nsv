@@ -37,9 +37,6 @@ INSERT INTO payments_type (name, create_date) VALUES('Tarjeta de Credito', NOW()
 INSERT INTO payments_type (name, create_date) VALUES('Tarjeta de Debito', NOW());
 
 
-
-
-
 INSERT INTO ncf_series (id,description, create_date) VALUES('B','Dolar US', NOW());
 INSERT INTO ncf_series (id,description, create_date) VALUES('B1','Dolar US', NOW());
 
@@ -47,9 +44,9 @@ INSERT INTO ncf_types (id,description, create_date) VALUES('01','Dolar US', NOW(
 INSERT INTO ncf_types (id,description, create_date) VALUES('02','Dolar US', NOW());
 INSERT INTO ncf_types (id,description, create_date) VALUES('03','Dolar US', NOW());
 
-
-INSERT INTO ncf ( create_date, last_update_date, sequence, invoice_id, serie_id, type_id) VALUES( '2018-11-06 01:16:24', NOW(), '00000002', 1, 'B', '01');
-INSERT INTO ncf ( create_date, last_update_date, sequence,  serie_id, type_id) VALUES	( '2018-11-06 01:16:24', NOW(), '00000003',  'B', '01');
+--
+-- INSERT INTO ncf ( create_date, last_update_date, sequence, invoice_id, serie_id, type_id) VALUES( '2018-11-06 01:16:24', NOW(), '00000002', 1, 'B', '01');
+-- INSERT INTO ncf ( create_date, last_update_date, sequence,  serie_id, type_id) VALUES	( '2018-11-06 01:16:24', NOW(), '00000003',  'B', '01');
 
 
 

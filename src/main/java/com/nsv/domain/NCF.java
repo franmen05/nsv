@@ -5,23 +5,7 @@
  */
 package com.nsv.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -30,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "ncf")
-public class NCF implements Serializable, Cloneable {
+public class NCF extends AbstractBaseEntity implements  Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,15 +23,6 @@ public class NCF implements Serializable, Cloneable {
 //    @Id
     @NotEmpty
     private String sequence;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
-//
-//    @Enumerated(EnumType.STRING)
-//    private NCFStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private NCFSerie serie;
@@ -65,38 +40,7 @@ public class NCF implements Serializable, Cloneable {
 
     public NCF() {
     }
-//
-//    public NCF(NCF ncf, String sequence) {
-//        this.setSequence(sequence);
-//        this.setSerie(serie);
-//        setType(type);
-//    }
 
-    @PrePersist
-    public void prePersist() {
-        createDate = new Date();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        lastUpdateDate = new Date();
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
 
     public String getSequence() {
         return sequence;
@@ -161,7 +105,8 @@ public class NCF implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "NCF{" + "sequence=" + sequence + ", createDate=" + createDate + ", lastUpdateDate=" + lastUpdateDate + ", serie=" + serie + ", type=" + type + ", invoice=" + invoice + ", from=" + from + ", to=" + to + '}';
+        return "NCF{" + "sequence=" + sequence + ", createDate=" + getCreateDate() + ", lastUpdateDate=" + getLastUpdateDate() +
+                ", serie=" + serie + ", type=" + type + ", invoice=" + invoice + ", from=" + from + ", to=" + to + '}';
     }
 
 }

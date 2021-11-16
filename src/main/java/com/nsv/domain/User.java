@@ -2,9 +2,7 @@ package com.nsv.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "users")
-public class User  implements Serializable {
+public class User   extends AbstractBaseEntity {
 
     private static final long serialVersionUID = 1L;
     
@@ -50,15 +48,7 @@ public class User  implements Serializable {
 //
 //
 //    private GenericStatus status;
-//
-//    @NotEmpty
-//    @DateTimeFormat(pattern = "yyy-mm-ddd")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
-    
+
     //    @ManyToOne(fetch = FetchType.LAZY)
     //    private Company company;
     
@@ -66,28 +56,6 @@ public class User  implements Serializable {
         if(roles== null)
             roles= new ArrayList<>();
     }
-        
-    @PrePersist
-    public void prePersist(){
-       createDate= new Date();
-    }
-    
-    
-    @PreUpdate
-    public void preUpdate(){
-        lastUpdateDate= new Date();
-    }
-    
-//    get and set 
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-    
     
     public Long getId() {
         return id;
@@ -121,15 +89,6 @@ public class User  implements Serializable {
         this.comment = comment;
     }
 
-    
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -137,14 +96,6 @@ public class User  implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
-
-//    public Company getCompany() {
-//        return company;
-//    }
-//
-//    public void setCompany(Company company) {
-//        this.company = company;
-//    }
 
     public String getPassword() {
         return password;
