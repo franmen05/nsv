@@ -19,8 +19,14 @@ const itemsHelperPayment = {
 //                    this.calcularImporte(id, precio, cantidad);
 //                },
     delete: function (id) {
-        $("#row_" + id).remove();
-        this.calculateTotal();
+        $("#row_" + id).click( (e) => {
+            // custom handling here
+            e.preventDefault();
+
+            $("#row_" + id).remove();
+            this.calculateTotal();
+        });
+
     },
     calculateTotal: function () {
         var tempTotal = 0;
@@ -173,7 +179,7 @@ $(document).ready(function () {
 
         item = item.replace(/{ID}/g, itemsHelperPayment.id);
         $("#loadItemPayment tbody").append(item);
-        itemsHelperPayment.id++;
+        itemsHelperPayment.id--;
 
         return false;
     });

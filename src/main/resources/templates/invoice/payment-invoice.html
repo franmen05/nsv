@@ -126,7 +126,7 @@
                                 </tr>   
                             </thead>
                             <tbody>
-                                <tr th:each="item: ${invoice.payments}">
+                                <tr th:each="item: ${invoice.payments}" th:id="'row_'+${item.id}">
                                     <!--<td th:text ="${item.paymentType.name}"></td>-->
                                     <!--<td th:text="${#numbers.formatDecimal((item.value),1,2)}"></td>-->
                             
@@ -147,7 +147,7 @@
                                          </div>
                                      </td>
                                     <td>
-                                        <a href="#" class="btn btn-danger btn-xs" onclick="itemsHelperPayment.delete({ID});">x</a>
+                                        <a href="#" class="btn btn-danger btn-xs" th:onclick="'itemsHelperPayment.delete('+ ${item.id} +');'">x</a>
                                     </td>
                                  </tr>
                             </tbody>
