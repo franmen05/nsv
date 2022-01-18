@@ -143,9 +143,10 @@
                                 </tr>
                             </tbody>
                         </table>
+
                         <h5>Total
                             <!--<span th:text="${#numbers.formatDecimal(invoice.calculeTotalAdtionalExpensive(0),1,2)}"  id="ae_gran_total" class="badge badge-danger" data-inputmask="'alias': 'currency'">0</span>-->
-                            <span th:text="${#numbers.formatDecimal(invoice .calculeTotalAdtionalExpensive(0),1,2)}"  id="ae_gran_total" class="badge badge-danger" >0</span>
+                            <span th:text="${#numbers.formatDecimal(invoice.calculeTotalAdtionalExpensive(0),1,2)}"  id="ae_gran_total" class="badge badge-danger" >0</span>
                         </h5>
 
                         <div class="form-group row bg-dark ">
@@ -167,8 +168,10 @@
                                 <label class="checkbox"><input type="checkbox" name="set_ncf" id="set_ncf" th:field="${invoice.hasNCF}"  /> Factura con NCF</label>
                             </div>
                         </div>
-
-                        <h5>SubTotal  :<span class="badge badge-danger" id="total_invoice" th:text="${#numbers.formatDecimal(invoice.totalWithoutTaxes,1,2)}" data-inputmask="'alias': 'currency'">0</span></h5>                        
+                <h5 class="card-title ">
+                    Los sentimos <span th:text="${#authentication.getAuthorities().contains('ROLE_ADMIN')}"></span>, NO tiene permisos para acceder a este recurso.
+                </h5>
+                        <h5>SubTotal  :<span class="badge badge-danger" id="total_invoice" th:text="${#numbers.formatDecimal(invoice.totalWithoutTaxes,1,2)}" data-inputmask="'alias': 'currency'">0</span></h5>
                         <h5 id="total_taxes_div">
                             Impuestos :<span class="badge badge-danger"  id="total_taxes" th:text="${#numbers.formatDecimal(invoice.totalTaxes(),1,2)}" data-inputmask="'alias': 'currency'">0</span>
                         </h5>

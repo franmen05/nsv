@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "Quotations")
-public class Quotation implements Serializable {
+public class Quotation extends AbstractBaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

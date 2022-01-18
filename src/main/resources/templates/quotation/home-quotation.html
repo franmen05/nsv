@@ -52,6 +52,10 @@
                                        th:href="@{'/quotation/print/' + ${item.id}}" >Imprimir</a>
                                 
                                     <a class="btn btn-danger btn-xs "
+                                       th:href="@{'/invoice/initFromQuotation/' + ${item.id}}"
+                                       onclick="return confirm('¿Estas seguro que desea crear la factura?');">Facturar</a>
+
+                                    <a class="btn btn-danger btn-xs "
                                        th:href="@{'/quotation/delete/' + ${item.id}}"
                                        th:text="'X'"
                                        onclick="return confirm('¿Estas seguro que desea eliminar la factura?');"></a>

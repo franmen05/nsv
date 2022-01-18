@@ -5,7 +5,6 @@ import com.nsv.exception.NSVException;
 import com.nsv.service.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -34,24 +33,28 @@ public class InvoiceController {
     
     private static final String REDIRECT_CUSTOMER= "redirect:/customer/ver/";
 
-    @Autowired
-    private ICustomerService customerService;
+    private final ICustomerService customerService;
+    private final IInvoiceService invoiceService;
+    private final IInventoryService inventoryService;
+    private final INCFService ncfService;
+    private final ICurrencyService currencyService;
+    private final IQuotationService quotationService;
 
-    @Autowired
-    private IInvoiceService invoiceService;
-
-    @Autowired
-    private IInventoryService inventoryService;
-    
-    @Autowired
-    private INCFService ncfService;
-
-    @Autowired
-    private ICurrencyService currencyService;
     
     
     private Invoice invoice;
-    
+
+    public InvoiceController(ICustomerService customerService, IInvoiceService invoiceService,
+                             IInventoryService inventoryService, INCFService ncfService,
+                             ICurrencyService currencyService, IQuotationService quotationService) {
+        this.customerService = customerService;
+        this.invoiceService = invoiceService;
+        this.inventoryService = inventoryService;
+        this.ncfService = ncfService;
+        this.currencyService = currencyService;
+        this.quotationService = quotationService;
+    }
+
 
     @RequestMapping("/ver/{id}")
     public String home(@PathVariable(name = "id") Long id,
@@ -83,6 +86,31 @@ public class InvoiceController {
         return invoiceService.findAdditionalExpenseByName(term);
     }
 
+    @GetMapping(value = "/initFromQuotation/{id}")
+    public String initFromQuotation(@PathVariable Long id,
+                                     @SessionAttribute("company") Company c,
+                                     @SessionAttribute("topProduct") Page<Product> pp,
+                                     @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
+                                     Model model) throws NSVException {
+
+        model.addAttribute("isNewInvoice", true);
+        model.addAttribute("isInvoice", true);
+        model.addAttribute("company", c);
+        model.addAttribute("topProduct", pp);
+        model.addAttribute("topExpensive", pae);
+
+        model.addAttribute("titulo", "Crear Factura");
+
+        genericLoad(model);
+        var q= quotationService.findById(id);
+        var i =  q.map(Invoice::create).orElseThrow(() -> new NSVException("Cotizacion no fue encontrada"));
+
+        model.addAttribute("invoice", i);
+
+        return "invoice/new-invoice";
+
+    }
+
     @ResponseBody
     @GetMapping(value = "/loadInvoice/{id}", produces = {"application/json"})
     public Object loadInvoice(@PathVariable Long id) {
@@ -90,7 +118,7 @@ public class InvoiceController {
 //        Invoice i=(Invoice) model.asMap().get("invoice");
 //        if(i.getId()==id)
 //            return i;
-        
+
         return invoiceService.findInvoiceById(id);
     }
     
@@ -218,8 +246,7 @@ public class InvoiceController {
         }
         
         _invoice.calculeTotalPayment();
-        var r= invoiceService.saveInvoice(_invoice);
-        return  r;
+        return invoiceService.saveInvoice(_invoice);
     }
 
     @PostMapping("/payment/doPayment")

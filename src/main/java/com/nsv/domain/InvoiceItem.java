@@ -2,15 +2,9 @@
 package com.nsv.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  *
@@ -45,12 +39,20 @@ public class InvoiceItem implements Serializable{
     public InvoiceItem() {
     }
     
+    public InvoiceItem build(Product p,Long quantity) {
+        setProduct(p);
+        setCost(p.getPrice());
+        setDescription(p.getName());
+        setQuantity(quantity);
+        return  this;
+    }
+
     public void addProduct(Product p) {
         setProduct(p);
         setCost(p.getPrice());
         setDescription(p.getName());
     }
-    
+
     public Double total(){
         
         if(cost==null)return 0.0d;

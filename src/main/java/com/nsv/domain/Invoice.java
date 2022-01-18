@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -92,6 +93,27 @@ public class Invoice extends  AbstractBaseEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "invoice_id")
     private List<Payment> payments ;
+
+    public static Invoice create(Quotation q){
+        final var i = new Invoice();
+        i.customer =q.getCustomer();
+        i.description ="Factura creada desde contizacion";
+        i.items = q.getItems().stream().filter(qi -> qi.getProduct()!=null)
+                .map(quotationItem -> new InvoiceItem().build(quotationItem.getProduct(),quotationItem.getQuantity()))
+                .collect(Collectors.toList());
+
+        i.addtionalExpensesItems = q.getItems().stream().filter(qi -> qi.getAdditionalExpense()!=null)
+                .map(quotationItem -> AdditionalExpenseItem.build(quotationItem.getAdditionalExpense(),quotationItem.getCost()))
+                .collect(Collectors.toList());
+
+        i.setCurrency(q.getCurrency());
+        i.setCompany(q.getCompany());
+
+//        i.calculeTotalWithoutTaxes();
+        i.calculeTotalWithTaxes();
+
+        return i;
+    }
 
     public Invoice() {
         

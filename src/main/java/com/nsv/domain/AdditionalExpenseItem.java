@@ -27,6 +27,14 @@ public class AdditionalExpenseItem implements Serializable{
     
     private Float discount;
 
+    public static  AdditionalExpenseItem build(AdditionalExpense additionalExpense,Double amount) {
+        var r= new AdditionalExpenseItem();
+        r.additionalExpense = additionalExpense;
+        r.amount = amount;
+        return r;
+
+    }
+
     public AdditionalExpenseItem() {}
     
     
