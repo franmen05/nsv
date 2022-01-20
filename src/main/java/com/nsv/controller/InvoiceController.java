@@ -18,6 +18,7 @@ import org.thymeleaf.util.ArrayUtils;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -104,6 +105,13 @@ public class InvoiceController {
         genericLoad(model);
         var q= quotationService.findById(id);
         var i =  q.map(Invoice::create).orElseThrow(() -> new NSVException("Cotizacion no fue encontrada"));
+
+        if(i.getHasTax()){
+
+            i.setTaxItems(invoiceService.findTaxesByTaxGroup(1L).stream().map(TaxItem::new).collect(Collectors.toList()));
+            i.calculeTotalWithTaxes();
+//            i.setTotalWithTaxes(i.getTotalWithoutTaxes()+ i.totalTaxes());
+        }
 
         model.addAttribute("invoice", i);
 

@@ -109,6 +109,7 @@ public class Invoice extends  AbstractBaseEntity {
         i.setCurrency(q.getCurrency());
         i.setCompany(q.getCompany());
 
+        i.hasTax=q.getHasTax();
 //        i.calculeTotalWithoutTaxes();
         i.calculeTotalWithTaxes();
 
@@ -187,15 +188,12 @@ public class Invoice extends  AbstractBaseEntity {
     
     public Double calculeTotalAdtionalExpensive(Double _total){
         return addtionalExpensesItems.stream()
-                .map(AdditionalExpenseItem::total)
-                .reduce(_total, Double::sum);
+                .map(AdditionalExpenseItem::total).reduce(_total, Double::sum);
         
     }
     
     public Double calculateTotalItem(Double _total){       
-        return items.stream().map((i) -> i.total()).reduce(
-                _total, (accumulator, _item) -> accumulator + _item
-        );
+        return items.stream().map(InvoiceItem::total).reduce(_total, Double::sum);
         
     }
 
