@@ -176,7 +176,11 @@ public class Invoice extends  AbstractBaseEntity {
     public Double change(){        
         return (totalPayment!=null)?total - totalPayment:0d;
     }
-    
+
+    public Double owed(){
+        return (totalPayment!=null)?total - totalPayment:0d;
+    }
+
     public Double totalTaxes(){
         
         if(getTotalWithTaxes()==null || getTotalWithTaxes()==0.0)  calculeTotalWithTaxes();

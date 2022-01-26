@@ -48,7 +48,7 @@ const itemsHelperPayment = {
         const change = _total - totalInvoice;
         $('#change').html(change);
 
-        if(change<=0){
+        if(change<0){
             $('#b_payment').attr('disabled',true);
         }else{
             $('#b_payment').attr('disabled',false);

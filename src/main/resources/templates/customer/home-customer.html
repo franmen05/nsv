@@ -77,7 +77,7 @@
                                 </td>
                                 <td>
                                     <a class="btn btn-danger btn-xs "
-                                       th:href="@{'/invoice/delete/' + ${invoce.id}}"
+                                       th:href="@{'/invoice/delete/' + ${invoce.id}+'/customer/'+${customer.id}}"
                                        th:text="'X'"
                                        onclick="return confirm('¿Estas seguro que desea eliminar la factura?');"></a>
                                 </td>

@@ -401,13 +401,13 @@ public class InvoiceController {
         return "invoice/print-invoice";
     }
     
-    @RequestMapping("/delete/{idInvoice}")
-    public String remove(@PathVariable(name = "idInvoice") Long id, Model model) {
+    @RequestMapping("/delete/{idInvoice}/customer/{idCustomer}")
+    public String remove(@PathVariable(name = "idInvoice") Long id, @PathVariable String idCustomer, Model model) {
         
         invoiceService.deleteInvoice(id);
 //        model.addAttribute("invoice", i);
         
-        return REDIRECT_CUSTOMER+id;
+        return REDIRECT_CUSTOMER+idCustomer;
     }
 
 }

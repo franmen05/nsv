@@ -5,7 +5,6 @@ import com.nsv.domain.Customer;
 import com.nsv.domain.GenericStatus;
 import com.nsv.domain.Invoice;
 import com.nsv.service.ICustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +29,12 @@ public class CustomerController {
     
     private static final String REDIRECT_CUSTOMER = "redirect:/customer/";
         
-    @Autowired
-    private ICustomerService customerService;
-    
+    private final ICustomerService customerService;
+
+    public CustomerController(ICustomerService customerService) {
+        this.customerService = customerService;
+    }
+
     @RequestMapping(value={"/",""})
     public String page(Model model) {
         //Customer c=customerService.find(1L);
