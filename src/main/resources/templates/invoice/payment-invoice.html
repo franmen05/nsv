@@ -165,7 +165,7 @@
                         <h5>Cambio: <span class="badge badge-danger" id="change" th:text="${#numbers.formatDecimal(invoice.change(),1,2)}" data-inputmask="'alias': 'currency'" >0</span></h5>
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <input type="submit" id="b_payment" value="Pagar" class="btn btn-success" disabled/>
+                                <input th:if="${not invoice.closed}" type="submit" id="b_payment" value="Pagar" class="btn btn-success" disabled/>
                                 <input type="submit" id="b_partial_payment" name="b_partial_payment" value="Abonar" class="btn btn-primary" />
                                 <input type="submit" id="b_edit_invoice" value="Modificar Factura" class="btn btn-warning" />
                             </div>

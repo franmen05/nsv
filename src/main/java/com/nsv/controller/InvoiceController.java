@@ -347,6 +347,9 @@ public class InvoiceController {
             }
             invoice.calculeTotalPayment();
         }
+
+        if(StringUtils.isEmpty(bPartialPayment))
+            invoice.close();
         
         Invoice i= invoiceService.saveInvoice(invoice);
         String title="Factura";

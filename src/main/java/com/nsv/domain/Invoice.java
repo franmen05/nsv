@@ -44,8 +44,9 @@ public class Invoice extends  AbstractBaseEntity {
     
     private Double totalPayment;
     
+    private Boolean closed;
     private Boolean hasTax;
-    
+
     @Column(name = "has_ncf")
     private Boolean hasNCF;
     
@@ -93,6 +94,7 @@ public class Invoice extends  AbstractBaseEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "invoice_id")
     private List<Payment> payments ;
+
 
     public static Invoice create(Quotation q){
         final var i = new Invoice();
@@ -179,6 +181,11 @@ public class Invoice extends  AbstractBaseEntity {
 
     public Double owed(){
         return (totalPayment!=null)?total - totalPayment:0d;
+    }
+
+    public void close(){
+       if((total - totalPayment)<=0)
+            setClosed(true);
     }
 
     public Double totalTaxes(){
@@ -430,5 +437,13 @@ public class Invoice extends  AbstractBaseEntity {
     public void setTotalPayment(Double totalPayment) {
         this.totalPayment = totalPayment;
     }
-    
+
+    public Boolean getClosed() {
+        if(closed==null) return false;
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
+    }
 }
