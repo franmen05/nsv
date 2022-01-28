@@ -59,25 +59,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="invoce: ${customer.invoices}">
-                                <td th:text="${invoce.id}"></td>
-                                <td th:text="${invoce.description}"></td>
-                                <td th:text="${invoce.createDate}"></td>
-                                <td th:text="${invoce.total}" data-inputmask="'alias': 'currency'"></td>
+                            <tr th:each="item: ${customer.invoices}">
+                                <td th:text="${item.id}"></td>
+                                <td th:text="${item.description}"></td>
+                                <td th:text="${item.createDate}"></td>
+                                <td th:text="${item.total}" data-inputmask="'alias': 'currency'"></td>
                                 <td>
-                                    <a class="btn btn-warning btn-xs" 
-                                       th:href="@{'/invoice/payment/' + ${invoce.id}}">Facturar</a>
+                                    <a th:if="${not item.closed}" class="btn btn-warning btn-xs"
+                                       th:href="@{'/invoice/payment/' + ${item.id}}">Facturar</a>
                                 
                                     <a class="btn btn-dark btn-xs" 
-                                       th:href="@{'/invoice/print/' + ${invoce.id}}">Imprimir</a>
+                                       th:href="@{'/invoice/print/' + ${item.id}}">Imprimir</a>
                                 </td>
                                 <td >
                                     <a class="btn btn-success btn-xs"
-                                       th:href="@{'/invoice/ver/' + ${invoce.id}}" >Ver detalle</a>
+                                       th:href="@{'/invoice/ver/' + ${item.id}}" >Ver detalle</a>
                                 </td>
                                 <td>
                                     <a class="btn btn-danger btn-xs "
-                                       th:href="@{'/invoice/delete/' + ${invoce.id}+'/customer/'+${customer.id}}"
+                                       th:href="@{'/invoice/delete/' + ${item.id}+'/customer/'+${customer.id}}"
                                        th:text="'X'"
                                        onclick="return confirm('¿Estas seguro que desea eliminar la factura?');"></a>
                                 </td>
