@@ -51,6 +51,7 @@
                                 <th>Nombre</th>
                                 <th>Precio</th>
                                 <th>Cantidad</th>
+                                <th>Descuento</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
@@ -59,6 +60,7 @@
                                 <td th:text="${item.product.name}"></td>
                                 <td th:text="${item.product.price}" data-inputmask="'alias': 'currency'"></td>
                                 <td th:text="${item.quantity}"></td>
+                                <td th:text="${#numbers.formatDecimal((item.discountTotal()),1,0)}" data-inputmask="'alias': 'currency'"></td>
                                 <td th:text="${item.total()}" data-inputmask="'alias': 'currency'"></td>
                             </tr>
                         </tbody>

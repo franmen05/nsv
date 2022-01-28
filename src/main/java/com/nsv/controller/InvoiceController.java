@@ -213,7 +213,7 @@ public class InvoiceController {
         model.addAttribute("topExpensive", pae);
 
         if (hasErrors(_invoice, result, model, itemId)) return "invoice/new-invoice";
-        saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost);
+        saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost,dicounts);
 //        model.addAttribute("invoice", invoice);
 //        status.setComplete();
 
@@ -223,7 +223,7 @@ public class InvoiceController {
         return home(_invoice.getId(), "Factura",model);
     }
 
-    private Invoice saveInvoice(Long[] itemId, Long[] cantidad, Invoice _invoice, Long[] aeItemId, Double[] aeCost) {
+    private Invoice saveInvoice(Long[] itemId, Long[] cantidad, Invoice _invoice, Long[] aeItemId, Double[] aeCost,Long[] discounts) {
         
         for (int i = 0; i < itemId.length; i++) {
             Product product = inventoryService.findProduct(itemId[i]);
@@ -231,6 +231,12 @@ public class InvoiceController {
             InvoiceItem linea = new InvoiceItem();
             linea.setQuantity(cantidad[i]);
             linea.addProduct(product);
+            if(discounts!=null){
+                linea.addDiscount(discounts[i]);
+                log.debug("ID: " + itemId[i].toString() + ", Descuento: " + linea.getDiscount());
+            }
+
+
             _invoice.addItem(linea);
 
             log.info("ID: " + itemId[i].toString() + ", cantidad: " + cantidad[i].toString());
@@ -243,6 +249,7 @@ public class InvoiceController {
                 var item = new AdditionalExpenseItem();
                 item.setAmount(aeCost[i]);
                 item.setAdditionalExpense(ae);
+
                 _invoice.addAddtionalExpenseItem(item);
 
                 log.info("ID: " + aeItemId[i].toString() + ", costo: " + aeCost[i]);
@@ -263,11 +270,12 @@ public class InvoiceController {
             @RequestParam(name = "cantidad[]", required = false) Long[] cantidad,
             @RequestParam(name = "ae_item_id[]", required = false) Long[] aeItemId,
             @RequestParam(name = "ae_cost[]", required = false) Double[] aeCost,
+            @RequestParam(name = "dicount[]", required = false) Long[] discounts,
             RedirectAttributes flash, SessionStatus status) {
 
         if (hasErrors(_invoice, result, model, itemId))  return "invoice/new-invoice";
 
-        Invoice i= saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost);
+        Invoice i= saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost, discounts);
         
         if(i==null){
             model.addAttribute("error", "Error: La factura no puedo ser guardada!");
@@ -348,7 +356,7 @@ public class InvoiceController {
             invoice.calculeTotalPayment();
         }
 
-        if(StringUtils.isEmpty(bPartialPayment))
+        if(!StringUtils.hasText(bPartialPayment))
             invoice.close();
         
         Invoice i= invoiceService.saveInvoice(invoice);
@@ -360,7 +368,7 @@ public class InvoiceController {
             
         }else{
         
-            if (StringUtils.isEmpty(bPartialPayment)) {
+            if (!StringUtils.hasText(bPartialPayment)) {
                 
                 log.info(bPartialPayment); 
                 if (i.getHasNCF()) {

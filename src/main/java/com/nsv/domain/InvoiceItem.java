@@ -52,6 +52,9 @@ public class InvoiceItem implements Serializable{
         setCost(p.getPrice());
         setDescription(p.getName());
     }
+    public void addDiscount(Long discount) {
+        setDiscount( discount.floatValue()/100);
+    }
 
     public Double total(){
         

@@ -57,6 +57,7 @@
                                 <th>Cantidad</th>
                                 <th>Unidad</th>
                                 <th>Precio</th>
+                                <th>Descuento</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
@@ -66,6 +67,7 @@
                                 <td th:text="${item.quantity}"></td>
                                 <td th:text="${item.product.unit}"></td>
                                 <td th:text="${item.product.price}" data-inputmask="'alias': 'currency'"></td>
+                                <td th:text="${item.discountTotal()}" data-inputmask="'alias': 'currency'"></td>
                                 <td th:text="${item.total()}" data-inputmask="'alias': 'currency'"></td>
                             </tr>
                         </tbody>
