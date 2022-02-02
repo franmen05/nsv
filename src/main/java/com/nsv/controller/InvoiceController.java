@@ -7,6 +7,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -131,18 +133,19 @@ public class InvoiceController {
     }
     
     @GetMapping("/form/edit/{idInvoice}")
-    public String edit(@PathVariable(name = "idInvoice") Long id, 
-            @SessionAttribute("company") Company c,
-            @SessionAttribute("topProduct") Page<Product> pp,
-            @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
-            Model model) {
+    public String edit(@PathVariable(name = "idInvoice") Long id,
+                       @SessionAttribute("company") Company c,
+                       @SessionAttribute("topProduct") Page<Product> pp,
+                       @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
+//                       @SessionAttribute("authentication") Authentication auth,
+                       Model model) {
         
         model.addAttribute("company", c);
         model.addAttribute("topProduct", pp);
         model.addAttribute("topExpensive", pae);
+
         genericLoad(model);
         Invoice  i=invoiceService.findInvoiceById(id);
-        
 
         model.addAttribute("titulo", "Modificar Factura");
         model.addAttribute("invoice", i);
@@ -179,14 +182,21 @@ public class InvoiceController {
     private void genericLoad(Model model) {
         
         model.addAttribute("currencies", currencyService.findAll());
-        
+        model.addAttribute("isSupervisor", isSupervisor());
+
         //TODO: se  debe poner que seleccione si se debea aplicar los impuestos.
-        List<Tax> taxes = invoiceService.findTaxesByTaxGroup(1l);
+        List<Tax> taxes = invoiceService.findTaxesByTaxGroup(1L);
         model.addAttribute("taxes", taxes);
+
 //        invoiceService.findTaxesByTaxGroup(1l).forEach((t) -> {
 //
 //            i.addTaxItems(new TaxItem(t));
 //        });
+    }
+
+    private boolean isSupervisor() {
+        var auth= SecurityContextHolder.getContext().getAuthentication();
+        return auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 
     @GetMapping("/form/refund")

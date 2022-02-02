@@ -148,15 +148,14 @@
                                                     onchange="itemsHelperPayment.calculateTotal();" class="form-control" placeholder="Monto"  />
                                          </div>
                                      </td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger btn-xs" th:onclick="'itemsHelperPayment.delete('+ ${item.id} +');'">x</a>
+                                    <td >
+                                        <a th:if="${not invoice.closed && isSupervisor}" href="#" class="btn btn-danger btn-xs" th:onclick="'itemsHelperPayment.delete('+ ${item.id} +');'">x</a>
                                     </td>
                                  </tr>
                             </tbody>
                         </table>
 
-
-                        <div th:if="${not invoice.closed}" class="form-group row">
+                        <div th:if="${not invoice.closed }" class="form-group row">
                             <div class="col-sm-6">
                                 <button name="add_payment" id="add_payment" class="btn btn-primary"  >Add</button>
                             </div>

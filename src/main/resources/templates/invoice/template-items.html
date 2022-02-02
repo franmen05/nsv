@@ -57,7 +57,7 @@
                         </div>
 
                     </td>
-                    <td><a href="#" class="btn btn-danger btn-xs" onclick="itemsHelperPayment.delete({ID});">x</a></td>
+                    <td><a th:if="${not invoice.closed && isSupervisor}" href="#" class="btn btn-danger btn-xs" onclick="itemsHelperPayment.delete({ID});">x</a></td>
                 </tr>
             </tbody>
         </table>
