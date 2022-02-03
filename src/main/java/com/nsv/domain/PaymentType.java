@@ -15,7 +15,9 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @Table(name = "payments_type")
 public class PaymentType   extends AbstractBaseEntity{
-    
+
+    public static final String CAST="Efectivo";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

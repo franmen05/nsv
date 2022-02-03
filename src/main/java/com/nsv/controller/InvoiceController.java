@@ -2,6 +2,7 @@ package com.nsv.controller;
 
 import com.nsv.domain.*;
 import com.nsv.exception.NSVException;
+import com.nsv.exception.NSVException2;
 import com.nsv.service.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -336,6 +337,7 @@ public class InvoiceController {
     public String savePayment(Model model,
             @RequestParam(name = "payment_type_[]", required = false) Long[] itemTypePayment,
             @RequestParam(name = "payment_value_[]", required = false) Double[] itemValuePayment,
+            @RequestParam(name = "payment_voucher_[]", required = false) String[] itemVoucherPayment,
             @RequestParam(name = "b_partial_payment", required = false) String bPartialPayment,
             RedirectAttributes flash, SessionStatus status
     ) {
@@ -353,14 +355,33 @@ public class InvoiceController {
 
                 Payment pay = new Payment();
                 Double value = itemValuePayment[i];
+                var voucher = itemVoucherPayment[i];
                 if(value == null ) continue;
-                
-                invoiceService.findPaymentType(itemTypePayment[i]).ifPresent((t) -> {
-                    pay.setPaymentType(t);
-                    pay.setValue( value);
-                    invoice.addPayment(pay);
-                });
-                
+                try {
+
+
+                    invoiceService.findPaymentType(itemTypePayment[i]).ifPresent((t) -> {
+
+                        pay.setPaymentType(t);
+                        pay.setValue( value);
+                        if(t.getName().equals(PaymentType.CAST))
+                            pay.setVoucher(voucher);
+                        else {
+                            if (StringUtils.hasText(voucher))
+                                pay.setVoucher(voucher);
+                            else {
+    //                            model.addAttribute("error", "Error: Voucher no encontrado!");
+                                throw new NSVException2("Voucher no puede ser nulo");
+
+                            }
+                        }
+                        invoice.addPayment(pay);
+                    });
+                } catch (NSVException2 ex) {
+
+                    model.addAttribute("error", "Error: "+ex.getMessage());
+                    return paymentHome(invoice.getId(),model);
+                }
 //                log.info("ID: " + aeItemId[i].toString() + ", costo: " + aeCost[i]);
             }
             invoice.calculeTotalPayment();

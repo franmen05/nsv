@@ -19,6 +19,8 @@ public class Payment   extends AbstractBaseEntity{
     @Column(nullable = false)
     private Double value;
 
+    private String voucher;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private PaymentType paymentType;
 
@@ -55,7 +57,12 @@ public class Payment   extends AbstractBaseEntity{
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
-    
-    
-    
+
+    public String getVoucher() {
+        return voucher;
+    }
+
+    public void setVoucher(String voucher) {
+        this.voucher = voucher;
+    }
 }

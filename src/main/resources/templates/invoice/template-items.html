@@ -52,10 +52,15 @@
                     <td>
                         <div class="input-group ">
                             <div class="input-group-addon">$</div>
-                            <input type="text" name="payment_value_[]" id="payment_value_{ID}" class="form-control" placeholder="Monto" 
+                            <input type="text" name="payment_value_[]" id="payment_value_{ID}" class="form-control" placeholder="Monto"
                                    onchange="itemsHelperPayment.calculateTotal();"  />
                         </div>
 
+                    </td>
+                    <td>
+                        <div class="input-group ">
+                            <input type="text" name="payment_voucher_[]" id="payment_voucher_{ID}" class="form-control" placeholder="Comprobante"  />
+                        </div>
                     </td>
                     <td><a th:if="${not invoice.closed }" href="#" class="btn btn-danger btn-xs" onclick="itemsHelperPayment.delete({ID});">x</a></td>
                 </tr>

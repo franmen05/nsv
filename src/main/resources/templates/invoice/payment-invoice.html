@@ -124,6 +124,7 @@
                                 <tr>
                                     <th>Tipo</th>
                                     <th>Monto</th>
+                                    <th>Voucher</th>
                                     <th></th>
                                 </tr>   
                             </thead>
@@ -146,6 +147,12 @@
                                              <div class="input-group-addon">$</div>
                                              <input type="text" th:value="${#numbers.formatDecimal((item.value),1,2)}" name="payment_value_[]" th:id="'payment_value_'+${item.id}" 
                                                     onchange="itemsHelperPayment.calculateTotal();" class="form-control" placeholder="Monto"  />
+                                         </div>
+                                     </td>
+                                    <td>
+                                         <div class="input-group ">
+                                             <input type="text" th:value="${item.voucher}" name="payment_voucher_[]" th:id="'payment_voucher_'+${item.id}"
+                                                     class="form-control" placeholder="Comprobante"  />
                                          </div>
                                      </td>
                                     <td >
