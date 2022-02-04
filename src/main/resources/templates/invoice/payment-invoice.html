@@ -137,7 +137,7 @@
                                          <input type="hidden" th:value="${item.id}" />
                                      </td>
                                      <td>
-                                         <select name="payment_type_[]" th:id="'payment_type_'+${item.id}" class="form-control" >
+                                         <select disabled name="payment_type_[]" th:id="'payment_type_'+${item.id}" class="form-control" >
                                              <option th:value="${item.paymentType.id}" th:text="${item.paymentType.name}"  selected></option>
                                              <option th:each="item2: ${paymentsTypes}" th:if="${item2.id!=item.paymentType.id}" th:value="${item2.id}" th:text="${item2.name}" >1</option>
                                          </select>
@@ -145,18 +145,18 @@
                                      <td>
                                          <div class="input-group ">
                                              <div class="input-group-addon">$</div>
-                                             <input type="text" th:value="${#numbers.formatDecimal((item.value),1,2)}" name="payment_value_[]" th:id="'payment_value_'+${item.id}" 
+                                             <input disabled type="text" th:value="${#numbers.formatDecimal((item.value),1,2)}" name="payment_value_[]" th:id="'payment_value_'+${item.id}"
                                                     onchange="itemsHelperPayment.calculateTotal();" class="form-control" placeholder="Monto"  />
                                          </div>
                                      </td>
                                     <td>
                                          <div class="input-group ">
-                                             <input type="text" th:value="${item.voucher}" name="payment_voucher_[]" th:id="'payment_voucher_'+${item.id}"
+                                             <input disabled type="text" th:value="${item.voucher}" name="payment_voucher_[]" th:id="'payment_voucher_'+${item.id}"
                                                      class="form-control" placeholder="Comprobante"  />
                                          </div>
                                      </td>
                                     <td >
-                                        <a th:if="${not invoice.closed and isSupervisor}" href="#" class="btn btn-danger btn-xs" th:onclick="'itemsHelperPayment.delete('+ ${item.id} +');'">x</a>
+<!--                                        <a th:if="${not invoice.closed and isSupervisor}" href="#" class="btn btn-danger btn-xs" th:onclick="'itemsHelperPayment.delete('+ ${item.id} +');'">x</a>-->
                                     </td>
                                  </tr>
                             </tbody>
