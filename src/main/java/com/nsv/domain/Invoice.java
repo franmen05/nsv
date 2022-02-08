@@ -7,6 +7,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,7 +44,10 @@ public class Invoice extends  AbstractBaseEntity {
     private Double totalRefund;
     
     private Double totalPayment;
-    
+
+
+    private Instant closedDate;
+
     private Boolean closed;
     private Boolean hasTax;
 
@@ -184,8 +188,10 @@ public class Invoice extends  AbstractBaseEntity {
     }
 
     public void close(){
-       if((total - totalPayment)<=0)
-            setClosed(true);
+       if((total - totalPayment)<=0) {
+           setClosed(true);
+           closedDate=Instant.now();
+       }
     }
 
     public Double totalTaxes(){
@@ -445,5 +451,9 @@ public class Invoice extends  AbstractBaseEntity {
 
     public void setClosed(Boolean closed) {
         this.closed = closed;
+    }
+
+    public Instant getClosedDate() {
+        return closedDate;
     }
 }

@@ -371,7 +371,7 @@ public class InvoiceController {
                                 pay.setVoucher(voucher);
                             else {
     //                            model.addAttribute("error", "Error: Voucher no encontrado!");
-                                throw new NSVException2("Voucher no puede ser nulo");
+                                throw new NSVException2("Voucher Solo puede ser nulo para pagos en efectivo");
 
                             }
                         }
