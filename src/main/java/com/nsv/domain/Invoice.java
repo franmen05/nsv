@@ -45,7 +45,6 @@ public class Invoice extends  AbstractBaseEntity {
     
     private Double totalPayment;
 
-
     private Instant closedDate;
 
     private Boolean closed;
