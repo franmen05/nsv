@@ -1,7 +1,6 @@
 package com.nsv.controller;
 
 import com.nsv.domain.Currency;
-import com.nsv.domain.GenericStatus;
 import com.nsv.service.IAccountingClosingService;
 import com.nsv.service.ICurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,55 +41,33 @@ public class AccountingClosingController {
         
         model.addAttribute("currency", new Currency());
         model.addAttribute("currencies", currencyService.findAll());
-        closingService.doClose();
+
         
         return "accounting-closing/maint-accountingclosing";
     }
 
-//    public String getCompany(@PathVariable(name = "id") Long id,Model model) {
-//        model.addAttribute("company", inventoryService.find(id));
-//        model.addAttribute("companys",inventoryService.findAll());
-//        return "company/maint-company";
-//    }
-    
-    @PostMapping("/open")
+    @PostMapping("/doOpen")
     public String doOpen(@Valid Currency c, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
         
         if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_;
-        
-        if(c.getStatus()==null)
-            c.setStatus(GenericStatus.ACTIVE);
-        
-        currencyService.save(c);
-        status.setComplete();
 
-        flash.addFlashAttribute("success", "Guardado con éxito!");
+        closingService.doOpen();
+        flash.addFlashAttribute("success", "La caja esta abierta!");
         return REDIRECT_;
     }
     
     
-    @PostMapping("/inactive")
+    @PostMapping("/doClose")
     public String doClose(@Valid Currency c, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
         if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_;
-        
-        c.setStatus(GenericStatus.INACTIVE);
-        currencyService.save(c);
-//        status.setComplete();
 
-        flash.addFlashAttribute("success", "El item fue inactivado con éxito!");
+        closingService.doClose();
+        flash.addFlashAttribute("success", "Cierre realizado con éxito!");
 
         return REDIRECT_;
     }
 
-//
-//    private boolean hasErrros(BindingResult result, RedirectAttributes flash) {
-//        if (result.hasErrors()) {
-//            flash.addFlashAttribute("success", "Se encontraron errores, favor verificar !");
-//            return true;
-//        }
-//        return false;
-//    }
 }
