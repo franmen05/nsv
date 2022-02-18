@@ -48,7 +48,9 @@
                         
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <button class="btn btn-warning " > <span class="glyphicon glyphicon-ok"></span> Abrir</button>
+
+                                <button  th:if="${not ac.open}"  class="btn btn-warning " > <span class="glyphicon glyphicon-ok"></span> Abrir</button>
+
                                 <a href="#" class="btn btn-danger " th:onclick="'itemsHelper.inactiveItem();'"><span class="glyphicon glyphicon-remove"></span> Cerrar</a>
 <!--                                <a href="#" class="btn btn-secondary " th:onclick="'itemsHelper.clearForm();'"><span class="glyphicon glyphicon-erase"></span> Limpiar</a>-->
                             </div>
@@ -96,7 +98,7 @@
 
         <footer th:replace="layout/mainLayout2 :: footer"></footer>
         <!--<script th:replace="invoice/autocomplete-ac :: javascript"></script>-->
-        <script src="../../static/js/app/currency.js" th:src="@{/js/app/currency.js}"></script>
+        <script src="../../static/js/app/ac.js" th:src="@{/js/app/ac.js}"></script>
         <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
         <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
         <script>

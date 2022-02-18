@@ -5,13 +5,16 @@ import com.nsv.domain.AccountingClosing;
 import com.nsv.exception.NSVException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author franm
  */
 @Service
 public class AccountingClosingService implements IAccountingClosingService {
 
-    public static final String MSJ_ERROR = "No ser ha realizado apertura de caja";
+    public static final String MSJ_ERROR = "No ser ha realizado cierre de caja";
+    public static final String MSJ_ERROR_IS_OPENED = "Caja ya esta abierta";
     private final AccountingClosingDao closingDao;
 
     public AccountingClosingService(AccountingClosingDao closingDao) {
@@ -24,14 +27,24 @@ public class AccountingClosingService implements IAccountingClosingService {
         if(ac.getId() ==null)
             throw new NSVException(MSJ_ERROR);
 
-        ac = closingDao.findById(ac.getId()).orElseThrow(() ->new NSVException(MSJ_ERROR));
+        ac = closingDao.findById(ac.getId()).orElseThrow(() -> new NSVException(MSJ_ERROR));
         closingDao.save(AccountingClosing.doClose(ac));
 
     }
 
     @Override
-    public void doOpen() {
+    public void doOpen() throws NSVException {
+        if(getAccountOpen().isPresent())
+            throw new NSVException(MSJ_ERROR_IS_OPENED);
+
         closingDao.save(AccountingClosing.doOpen());
 
     }
+
+    public Optional<AccountingClosing> getAccountOpen(){
+        return closingDao.findByOpen(true);
+    }
+
+
+
 }

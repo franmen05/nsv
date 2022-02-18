@@ -43,7 +43,7 @@ public class AccountingClosingController {
         
         model.addAttribute("currency", new Currency());
         model.addAttribute("currencies", currencyService.findAll());
-        model.addAttribute("ac", new AccountingClosing());
+        model.addAttribute("ac", closingService.getAccountOpen().orElse(new AccountingClosing()));
 
         
         return "accounting-closing/maint-accountingclosing";
@@ -55,8 +55,14 @@ public class AccountingClosingController {
         
         if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_;
 
-        closingService.doOpen();
-        flash.addFlashAttribute("success", "La caja esta abierta!");
+        try {
+            closingService.doOpen();
+            flash.addFlashAttribute("success", "La caja esta abierta!");
+        } catch (NSVException e) {
+            e.printStackTrace();
+            flash.addFlashAttribute("error", e.getMessage());
+        }
+
         return REDIRECT_;
     }
     

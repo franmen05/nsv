@@ -36,6 +36,7 @@ public class AccountingClosing extends AbstractBaseEntity{
     public static AccountingClosing doClose(AccountingClosing ac) {
 //        final var ac= new AccountingClosing();
         ac.close = true;
+        ac.open = false;
         ac.closedDate = Instant.now();
 
         return ac;
@@ -52,11 +53,16 @@ public class AccountingClosing extends AbstractBaseEntity{
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Boolean getClose() {
         return close;
     }
 
     public Boolean getOpen() {
+        if(open== null) return false;
         return open;
     }
 
