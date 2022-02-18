@@ -24,6 +24,12 @@ public class Payment   extends AbstractBaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private PaymentType paymentType;
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private AccountingClosing accountingClosing;
+
+
+
     public Payment() { }
 
     public Long getId() {
@@ -64,5 +70,13 @@ public class Payment   extends AbstractBaseEntity{
 
     public void setVoucher(String voucher) {
         this.voucher = voucher;
+    }
+
+    public AccountingClosing getAccountingClosing() {
+        return accountingClosing;
+    }
+
+    public void setAccountingClosing(AccountingClosing accountingClosing) {
+        this.accountingClosing = accountingClosing;
     }
 }

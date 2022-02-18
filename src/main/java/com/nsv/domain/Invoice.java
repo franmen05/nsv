@@ -71,7 +71,9 @@ public class Invoice extends  AbstractBaseEntity {
     private Customer customer;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    private Subsidiary subsidiary;   
+    private Subsidiary subsidiary;
+
+
     
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
@@ -455,4 +457,5 @@ public class Invoice extends  AbstractBaseEntity {
     public Instant getClosedDate() {
         return closedDate;
     }
+
 }

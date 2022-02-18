@@ -5,16 +5,13 @@
  */
 package com.nsv.service;
 
-import com.nsv.domain.AdditionalExpense;
-import com.nsv.domain.Currency;
-import com.nsv.domain.Invoice;
-import com.nsv.domain.Payment;
-import com.nsv.domain.PaymentType;
-import com.nsv.domain.Tax;
-import java.util.List;
-import java.util.Optional;
+import com.nsv.domain.*;
+import com.nsv.exception.NSVException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -22,7 +19,7 @@ import org.springframework.data.domain.Pageable;
  */
 public interface IInvoiceService {    
 
-    Invoice saveInvoice(Invoice invoice);
+    Invoice saveInvoice(Invoice invoice) throws NSVException;
     Invoice findInvoiceById(Long id);
     void deleteInvoice(Long id);
     

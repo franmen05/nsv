@@ -43,6 +43,7 @@ public class InvoiceController {
     private final INCFService ncfService;
     private final ICurrencyService currencyService;
     private final IQuotationService quotationService;
+    private final AccountingClosingService accountingClosingService;
 
     
     
@@ -50,13 +51,15 @@ public class InvoiceController {
 
     public InvoiceController(ICustomerService customerService, IInvoiceService invoiceService,
                              IInventoryService inventoryService, INCFService ncfService,
-                             ICurrencyService currencyService, IQuotationService quotationService) {
+                             ICurrencyService currencyService, IQuotationService quotationService,
+                             AccountingClosingService accountingClosingService) {
         this.customerService = customerService;
         this.invoiceService = invoiceService;
         this.inventoryService = inventoryService;
         this.ncfService = ncfService;
         this.currencyService = currencyService;
         this.quotationService = quotationService;
+        this.accountingClosingService = accountingClosingService;
     }
 
 
@@ -224,17 +227,26 @@ public class InvoiceController {
         model.addAttribute("topExpensive", pae);
 
         if (hasErrors(_invoice, result, model, itemId)) return "invoice/new-invoice";
-        saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost,dicounts);
+
+        try {
+            saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost,dicounts);
+            flash.addFlashAttribute("success", "Factura creada con éxito!");
+            return home(_invoice.getId(), "Factura",model);
+        } catch (NSVException e) {
+            e.printStackTrace();
+            flash.addFlashAttribute("error", e.getMessage());
+            return "invoice/new-invoice";
+        }
 //        model.addAttribute("invoice", invoice);
 //        status.setComplete();
 
-        flash.addFlashAttribute("success", "Factura creada con éxito!");
+
 
 //        return "redirect:/invoice/ver/" + invoice.getCustomer().getId();
-        return home(_invoice.getId(), "Factura",model);
+
     }
 
-    private Invoice saveInvoice(Long[] itemId, Long[] cantidad, Invoice _invoice, Long[] aeItemId, Double[] aeCost,Long[] discounts) {
+    private Invoice saveInvoice(Long[] itemId, Long[] cantidad, Invoice _invoice, Long[] aeItemId, Double[] aeCost,Long[] discounts) throws NSVException {
         
         for (int i = 0; i < itemId.length; i++) {
             Product product = inventoryService.findProduct(itemId[i]);
@@ -286,18 +298,28 @@ public class InvoiceController {
 
         if (hasErrors(_invoice, result, model, itemId))  return "invoice/new-invoice";
 
-        Invoice i= saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost, discounts);
-        
-        if(i==null){
-            model.addAttribute("error", "Error: La factura no puedo ser guardada!");
-                return "invoice/payment-invoice";
+
+        try {
+
+            Invoice i = saveInvoice(itemId, cantidad, _invoice, aeItemId, aeCost, discounts);
+
+            if(i==null){
+                model.addAttribute("error", "Error: La factura no puedo ser guardada!");
+                    return "invoice/payment-invoice";
+            }
+
+            model.addAttribute("invoice", invoiceService.findInvoiceById(_invoice.getId()));
+    //        model.addAttribute("invoice", _invoice);
+            model.addAttribute("paymentsTypes", invoiceService.findAllPaymentType());
+
+            return "invoice/payment-invoice";
+
+        } catch (NSVException e) {
+            e.printStackTrace();
+            model.addAttribute("error", e.getMessage());
+
+            return "invoice/new-invoice";
         }
-
-        model.addAttribute("invoice", invoiceService.findInvoiceById(_invoice.getId()));
-//        model.addAttribute("invoice", _invoice);
-        model.addAttribute("paymentsTypes", invoiceService.findAllPaymentType());
-
-        return "invoice/payment-invoice";
     }
 
     private boolean hasErrors(@Valid Invoice _invoice, BindingResult result, Model model,
@@ -349,7 +371,10 @@ public class InvoiceController {
 //            return "invoice/new-invoice";
 //        }
 
-        
+
+
+//        invoice.setAccountingClosing(ac);
+        AccountingClosing ac = null;
         if (!ArrayUtils.isEmpty(itemTypePayment) && !ArrayUtils.isEmpty(itemValuePayment)) {
             for (int i = 0; i < itemTypePayment.length; i++) {
 
@@ -359,6 +384,11 @@ public class InvoiceController {
                 if(value == null ) continue;
                 try {
 
+                    if(ac==null)
+                        ac = accountingClosingService.getAccountOpen()
+                            .orElseThrow( () -> new NSVException2(AccountingClosingService.MSJ_ERROR_IS_NOT_OPEN));
+
+                    pay.setAccountingClosing(ac);
 
                     invoiceService.findPaymentType(itemTypePayment[i]).ifPresent((t) -> {
 
@@ -372,13 +402,12 @@ public class InvoiceController {
                             else {
     //                            model.addAttribute("error", "Error: Voucher no encontrado!");
                                 throw new NSVException2("Voucher Solo puede ser nulo para pagos en efectivo");
-
                             }
                         }
                         invoice.addPayment(pay);
                     });
                 } catch (NSVException2 ex) {
-
+                    ex.printStackTrace();
                     model.addAttribute("error", "Error: "+ex.getMessage());
                     return paymentHome(invoice.getId(),model);
                 }
@@ -389,36 +418,45 @@ public class InvoiceController {
 
         if(!StringUtils.hasText(bPartialPayment))
             invoice.close();
-        
-        Invoice i= invoiceService.saveInvoice(invoice);
-        String title="Factura";
-        
-        if(i==null){
-            model.addAttribute("error", "Error: La factura NO puedo ser guardada!");
-            return "invoice/payment-invoice";
-            
-        }else{
-        
-            if (!StringUtils.hasText(bPartialPayment)) {
-                
-                log.info(bPartialPayment); 
-                if (i.getHasNCF()) {
-                    try {
-                        ncfService.addInvoice(i);
-                    } catch (NSVException ex) {
 
-                        model.addAttribute("error", "Error: La factura, no se puedo agregar NCF");
-                        return "invoice/payment-invoice";
-                    }
-                }
+        Invoice i= null;
+        try {
+            i = invoiceService.saveInvoice(invoice);
+
+            String title="Factura";
+
+            if(i==null){
+                model.addAttribute("error", "Error: La factura NO puedo ser guardada!");
+                return "invoice/payment-invoice";
+
             }else{
-                title+="(Abono)";
+
+                if (!StringUtils.hasText(bPartialPayment)) {
+
+                    log.info(bPartialPayment);
+                    if (i.getHasNCF()) {
+                        try {
+                            ncfService.addInvoice(i);
+                        } catch (NSVException ex) {
+
+                            model.addAttribute("error", "Error: La factura, no se puedo agregar NCF");
+                            return "invoice/payment-invoice";
+                        }
+                    }
+                }else{
+                    title+="(Abono)";
+                }
+
+                flash.addFlashAttribute("success", "Factura creada con éxito!");
             }
 
-            flash.addFlashAttribute("success", "Factura creada con éxito!");
+            return home(invoice.getId(), title,model);
+
+        } catch (NSVException e) {
+            e.printStackTrace();
+            flash.addFlashAttribute("error", e.getMessage());
+            return paymentHome(invoice.getId(),model);
         }
-        
-        return home(invoice.getId(), title,model);
     }    
     
     @RequestMapping("/print/{idInvoice}")

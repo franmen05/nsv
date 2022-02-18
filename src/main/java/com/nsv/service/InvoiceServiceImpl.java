@@ -5,25 +5,15 @@
  */
 package com.nsv.service;
 
-import com.nsv.dao.IAdditionalExpenseDao;
-import com.nsv.dao.ICurrencyDao;
-import com.nsv.dao.ICustomerDao;
-import com.nsv.dao.IInvoiceDao;
-import com.nsv.dao.IPaymentDao;
-import com.nsv.dao.IPaymentTypeDao;
-import com.nsv.dao.IProductDao;
-import com.nsv.dao.ITaxDao;
-import com.nsv.domain.AdditionalExpense;
-import com.nsv.domain.Invoice;
-import com.nsv.domain.Payment;
-import com.nsv.domain.PaymentType;
-import com.nsv.domain.Tax;
-import java.util.List;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.nsv.dao.*;
+import com.nsv.domain.*;
+import com.nsv.exception.NSVException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -32,29 +22,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class InvoiceServiceImpl implements IInvoiceService {
 
-    @Autowired 
-    private ICustomerDao customerDao;
+    private static final String REDIRECT_ = "redirect:/accountingclosing/";
 
-    @Autowired
-    private IProductDao productDao;
-    
-    @Autowired
-    private ITaxDao taxDao;
-    
-    @Autowired
-    private IAdditionalExpenseDao additionalExpenseDao;
+    private final ICustomerDao customerDao;
+    private final IProductDao productDao;
+    private final ITaxDao taxDao;
+    private final IAdditionalExpenseDao additionalExpenseDao;
+    private final IInvoiceDao invoiceDao;
+    private final IPaymentDao paymentDao;
+    private final IPaymentTypeDao paymentTypeDao;
+    private final ICurrencyDao currencyDao;
+    private final AccountingClosingService accountingClosingService;
 
-    @Autowired
-    private IInvoiceDao invoiceDao;
-
-    @Autowired
-    private IPaymentDao paymentDao;
-
-    @Autowired
-    private IPaymentTypeDao paymentTypeDao;
-
-    @Autowired
-    private ICurrencyDao currencyDao;
+    public InvoiceServiceImpl(ICustomerDao customerDao, IProductDao productDao, ITaxDao taxDao,
+                              IAdditionalExpenseDao additionalExpenseDao, IInvoiceDao invoiceDao,
+                              IPaymentDao paymentDao, IPaymentTypeDao paymentTypeDao, ICurrencyDao currencyDao,
+                              AccountingClosingService accountingClosingService) {
+        this.customerDao = customerDao;
+        this.productDao = productDao;
+        this.taxDao = taxDao;
+        this.additionalExpenseDao = additionalExpenseDao;
+        this.invoiceDao = invoiceDao;
+        this.paymentDao = paymentDao;
+        this.paymentTypeDao = paymentTypeDao;
+        this.currencyDao = currencyDao;
+        this.accountingClosingService = accountingClosingService;
+    }
 
     @Override
     public List<Tax> findTaxesByTaxGroup(Long id) {
@@ -73,7 +66,11 @@ public class InvoiceServiceImpl implements IInvoiceService {
     }
     
     @Override
-    public Invoice saveInvoice(Invoice invoice) {
+    public Invoice saveInvoice(Invoice invoice) throws NSVException {
+
+        accountingClosingService.getAccountOpen()
+                .orElseThrow( () -> new NSVException(AccountingClosingService.MSJ_ERROR_IS_NOT_OPEN));
+
        return invoiceDao.save(invoice);
     }
 
@@ -131,12 +128,12 @@ public class InvoiceServiceImpl implements IInvoiceService {
     public Page<AdditionalExpense> findAllAdditionalExpenses(Pageable pageable) {
            return  additionalExpenseDao.findAll(pageable);
     }
-    
-    
+
+
 
     @Override
     public void saveAdditionalExpense(AdditionalExpense additionalExpense) {
         additionalExpenseDao.save(additionalExpense);
     }
-    
+
 }

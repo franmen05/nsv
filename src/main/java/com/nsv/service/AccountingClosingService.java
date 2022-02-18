@@ -13,8 +13,10 @@ import java.util.Optional;
 @Service
 public class AccountingClosingService implements IAccountingClosingService {
 
-    public static final String MSJ_ERROR = "No ser ha realizado cierre de caja";
+    public static final String MSJ_ERROR = "No se ha realizado cierre de caja";
     public static final String MSJ_ERROR_IS_OPENED = "Caja ya esta abierta";
+    public static final String MSJ_ERROR_IS_NOT_OPEN = "Se no ha abierto la caja ";
+
     private final AccountingClosingDao closingDao;
 
     public AccountingClosingService(AccountingClosingDao closingDao) {
