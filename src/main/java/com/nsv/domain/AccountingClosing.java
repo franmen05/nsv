@@ -33,10 +33,11 @@ public class AccountingClosing extends AbstractBaseEntity{
 
     public AccountingClosing() { }
 
-    public static AccountingClosing doClose() {
-        final var ac= new AccountingClosing();
+    public static AccountingClosing doClose(AccountingClosing ac) {
+//        final var ac= new AccountingClosing();
         ac.close = true;
         ac.closedDate = Instant.now();
+
         return ac;
     }
 

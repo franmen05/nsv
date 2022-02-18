@@ -5,6 +5,9 @@
  */
 package com.nsv.service;
 
+import com.nsv.domain.AccountingClosing;
+import com.nsv.exception.NSVException;
+
 /**
  *
  * @author franm
@@ -32,6 +35,6 @@ public interface IAccountingClosingService {
 //
 //    void deleteExchangeRate(Long id);
 
-    void doClose();
+    void doClose(AccountingClosing ac) throws NSVException;
     void doOpen();
 }

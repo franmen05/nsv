@@ -1,6 +1,8 @@
 package com.nsv.controller;
 
+import com.nsv.domain.AccountingClosing;
 import com.nsv.domain.Currency;
+import com.nsv.exception.NSVException;
 import com.nsv.service.IAccountingClosingService;
 import com.nsv.service.ICurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,7 @@ public class AccountingClosingController {
         
         model.addAttribute("currency", new Currency());
         model.addAttribute("currencies", currencyService.findAll());
+        model.addAttribute("ac", new AccountingClosing());
 
         
         return "accounting-closing/maint-accountingclosing";
@@ -59,13 +62,19 @@ public class AccountingClosingController {
     
     
     @PostMapping("/doClose")
-    public String doClose(@Valid Currency c, BindingResult result, Model model,
-            RedirectAttributes flash, SessionStatus status) {
+    public String doClose( AccountingClosing ac, BindingResult result, Model model,
+                          RedirectAttributes flash, SessionStatus status) {
 
         if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_;
 
-        closingService.doClose();
-        flash.addFlashAttribute("success", "Cierre realizado con éxito!");
+        try {
+            closingService.doClose(ac);
+            flash.addFlashAttribute("success", "Cierre realizado con éxito!");
+        } catch (NSVException e) {
+            e.printStackTrace();
+            flash.addFlashAttribute("error", e.getMessage());
+        }
+
 
         return REDIRECT_;
     }
