@@ -8,6 +8,7 @@ package com.nsv.service;
 import com.nsv.domain.AccountingClosing;
 import com.nsv.exception.NSVException;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -41,4 +42,5 @@ public interface IAccountingClosingService {
     void doOpen() throws NSVException;
 
     Optional<AccountingClosing> getAccountOpen();
+    List<AccountingClosing> findAll();
 }

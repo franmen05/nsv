@@ -61,27 +61,16 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Nombre</th> 
-                                    <th>RNC</th>
-                                    <th>Email</th>
-                                    <th>Estado</th>
-                                    <th>Fecha Creacion</th>
-                                    <th>Fecha Actualizacion</th>
-                                    <th>Direccion</th>
-                                    <th>Nota</th>
+                                    <th>Fecha Apertuda</th>
+                                    <th>FEcha Cierre</th>
                                 </tr>   
                             </thead>
                             <tbody>
                                 <tr th:each="item: ${acs}">
                                     <td  th:text="${item.id}"></td>
-                                    <td th:text="${item.name}"></td>
-                                    <td th:text="${item.RNC}"></td>
-                                    <td th:text="${item.email}"></td>
-                                    <td th:text="${item.status}"></td>
-                                    <td th:text="${item.createDate}"></td>
-                                    <td th:text="${item.lastUpdateDate}"></td>
-                                    <td th:text="${item.address}"></td>
-                                    <td th:text="${item.comment}"></td>
+                                    <td th:text="${item.getCreateDate()}"></td>
+                                    <td th:text="${item.closedDate}"></td>
+
                                 </tr>
                             </tbody>
                         </table>

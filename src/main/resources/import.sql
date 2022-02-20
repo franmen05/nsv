@@ -177,9 +177,13 @@ INSERT INTO users (username, password, enabled) VALUES('admin', '$2a$10$DOMDxjYy
 INSERT INTO users_roles (user_id, rol) VALUES(1, 'ROLE_USER');
 INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_USER');
 INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ADMIN');
+INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ACCOUNTING_CLOSER');
+INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ACCOUNTING_OPENER');
 
 
 INSERT INTO  roles ( authority) VALUES( 'ROLE_ADMIN');
 INSERT INTO  roles ( authority) VALUES( 'ROLE_USER');
 INSERT INTO  roles ( authority) VALUES( 'ROLE_SALER');
 INSERT INTO  roles ( authority) VALUES( 'ROLE_OPERATIONS');
+INSERT INTO  roles ( authority) VALUES( 'ROLE_ACCOUNTING_OPENER');
+INSERT INTO  roles ( authority) VALUES( 'ROLE_ACCOUNTING_CLOSER');

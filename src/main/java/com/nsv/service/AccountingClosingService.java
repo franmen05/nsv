@@ -5,6 +5,7 @@ import com.nsv.domain.AccountingClosing;
 import com.nsv.exception.NSVException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -47,6 +48,8 @@ public class AccountingClosingService implements IAccountingClosingService {
         return closingDao.findByOpen(true);
     }
 
-
-
+    @Override
+    public List<AccountingClosing> findAll() {
+        return (List<AccountingClosing>) closingDao.findAll();
+    }
 }

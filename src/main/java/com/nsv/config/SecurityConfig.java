@@ -21,7 +21,12 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-    
+	public static final String ROLE_SALER = "ROLE_SALER";
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+	public static final String ROLE_OPERATIONS = "ROLE_OPERATIONS";
+	public static final String ROLE_ACCOUNTING_OPENER = "ROLE_ACCOUNTING_OPENER";
+	public static final String ROLE_ACCOUNTING_CLOSER = "ROLE_ACCOUNTING_CLOSER";
+
     private final static Log log = LogFactory.getLog(SecurityConfig.class);
 	private final LoginSuccessHandler successHandler;
 

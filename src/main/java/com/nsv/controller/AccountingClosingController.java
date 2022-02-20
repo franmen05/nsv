@@ -1,5 +1,6 @@
 package com.nsv.controller;
 
+import com.nsv.config.SecurityConfig;
 import com.nsv.domain.AccountingClosing;
 import com.nsv.domain.Currency;
 import com.nsv.exception.NSVException;
@@ -22,7 +23,7 @@ import javax.validation.Valid;
  * @author franm
  */
 @Controller
-@Secured( "ROLE_ADMIN")
+@Secured( {SecurityConfig.ROLE_ADMIN})
 @RequestMapping("/accountingclosing")
 public class AccountingClosingController {
     
@@ -42,15 +43,16 @@ public class AccountingClosingController {
     public String home(Model model) {
         
         model.addAttribute("currency", new Currency());
-        model.addAttribute("currencies", currencyService.findAll());
+        model.addAttribute("acs", closingService.findAll());
         model.addAttribute("ac", closingService.getAccountOpen().orElse(new AccountingClosing()));
 
         
         return "accounting-closing/maint-accountingclosing";
     }
 
+    @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
     @PostMapping("/doOpen")
-    public String doOpen(@Valid Currency c, BindingResult result, Model model,
+    public String doOpen(@Valid AccountingClosing ac, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
         
         if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_;
@@ -65,8 +67,9 @@ public class AccountingClosingController {
 
         return REDIRECT_;
     }
-    
-    
+
+
+    @Secured( SecurityConfig.ROLE_ACCOUNTING_CLOSER)
     @PostMapping("/doClose")
     public String doClose( AccountingClosing ac, BindingResult result, Model model,
                           RedirectAttributes flash, SessionStatus status) {

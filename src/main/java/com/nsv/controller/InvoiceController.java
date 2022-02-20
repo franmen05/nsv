@@ -23,19 +23,24 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.nsv.config.SecurityConfig.*;
+
 /**
  *
  * @author you_k
  */
 @Controller
-@Secured( {"ROLE_ADMIN","ROLE_SALER","ROLE_OPERATIONS"})
+@Secured( {ROLE_ADMIN, ROLE_SALER, ROLE_OPERATIONS})
 @RequestMapping("/invoice")
 @SessionAttributes({"invoice", "titulo", "currencies","paymentsTypes"})
 public class InvoiceController {
 
+
     private static final Log log = LogFactory.getLog(InvoiceController.class);
     
     private static final String REDIRECT_CUSTOMER= "redirect:/customer/ver/";
+
+
 
     private final ICustomerService customerService;
     private final IInvoiceService invoiceService;
