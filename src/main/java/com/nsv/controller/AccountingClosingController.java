@@ -1,12 +1,12 @@
 package com.nsv.controller;
 
 import com.nsv.config.SecurityConfig;
+import com.nsv.controller.dto.ReportDate;
 import com.nsv.domain.AccountingClosing;
-import com.nsv.domain.Currency;
 import com.nsv.exception.NSVException;
 import com.nsv.service.IAccountingClosingService;
-import com.nsv.service.ICurrencyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.nsv.service.IReportService;
+import com.nsv.utils.DateUtil;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,35 +26,63 @@ import javax.validation.Valid;
 @Secured( {SecurityConfig.ROLE_ADMIN})
 @RequestMapping("/accountingclosing")
 public class AccountingClosingController {
-    
+
     private static final String REDIRECT_ = "redirect:/accountingclosing/";
-    
-    @Autowired
-    private ICurrencyService currencyService;
+    public static final String RD = "accounting-closing/rep-salesToday";
+    public static final String REDIRECT_RD = "redirect:/accountingclosing/rep-salesToday";
+
 
     private final IAccountingClosingService closingService;
+    private final IReportService reportService;
 
-    public AccountingClosingController(IAccountingClosingService closingService) {
+    public AccountingClosingController(IAccountingClosingService closingService, IReportService reportService) {
         this.closingService = closingService;
+        this.reportService = reportService;
+    }
+
+
+    @RequestMapping(value={"/rep-salesToday"})
+    public String home2(AccountingClosing ac,Model model) {
+
+        model.addAttribute("daySales", reportService.findAllDaySales());
+        model.addAttribute("rd", new ReportDate(""));
+        
+        return RD;
+    }
+
+//    @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
+    @PostMapping("/rep-salesToday")
+    public String selectedDate(ReportDate date, BindingResult result, Model model,
+            RedirectAttributes flash, SessionStatus status) {
+
+        model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(date.date())));
+        model.addAttribute("rd", new ReportDate(""));
+
+//        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_RD;
+
+
+//        reportService.findAllDaySales()
+
+        return RD;
     }
 
 
     @RequestMapping(value={"/",""})
     public String home(Model model) {
-        
-        model.addAttribute("currency", new Currency());
+
         model.addAttribute("acs", closingService.findAll());
         model.addAttribute("ac", closingService.getAccountOpen().orElse(new AccountingClosing()));
 
-        
+
         return "accounting-closing/maint-accountingclosing";
     }
+
 
     @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
     @PostMapping("/doOpen")
     public String doOpen(@Valid AccountingClosing ac, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
-        
+
         if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_;
 
         try {

@@ -32,12 +32,12 @@
                             </div>
                         </div>
                         
-                        <div class="form-group row">
-                            <label for="datepicker" class="col-sm-2 col-form-label" th:text="'Fecha'"></label>
-                            <div class="col-sm-6">
-                                <input id="datepicker" width="270" class="form-control"  />
-                            </div>
-                        </div>
+<!--                        <div class="form-group row">-->
+<!--                            <label for="date" class="col-sm-2 col-form-label" th:text="'Fecha'"></label>-->
+<!--                            <div class="col-sm-6">-->
+<!--                                <input id="date" width="270" class="form-control"  />-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="container">
                             <div class="row">
                                 <div class='col-sm-6'>
@@ -51,8 +51,9 @@
 
                                 <button  th:if="${not ac.open}"  class="btn btn-warning " > <span class="glyphicon glyphicon-ok"></span> Abrir</button>
 
+
                                 <a href="#" class="btn btn-danger " th:onclick="'itemsHelper.inactiveItem();'"><span class="glyphicon glyphicon-remove"></span> Cerrar</a>
-<!--                                <a href="#" class="btn btn-secondary " th:onclick="'itemsHelper.clearForm();'"><span class="glyphicon glyphicon-erase"></span> Limpiar</a>-->
+                                <a href="/accountingclosing/rep-salesToday" class="btn btn-facebook " > <span class="glyphicon glyphicon-ok"></span> Reporte Ventas Dia</a>
                             </div>
                         </div>
                         </form>
@@ -62,7 +63,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Fecha Apertuda</th>
-                                    <th>FEcha Cierre</th>
+                                    <th>Fecha Cierre</th>
                                 </tr>   
                             </thead>
                             <tbody>
