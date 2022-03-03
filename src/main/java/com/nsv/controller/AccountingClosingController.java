@@ -10,6 +10,7 @@ import com.nsv.utils.DateUtil;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,14 +53,18 @@ public class AccountingClosingController {
 
 //    @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
     @PostMapping("/rep-salesToday")
-    public String selectedDate(ReportDate date, BindingResult result, Model model,
+    public String selectedDate(@Valid ReportDate date, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
+
+
+        if (date==null || !StringUtils.hasText(date.date()) ){
+            flash.addFlashAttribute("error", "Debe seleccionar una fecha !");
+            return REDIRECT_RD;
+        }
+        if (ControllerUtil.hasErrros(result, flash) ) return REDIRECT_RD;
 
         model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(date.date())));
         model.addAttribute("rd", new ReportDate(""));
-
-//        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_RD;
-
 
 //        reportService.findAllDaySales()
 
