@@ -5,6 +5,7 @@
  */
 package com.nsv.service;
 
+import com.nsv.domain.Payment;
 import com.nsv.domain.report.DaySales;
 
 import java.time.Instant;
@@ -18,4 +19,5 @@ public interface IReportService {
 
     List<DaySales> findAllDaySales();
     List<DaySales> findAllDaySalesByDate(Instant date);
+    List<Payment> findAllPaymentByAccountClosing(Long id);
 }

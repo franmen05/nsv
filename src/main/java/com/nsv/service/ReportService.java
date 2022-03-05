@@ -2,6 +2,8 @@ package com.nsv.service;
 
 import com.nsv.dao.AccountingClosingDao;
 import com.nsv.dao.IInvoiceDao;
+import com.nsv.dao.IPaymentDao;
+import com.nsv.domain.Payment;
 import com.nsv.domain.report.DaySales;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +22,20 @@ public class ReportService implements IReportService {
 
     private final AccountingClosingDao closingDao;
     private final IInvoiceDao invoiceDao;
+    private final IPaymentDao paymentDao;
 
-    public ReportService(AccountingClosingDao closingDao, IInvoiceDao invoiceDao) {
+
+    public ReportService(AccountingClosingDao closingDao, IInvoiceDao invoiceDao, IPaymentDao paymentDao) {
         this.closingDao = closingDao;
         this.invoiceDao = invoiceDao;
+        this.paymentDao = paymentDao;
     }
 
     @Override
     public List<DaySales> findAllDaySales() {
          var invoice = invoiceDao.findAllByClosedIsTrue();
          return invoice.stream()
-                 .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()))
+                 .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()    ))
                  .collect(Collectors.toList());
     }
 //    @Override
@@ -47,6 +52,11 @@ public class ReportService implements IReportService {
         return invoice.stream()
                 .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()))
                 .collect(Collectors.toList());
+
+    }
+    public List<Payment> findAllPaymentByAccountClosing(Long id) {
+
+        return paymentDao.findAllByInvoiceId(id);
 
     }
 }

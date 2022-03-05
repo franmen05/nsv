@@ -4,6 +4,8 @@ import com.nsv.domain.Payment;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  *
  * @author you_k
@@ -13,6 +15,8 @@ public interface IPaymentDao extends PagingAndSortingRepository<Payment, Long> {
     
 //    @Query("select t from Tax t where t.taxGroup.id=?1 ")
 //    List<Tax> findByTaxGroup(Long term);
-    
+
+    List<Payment> findAllByInvoiceId(Long id);
+
     
 }

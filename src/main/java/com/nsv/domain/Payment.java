@@ -28,6 +28,9 @@ public class Payment   extends AbstractBaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private AccountingClosing accountingClosing;
 
+    @Column(nullable = false,name = "invoice_id")
+    private Long invoiceId;
+
 
 
     public Payment() { }
@@ -78,5 +81,9 @@ public class Payment   extends AbstractBaseEntity{
 
     public void setAccountingClosing(AccountingClosing accountingClosing) {
         this.accountingClosing = accountingClosing;
+    }
+
+    public Long getInvoiceId() {
+        return invoiceId;
     }
 }

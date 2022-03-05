@@ -75,8 +75,5 @@ public class PaymentType   extends AbstractBaseEntity{
     public void setStatus(GenericStatus status) {
         this.status = status;
     }
-    
-    
 
-    
 }

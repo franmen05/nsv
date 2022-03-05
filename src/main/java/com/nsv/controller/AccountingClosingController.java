@@ -1,7 +1,7 @@
 package com.nsv.controller;
 
 import com.nsv.config.SecurityConfig;
-import com.nsv.controller.dto.ReportDate;
+import com.nsv.controller.dto.ReportDateDTO;
 import com.nsv.domain.AccountingClosing;
 import com.nsv.exception.NSVException;
 import com.nsv.service.IAccountingClosingService;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
@@ -30,6 +32,7 @@ public class AccountingClosingController {
 
     private static final String REDIRECT_ = "redirect:/accountingclosing/";
     public static final String RD = "accounting-closing/rep-salesToday";
+    public static final String RP = "accounting-closing/rep-payment-details";
     public static final String REDIRECT_RD = "redirect:/accountingclosing/rep-salesToday";
 
 
@@ -46,15 +49,15 @@ public class AccountingClosingController {
     public String home2(AccountingClosing ac,Model model) {
 
         model.addAttribute("daySales", reportService.findAllDaySales());
-        model.addAttribute("rd", new ReportDate(""));
+        model.addAttribute("rd", new ReportDateDTO(""));
         
         return RD;
     }
 
 //    @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
     @PostMapping("/rep-salesToday")
-    public String selectedDate(@Valid ReportDate date, BindingResult result, Model model,
-            RedirectAttributes flash, SessionStatus status) {
+    public String selectedDate(@Valid ReportDateDTO date, BindingResult result, Model model,
+                               RedirectAttributes flash, SessionStatus status) {
 
 
         if (date==null || !StringUtils.hasText(date.date()) ){
@@ -64,11 +67,25 @@ public class AccountingClosingController {
         if (ControllerUtil.hasErrros(result, flash) ) return REDIRECT_RD;
 
         model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(date.date())));
-        model.addAttribute("rd", new ReportDate(""));
+        model.addAttribute("rd", new ReportDateDTO(""));
 
 //        reportService.findAllDaySales()
 
         return RD;
+    }
+
+//    @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
+    @GetMapping("/rep-paymentDetails/{idInvoice}")
+    public String details(@PathVariable Long idInvoice, Model model,
+                          RedirectAttributes flash, SessionStatus status) {
+
+
+        model.addAttribute("paymentDetails", reportService.findAllPaymentByAccountClosing(idInvoice));
+        model.addAttribute("rd", new ReportDateDTO(""));
+
+//        reportService.findAllDaySales()
+
+        return RP;
     }
 
 
