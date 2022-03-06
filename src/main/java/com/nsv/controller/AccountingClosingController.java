@@ -45,7 +45,7 @@ public class AccountingClosingController {
     }
 
 
-    @RequestMapping(value={"/rep-salesToday"})
+    @GetMapping(value={"/rep-salesToday"})
     public String homeReport(Model model) {
 
         model.addAttribute("daySales", reportService.findAllDaySales());
@@ -55,11 +55,10 @@ public class AccountingClosingController {
     }
 
 
-
 //    @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
     @PostMapping("/rep-salesToday")
     public String selectedDate(@Valid SalesTodayDTO salesToday, BindingResult result, Model model,
-                               RedirectAttributes flash, SessionStatus status) {
+                               RedirectAttributes flash) {
 
 
         if (salesToday==null || (!StringUtils.hasText(salesToday.date())  &&  null ==salesToday.id()) ){
@@ -69,7 +68,11 @@ public class AccountingClosingController {
 
         if (ControllerUtil.hasErrros(result, flash) ) return REDIRECT_RD;
 
-        model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(salesToday.date())));
+        if(StringUtils.hasText(salesToday.date()))
+            model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(salesToday.date())));
+        else
+            model.addAttribute("daySales", reportService.findInvoiceById( salesToday.id()));
+
         model.addAttribute("rd",  new SalesTodayDTO("", 0L));
 
 //        reportService.findAllDaySales()
@@ -79,8 +82,7 @@ public class AccountingClosingController {
 
 //    @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
     @GetMapping("/rep-paymentDetails/{idInvoice}")
-    public String details(@PathVariable Long idInvoice, Model model,
-                          RedirectAttributes flash, SessionStatus status) {
+    public String details(@PathVariable Long idInvoice, Model model) {
 
 
         model.addAttribute("paymentDetails", reportService.findAllPaymentByAccountClosing(idInvoice));
