@@ -5,6 +5,7 @@
  */
 package com.nsv.service;
 
+import com.nsv.domain.Invoice;
 import com.nsv.domain.Payment;
 import com.nsv.domain.report.DaySales;
 
@@ -20,4 +21,5 @@ public interface IReportService {
     List<DaySales> findAllDaySales();
     List<DaySales> findAllDaySalesByDate(Instant date);
     List<Payment> findAllPaymentByAccountClosing(Long id);
+    Invoice findInvoiceById(Long id);
 }

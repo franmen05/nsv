@@ -34,6 +34,18 @@
                                 <button   class="btn btn-primary " > <span class="glyphicon glyphicon-ok"></span> Buscar</button>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label th:for="date" class="col-sm-2 col-form-label" th:text="'Fecha'"></label>
+                            <div class="col-sm-4">
+                                <input th:field="${rd.date}" type="date" width="270" class="form-control"  />
+
+<!--                                <p th:text="${#temporals.formatISO(rd.date)}"></p>-->
+
+                            </div>
+                            <div class="col-sm-2">
+                                <button   class="btn btn-primary " > <span class="glyphicon glyphicon-ok"></span> Buscar</button>
+                            </div>
+                        </div>
                         <div class="container">
                             <div class="row">
                                 <div class='col-sm-6'>

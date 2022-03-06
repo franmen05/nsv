@@ -1,7 +1,7 @@
 package com.nsv.controller;
 
 import com.nsv.config.SecurityConfig;
-import com.nsv.controller.dto.ReportDateDTO;
+import com.nsv.controller.dto.SalesTodayDTO;
 import com.nsv.domain.AccountingClosing;
 import com.nsv.exception.NSVException;
 import com.nsv.service.IAccountingClosingService;
@@ -46,28 +46,31 @@ public class AccountingClosingController {
 
 
     @RequestMapping(value={"/rep-salesToday"})
-    public String home2(AccountingClosing ac,Model model) {
+    public String homeReport(Model model) {
 
         model.addAttribute("daySales", reportService.findAllDaySales());
-        model.addAttribute("rd", new ReportDateDTO(""));
+        model.addAttribute("rd", new SalesTodayDTO("", 0L));
         
         return RD;
     }
 
+
+
 //    @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
     @PostMapping("/rep-salesToday")
-    public String selectedDate(@Valid ReportDateDTO date, BindingResult result, Model model,
+    public String selectedDate(@Valid SalesTodayDTO salesToday, BindingResult result, Model model,
                                RedirectAttributes flash, SessionStatus status) {
 
 
-        if (date==null || !StringUtils.hasText(date.date()) ){
+        if (salesToday==null || (!StringUtils.hasText(salesToday.date())  &&  null ==salesToday.id()) ){
             flash.addFlashAttribute("error", "Debe seleccionar una fecha !");
             return REDIRECT_RD;
         }
+
         if (ControllerUtil.hasErrros(result, flash) ) return REDIRECT_RD;
 
-        model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(date.date())));
-        model.addAttribute("rd", new ReportDateDTO(""));
+        model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(salesToday.date())));
+        model.addAttribute("rd",  new SalesTodayDTO("", 0L));
 
 //        reportService.findAllDaySales()
 
@@ -81,7 +84,8 @@ public class AccountingClosingController {
 
 
         model.addAttribute("paymentDetails", reportService.findAllPaymentByAccountClosing(idInvoice));
-        model.addAttribute("rd", new ReportDateDTO(""));
+        model.addAttribute("invoice", reportService.findInvoiceById(idInvoice));
+        model.addAttribute("rd", new SalesTodayDTO("", 0L));
 
 //        reportService.findAllDaySales()
 

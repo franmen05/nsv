@@ -12,13 +12,13 @@
                             <div class="col-12 grid-margin">
                                 
             <div class="card bg-light">
-                <div class="card-header"> Detalle Pagos   </div>
+                <div class="card-header"> Detalle Pagos y factura   </div>
                 <div class="card-body">
-                    <h4 class="card-title">
-                        <a class="btn btn-light btn-xs"
+                    <h3 class="card-title">
+                        <a class="btn btn-facebook btn-xs"
                            th:href="@{/accountingclosing/rep-salesToday}"
                            th:text="'&laquo; volver'"></a>
-                    </h4>
+                    </h3>
 <!--                    id="date"-->
 <!--                    <form  id="form-ac" th:action="@{/accountingclosing/rep-salesToday}" th:object="${rd}" method="post">-->
 <!--                        -->
@@ -43,32 +43,63 @@
 <!--                        </div>-->
 
 <!--                    </form>-->
+                    <div>
+                        <div class="title"> Detalle Pagos   </div>
+                        <table id="itemsCurrency"  class="table table-striped table-bordered dt-responsive nowrap ">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Total</th>
+                                    <th>Tipo de pago</th>
+                                    <th>voucher</th>
+                                    <th>Descripcion</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item: ${paymentDetails}">
+                                    <td  th:text="${item.id}"></td>
+                                    <td th:text="${item.value}"></td>
+                                    <td th:text="${item.paymentType.name}"></td>
+                                    <td th:text="${item.voucher}"></td>
+                                    <td th:text="${item.description}"></td>
+                                    <td th:text="${item.getCreateDate()}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <table id="itemsCurrency"  class="table table-striped table-bordered dt-responsive nowrap ">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Total</th>
-                                <th>Tipo de pago</th>
-                                <th>voucher</th>
-                                <th>Descripcion</th>
-                                <th>Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="item: ${paymentDetails}">
-                                <td  th:text="${item.id}"></td>
-                                <td th:text="${item.value}"></td>
-                                <td th:text="${item.paymentType.name}"></td>
-                                <td th:text="${item.voucher}"></td>
-                                <td th:text="${item.description}"></td>
-                                <td th:text="${item.getCreateDate()}"></td>
+                    </div>
+                    <br>
+                    <div>
+                        <div class="title"> Detalle Factura   </div>
+                        <table id="itemsInvoice"  class="table table-striped table-bordered dt-responsive nowrap ">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Descuento</th>
+                                    <th>Descripcion</th>
+                                    <th>Fecha</th>
+                                    <th>Cliente ID</th>
+                                    <th>Nombre Cliente</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item: ${invoice.items}">
+                                    <td  th:text="${item.id}"></td>
+                                    <td th:text="${item.quantity}"></td>
+                                    <td th:text="${item.cost}"></td>
+                                    <td th:text="${item.discount}"></td>
+                                    <td th:text="${item.product.name}"></td>
+                                    <td th:text="${invoice.getCreateDate()}"></td>
+                                    <td th:text="${invoice.customer.id}"></td>
+                                    <td th:text="${invoice.customer.lastName}+', '+${invoice.customer.name} "></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                            </tr>
-                        </tbody>
-                    </table>
-
-
+                    </div>
                 </div>
             </div>
         </div>

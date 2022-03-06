@@ -3,6 +3,7 @@ package com.nsv.service;
 import com.nsv.dao.AccountingClosingDao;
 import com.nsv.dao.IInvoiceDao;
 import com.nsv.dao.IPaymentDao;
+import com.nsv.domain.Invoice;
 import com.nsv.domain.Payment;
 import com.nsv.domain.report.DaySales;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,14 @@ public class ReportService implements IReportService {
     private final AccountingClosingDao closingDao;
     private final IInvoiceDao invoiceDao;
     private final IPaymentDao paymentDao;
+    private final IInvoiceService invoiceService;
 
 
-    public ReportService(AccountingClosingDao closingDao, IInvoiceDao invoiceDao, IPaymentDao paymentDao) {
+    public ReportService(AccountingClosingDao closingDao, IInvoiceDao invoiceDao, IPaymentDao paymentDao, IInvoiceService invoiceService) {
         this.closingDao = closingDao;
         this.invoiceDao = invoiceDao;
         this.paymentDao = paymentDao;
+        this.invoiceService = invoiceService;
     }
 
     @Override
@@ -58,5 +61,10 @@ public class ReportService implements IReportService {
 
         return paymentDao.findAllByInvoiceId(id);
 
+    }
+
+    @Override
+    public Invoice findInvoiceById(Long id) {
+        return invoiceService.findInvoiceById(id);
     }
 }
