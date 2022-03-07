@@ -2,10 +2,11 @@ package com.nsv.dao;
 
 import com.nsv.domain.Company;
 import com.nsv.domain.Quotation;
-import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  *
@@ -20,7 +21,7 @@ public interface IQuotationDao extends CrudRepository<Quotation, Long> {
     @Query("select u from Quotation u where u.customer.id =?1 and u.company.id=?2")
     List<Quotation> findAllByCustomerAndCompany(Long customerID,Long companyId);
 
-//    @Query("select u from Quotation u where u.customer.id =?1 and u.company.id=?2")
+//    @Query("select u from Quotation u where u.customer.accountingClosingId =?1 and u.company.accountingClosingId=?2")
     List<Quotation> findAllByCompany(Company company);
 
 }

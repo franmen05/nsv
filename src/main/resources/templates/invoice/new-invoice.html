@@ -18,7 +18,7 @@
                     <form id="form-invoice" th:action="@{/invoice/form/}" th:object="${invoice}" method="post">
 
                         <input type="hidden" th:field="${invoice.id}" class="form-control" />
-                        <!--<input type="hidden" th:field="${invoice.currency.id}"  th:value="${company.currency.id}" class="form-control" />-->
+                        <!--<input type="hidden" th:field="${invoice.currency.accountingClosingId}"  th:value="${company.currency.accountingClosingId}" class="form-control" />-->
                         <div class="form-group row">
                             <label for="descripcion" class="col-sm-3 col-form-label" th:text="'Descripción'"></label>
                             <div class="col-sm-6">
@@ -98,7 +98,7 @@
                         </table>
                         
                         <h5>
-                            <!--Total: <span class="badge badge-danger" id="gran_total" th:text="${#numbers.formatDecimal(invoice.calculateTotalItem(0),1,2)}"  data-inputmask="'alias': 'currency'">0</span>-->
+                            <!--Total: <span class="badge badge-danger" accountingClosingId="gran_total" th:text="${#numbers.formatDecimal(invoice.calculateTotalItem(0),1,2)}"  data-inputmask="'alias': 'currency'">0</span>-->
                             Total: <span class="badge badge-danger" id="gran_total" th:text="${#numbers.formatDecimal(invoice.calculateTotalItem(0),1,2)}" >0</span>
                         </h5>
 
@@ -145,7 +145,7 @@
                         </table>
 
                         <h5>Total
-                            <!--<span th:text="${#numbers.formatDecimal(invoice.calculeTotalAdtionalExpensive(0),1,2)}"  id="ae_gran_total" class="badge badge-danger" data-inputmask="'alias': 'currency'">0</span>-->
+                            <!--<span th:text="${#numbers.formatDecimal(invoice.calculeTotalAdtionalExpensive(0),1,2)}"  accountingClosingId="ae_gran_total" class="badge badge-danger" data-inputmask="'alias': 'currency'">0</span>-->
                             <span th:text="${#numbers.formatDecimal(invoice.calculeTotalAdtionalExpensive(0),1,2)}"  id="ae_gran_total" class="badge badge-danger" >0</span>
                         </h5>
 

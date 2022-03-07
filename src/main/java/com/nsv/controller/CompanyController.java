@@ -48,8 +48,8 @@ public class CompanyController {
         return "company/maint-company";
     }
     
-//    public String getCompany(@PathVariable(name = "id") Long id,Model model) {
-//        model.addAttribute("company", inventoryService.find(id));
+//    public String getCompany(@PathVariable(name = "accountingClosingId") Long accountingClosingId,Model model) {
+//        model.addAttribute("company", inventoryService.find(accountingClosingId));
 //        model.addAttribute("companies",inventoryService.findAll());
 //        return "company/maint-company";
 //    }

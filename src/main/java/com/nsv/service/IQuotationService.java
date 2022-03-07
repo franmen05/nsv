@@ -7,7 +7,7 @@ package com.nsv.service;
 
 import com.nsv.domain.Company;
 import com.nsv.domain.Quotation;
-import java.util.Collection;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -31,13 +31,13 @@ public interface IQuotationService {
 //
 //    public AdditionalExpense findAdditonalExpense(Long aLong);
 //    public List<Tax> findTaxesByTaxGroup(Long aLong);
-//    public List<Payment> findPaymentByInvoice(Long  id);
+//    public List<Payment> findPaymentByInvoice(Long  accountingClosingId);
 //    public Iterable<PaymentType> findAllPaymentType();
-//    public Optional<PaymentType> findPaymentType(Long id);
+//    public Optional<PaymentType> findPaymentType(Long accountingClosingId);
 //    
 //    
 //    public Iterable<Currency> findAllCurrencies() ;
-//    public Optional<Currency> findCurrency(Long id) ;
+//    public Optional<Currency> findCurrency(Long accountingClosingId) ;
 //
 //    public List<AdditionalExpense> findAllAdditionalExpenses();
 //

@@ -19,7 +19,7 @@
                            th:href="@{/accountingclosing}"
                            th:text="'&laquo; volver'"></a>
                     </h4>
-<!--                    id="date"-->
+<!--                    accountingClosingId="date"-->
                     <form  id="form-ac" th:action="@{/accountingclosing/rep-salesToday}" th:object="${rd}" method="post">
                         
                         <div class="form-group row">
@@ -35,9 +35,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label th:for="date" class="col-sm-2 col-form-label" th:text="'Fecha'"></label>
+                            <label th:for="date" class="col-sm-2 col-form-label" th:text="'ID de Cierre'"></label>
                             <div class="col-sm-4">
-                                <input th:field="${rd.date}" type="date" width="270" class="form-control"  />
+                                <input th:field="${rd.accountingClosingId}" type="number" width="270" class="form-control"  />
 
 <!--                                <p th:text="${#temporals.formatISO(rd.date)}"></p>-->
 

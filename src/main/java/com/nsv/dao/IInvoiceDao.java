@@ -24,6 +24,7 @@ public interface IInvoiceDao extends CrudRepository<Invoice, Long> {
 //    @Query("select t from Invoice t where t.closed= true and DATE_FORMAT(t.closedDate,'%Y-%m-%d') =?1 ")
     List<Invoice> findAllByClosedIsTrueAndClosedDateBetween(Instant closedDate,Instant closedDate1);
     List<Invoice> findAllByClosedIsTrueAndClosedDate(Instant closedDate);
+//    List<Invoice> findAllById(Long closedDate);
 
     
 }

@@ -40,7 +40,7 @@ public class UserController {
         return "user/maint-user";
     }
     
-    public String getUser(@PathVariable(name = "id") Long id,Model model) {
+    public String getUser(@PathVariable(name = "accountingClosingId") Long id,Model model) {
         model.addAttribute("user", userService.find(id));
         model.addAttribute("users",userService.findAll());
         return "user/maint-user";

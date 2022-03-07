@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICurrencyDao extends PagingAndSortingRepository<Currency, Long> {
     
-//    @Query("select t from Tax t where t.taxGroup.id=?1 ")
+//    @Query("select t from Tax t where t.taxGroup.accountingClosingId=?1 ")
 //    List<Tax> findByTaxGroup(Long term);
     
     

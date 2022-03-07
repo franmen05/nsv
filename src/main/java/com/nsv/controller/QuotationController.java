@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.ArrayUtils;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  *
@@ -90,7 +89,7 @@ public class QuotationController {
             @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
             Model model) {
 
-//        Customer c=customerService.find(id);
+//        Customer c=customerService.find(accountingClosingId);
         Quotation q = initQuotation(c);
         model.addAttribute("topProduct", pp);
         model.addAttribute("topExpensive", pae);

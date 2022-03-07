@@ -115,8 +115,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
 //    }
 //    
 //    @Override
-//    public Optional<Currency> findCurrency(Long id) {
-//        return currencyDao.findById(id);
+//    public Optional<Currency> findCurrency(Long accountingClosingId) {
+//        return currencyDao.findById(accountingClosingId);
 //    }
 
     @Override

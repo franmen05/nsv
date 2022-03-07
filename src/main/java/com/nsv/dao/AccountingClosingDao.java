@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface AccountingClosingDao extends PagingAndSortingRepository<AccountingClosing, Long> {
     
-//    @Query("select t from Tax t where t.taxGroup.id=?1 ")
+//    @Query("select t from Tax t where t.taxGroup.accountingClosingId=?1 ")
 //    List<Tax> findByTaxGroup(Long term);
 
 

@@ -23,9 +23,9 @@ public interface IAccountingClosingService {
 //
 //    void save(Currency customer);
 //
-//    Optional<Currency> find(Long id);
+//    Optional<Currency> find(Long accountingClosingId);
 //
-//    void delete(Long id);
+//    void delete(Long accountingClosingId);
 //
 //
 //    Iterable<ExchangeRate> findAllExchangeRate();
@@ -34,9 +34,9 @@ public interface IAccountingClosingService {
 //
 //    void saveExchangeRate(ExchangeRate customer);
 //
-//    Optional<ExchangeRate> findExchangeRate(Long id);
+//    Optional<ExchangeRate> findExchangeRate(Long accountingClosingId);
 //
-//    void deleteExchangeRate(Long id);
+//    void deleteExchangeRate(Long accountingClosingId);
 
     void doClose(AccountingClosing ac) throws NSVException;
     void doOpen() throws NSVException;

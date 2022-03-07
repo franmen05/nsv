@@ -22,7 +22,7 @@ public interface IInvoiceService {
     Invoice saveInvoice(Invoice invoice) throws NSVException;
     Invoice findInvoiceById(Long id);
     void deleteInvoice(Long id);
-    
+
     List<Tax> findTaxesByTaxGroup(Long aLong);
     Double totalTaxesByTaxGroup(Long aLong);
 
@@ -32,7 +32,7 @@ public interface IInvoiceService {
 
 //
 //    public Iterable<Currency> findAllCurrencies() ;
-//    public Optional<Currency> findCurrency(Long id) ;
+//    public Optional<Currency> findCurrency(Long accountingClosingId) ;
 
     List<AdditionalExpense> findAdditionalExpenseByName(String term) ;
     AdditionalExpense findAdditionalExpense(Long aLong);

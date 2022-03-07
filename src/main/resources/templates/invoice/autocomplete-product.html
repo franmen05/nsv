@@ -6,10 +6,10 @@
             $(document).ready(function () {
                 
 //                $.ajax({
-//                      url: "/nsv/invoice/loadInvoice/"+$("#id-invoice").val()  ,
+//                      url: "/nsv/invoice/loadInvoice/"+$("#accountingClosingId-invoice").val()  ,
 //                      dataType: "json",
 ////                      data: {
-////                          id: $("#id-invoice").val()
+////                          accountingClosingId: $("#accountingClosingId-invoice").val()
 ////                      },
 //                      success: function (data) {
 //                          
@@ -17,16 +17,16 @@
 ////                            console.log(element);
 //                            var linea = $("#plantillaItemsFactura").html();
 //
-//                            linea = linea.replace(/{ID}/g, element.id);
+//                            linea = linea.replace(/{ID}/g, element.accountingClosingId);
 //                            linea = linea.replace(/{NOMBRE}/g, element.product.name);
 //                            linea = linea.replace(/{PRECIO}/g, element.product.price);
 //
 //                            $("#cargarItemProductos tbody").append(linea);
-//                            itemsHelper.calcularImporte(element.id, element.product.price, element.quantity);
+//                            itemsHelper.calcularImporte(element.accountingClosingId, element.product.price, element.quantity);
 //                          });
 ////                          response($.map(data, function (item) {
 ////                              return {
-////                                  value: item.id,
+////                                  value: item.accountingClosingId,
 ////                                  label: item.name,
 ////                                  cost: item.cost,
 ////                              };
@@ -47,7 +47,7 @@
 //                            success: function (data) {
 //                                response($.map(data, function (item) {
 //                                    return {
-//                                        value: item.id,
+//                                        value: item.accountingClosingId,
 //                                        label: item.name,
 //                                        cost: item.cost,
 //                                    };

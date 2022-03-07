@@ -22,4 +22,5 @@ public interface IReportService {
     List<DaySales> findAllDaySalesByDate(Instant date);
     List<Payment> findAllPaymentByAccountClosing(Long id);
     Invoice findInvoiceById(Long id);
+    List<DaySales> findAllByAccountingClosingId(Long accountingClosingId);
 }

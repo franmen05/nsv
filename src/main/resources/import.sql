@@ -1,5 +1,5 @@
     /* Populate tables */
--- INSERT INTO customers(id,comment,create_date,email,last_name,last_update_date,name) VALUES(1,'comentario', '2017-08-28', 'profesor@bolsadeideas.com','Andres Apellido', '2017-08-28', 'Andres');
+-- INSERT INTO customers(accountingClosingId,comment,create_date,email,last_name,last_update_date,name) VALUES(1,'comentario', '2017-08-28', 'profesor@bolsadeideas.com','Andres Apellido', '2017-08-28', 'Andres');
 INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc) VALUES(1, 'Rosa Roja numero 232423', 'comentario', '2017-08-28 00:00:00', 'profesor@bolsadeideas.com', 'Andres Apellido', '2017-08-28 00:00:00', 'Andres', '222324242342', '809-34-2-421', '2312' );
 INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc) VALUES(2, 'Rosa Roja numero 232423', 'comentario', '2017-08-28 00:00:00', 'profesor@bolsadeideas.com', 'De Los Santos', '2017-08-28 00:00:00', 'Guillermo', '222324242342', '809-34-2-421', '2312' );
 /* Populate tabla productos */

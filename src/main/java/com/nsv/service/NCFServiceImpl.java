@@ -13,15 +13,16 @@ import com.nsv.domain.NCF;
 import com.nsv.domain.NCFSerie;
 import com.nsv.domain.NCFType;
 import com.nsv.exception.NSVException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NCFServiceImpl implements INCFService {
@@ -70,7 +71,7 @@ public class NCFServiceImpl implements INCFService {
     }
 
 //    @Override
-//    public void delete(Long id) {
+//    public void delete(Long accountingClosingId) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
 
