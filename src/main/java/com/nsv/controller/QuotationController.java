@@ -89,7 +89,7 @@ public class QuotationController {
             @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
             Model model) {
 
-//        Customer c=customerService.find(accountingClosingId);
+//        Customer c=customerService.find(id);
         Quotation q = initQuotation(c);
         model.addAttribute("topProduct", pp);
         model.addAttribute("topExpensive", pae);

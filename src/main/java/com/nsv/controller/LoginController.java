@@ -71,14 +71,14 @@ public class LoginController {
 
 //    
 //    @PostMapping(value = "/authenticate")
-//    public String authenticate(@RequestParam(value = "userId", required = false) String accountingClosingId,
+//    public String authenticate(@RequestParam(value = "userId", required = false) String id,
 //                @RequestParam(value = "password", required = false) String pass,
 //                Model model,RedirectAttributes flash){
 //        
 //
-//        log.debug("ID :: "+ accountingClosingId);
+//        log.debug("ID :: "+ id);
 //        log.debug("Pass :: "+ pass);
-//        if(userService.authenticate(accountingClosingId, pass)){
+//        if(userService.authenticate(id, pass)){
 //            return "redirect:/home";
 //        }else{
 ////            ControllerUtil.hasErrros(result, flash);

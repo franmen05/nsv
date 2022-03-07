@@ -71,7 +71,7 @@ public class NCFServiceImpl implements INCFService {
     }
 
 //    @Override
-//    public void delete(Long accountingClosingId) {
+//    public void delete(Long id) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
 

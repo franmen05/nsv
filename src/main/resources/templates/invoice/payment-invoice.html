@@ -111,8 +111,8 @@
                         <div class="form-group row">
                             <label for="find_product" class="col-sm-2 col-form-label" >Moneda</label>
                             <div class="col-sm-3">
-                                <select th:field="${invoice.currency.accountingClosingId}" class="form-control" >
-                                    <option th:each="item: ${currencies}" th:value="${item.accountingClosingId}" th:text="${item.name}"></option>
+                                <select th:field="${invoice.currency.id}" class="form-control" >
+                                    <option th:each="item: ${currencies}" th:value="${item.id}" th:text="${item.name}"></option>
                                 </select>
                             </div>
                         </div>

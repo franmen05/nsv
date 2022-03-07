@@ -37,7 +37,7 @@ public class ProductController {
         return "product/maint-product";
     }
     
-    public String getProduct(@PathVariable(name = "accountingClosingId") Long id,Model model) {
+    public String getProduct(@PathVariable(name = "id") Long id,Model model) {
         model.addAttribute("product", inventoryService.findProduct(id));
         model.addAttribute("products",inventoryService.findAllProduct());
         return "product/maint-product";

@@ -69,7 +69,7 @@ public class CustomerController {
      
 //        TODO: hacer que los customer se busquen en session primero 
 //        if(customers!=null){
-//            customers= customers.stream().filter(l-> l.getName().contains(accountingClosingId)).collect(Collectors.toList());
+//            customers= customers.stream().filter(l-> l.getName().contains(id)).collect(Collectors.toList());
 //        
 //            if(!CollectionUtils.isEmpty(customers))
 //                return customers;

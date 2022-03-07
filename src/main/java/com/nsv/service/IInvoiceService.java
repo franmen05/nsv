@@ -32,7 +32,7 @@ public interface IInvoiceService {
 
 //
 //    public Iterable<Currency> findAllCurrencies() ;
-//    public Optional<Currency> findCurrency(Long accountingClosingId) ;
+//    public Optional<Currency> findCurrency(Long id) ;
 
     List<AdditionalExpense> findAdditionalExpenseByName(String term) ;
     AdditionalExpense findAdditionalExpense(Long aLong);

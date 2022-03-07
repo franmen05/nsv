@@ -21,7 +21,7 @@ public interface IQuotationDao extends CrudRepository<Quotation, Long> {
     @Query("select u from Quotation u where u.customer.id =?1 and u.company.id=?2")
     List<Quotation> findAllByCustomerAndCompany(Long customerID,Long companyId);
 
-//    @Query("select u from Quotation u where u.customer.accountingClosingId =?1 and u.company.accountingClosingId=?2")
+//    @Query("select u from Quotation u where u.customer.id =?1 and u.company.id=?2")
     List<Quotation> findAllByCompany(Company company);
 
 }

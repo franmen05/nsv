@@ -135,7 +135,7 @@ public class InvoiceController {
     public Object loadInvoice(@PathVariable Long id) {
 //        List<AdditionalExpense> r = new ArrayList<>();
 //        Invoice i=(Invoice) model.asMap().get("invoice");
-//        if(i.getId()==accountingClosingId)
+//        if(i.getId()==id)
 //            return i;
 
         return invoiceService.findInvoiceById(id);
@@ -169,7 +169,7 @@ public class InvoiceController {
                 @SessionAttribute("topProduct") Page<Product> pp,
                 @SessionAttribute("topExpensive") Page<AdditionalExpense> pae,
                 Model model) {
-//        Customer c=customerService.find(accountingClosingId);
+//        Customer c=customerService.find(id);
         model.addAttribute("isNewInvoice", true);
         model.addAttribute("isInvoice", true);
         model.addAttribute("company", c);
@@ -210,7 +210,7 @@ public class InvoiceController {
 
     @GetMapping("/form/refund")
     public String refund(Model model) {
-//        Customer c=customerService.find(accountingClosingId);
+//        Customer c=customerService.find(id);
         Invoice i = new Invoice();
         i.setDescription("Facturacion Carga");
         model.addAttribute("invoice", i);

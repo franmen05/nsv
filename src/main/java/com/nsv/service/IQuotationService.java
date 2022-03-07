@@ -31,13 +31,13 @@ public interface IQuotationService {
 //
 //    public AdditionalExpense findAdditonalExpense(Long aLong);
 //    public List<Tax> findTaxesByTaxGroup(Long aLong);
-//    public List<Payment> findPaymentByInvoice(Long  accountingClosingId);
+//    public List<Payment> findPaymentByInvoice(Long  id);
 //    public Iterable<PaymentType> findAllPaymentType();
-//    public Optional<PaymentType> findPaymentType(Long accountingClosingId);
+//    public Optional<PaymentType> findPaymentType(Long id);
 //    
 //    
 //    public Iterable<Currency> findAllCurrencies() ;
-//    public Optional<Currency> findCurrency(Long accountingClosingId) ;
+//    public Optional<Currency> findCurrency(Long id) ;
 //
 //    public List<AdditionalExpense> findAllAdditionalExpenses();
 //

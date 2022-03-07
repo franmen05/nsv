@@ -61,7 +61,7 @@ public class AccountingClosingController {
                                RedirectAttributes flash) {
 
 
-        if (salesToday==null || (!StringUtils.hasText(salesToday.date())  &&  null ==salesToday.accountingClosingId()) ){
+        if (salesToday==null || (!StringUtils.hasText(salesToday.date())  &&  null ==salesToday.id()) ){
             flash.addFlashAttribute("error", "Debe seleccionar una fecha !");
             return REDIRECT_RD;
         }
@@ -71,7 +71,7 @@ public class AccountingClosingController {
         if(StringUtils.hasText(salesToday.date()))
             model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(salesToday.date())));
         else
-            model.addAttribute("daySales", reportService.findAllByAccountingClosingId( salesToday.accountingClosingId()));
+            model.addAttribute("daySales", reportService.findAllByAccountingClosingId( salesToday.id()));
 
         model.addAttribute("rd",  new SalesTodayDTO("", 0L));
 

@@ -39,8 +39,8 @@ public class CurrencyController {
         return "currency/maint-currency";
     }
 
-//    public String getCompany(@PathVariable(name = "accountingClosingId") Long accountingClosingId,Model model) {
-//        model.addAttribute("company", inventoryService.find(accountingClosingId));
+//    public String getCompany(@PathVariable(name = "id") Long id,Model model) {
+//        model.addAttribute("company", inventoryService.find(id));
 //        model.addAttribute("companys",inventoryService.findAll());
 //        return "company/maint-company";
 //    }

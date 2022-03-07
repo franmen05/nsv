@@ -31,7 +31,7 @@ public interface INCFService {
     
     List<NCF> findByName(String term) ;
 
-//    void delete(Long accountingClosingId);
+//    void delete(Long id);
     List<NCF> generateSequence(NCF ncf) ;
 
     List<NCFType> findAllTypes();

@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface IPaymentDao extends PagingAndSortingRepository<Payment, Long> {
     
-//    @Query("select t from Tax t where t.taxGroup.accountingClosingId=?1 ")
+//    @Query("select t from Tax t where t.taxGroup.id=?1 ")
 //    List<Tax> findByTaxGroup(Long term);
 
     List<Payment> findAllByInvoiceId(Long id);
