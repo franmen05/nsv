@@ -19,8 +19,9 @@ import java.util.List;
  */
 public interface IReportService {
 
-    List<DaySales> findAllDaySales();
-    List<DaySales> findAllPartialSales();
+    List<DaySales> findAllSales(ReportSaleTypes type);
+//    List<DaySales> findAllDaySales();
+//    List<DaySales> findAllPartialSales();
     List<DaySales> findAllDaySalesByDate(Instant date, ReportSaleTypes type);
     List<Payment> findAllPaymentByAccountClosing(Long id);
     Invoice findInvoiceById(Long id);

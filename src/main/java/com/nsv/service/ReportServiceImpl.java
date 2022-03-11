@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class ReportServiceImpl implements IReportService {
 
 
+    public static final int SECONDS_OF_DAY = 86_399;
 
     private final AccountingClosingDao closingDao;
     private final IInvoiceDao invoiceDao;
@@ -37,19 +38,28 @@ public class ReportServiceImpl implements IReportService {
     }
 
     @Override
-    public List<DaySales> findAllPartialSales() {
+    public List<DaySales> findAllSales(ReportSaleTypes type) {
+        return switch (type) {
+            case TODAY_SALES -> findAllDaySales();
+            case PARTIAL_SALES -> findAllPartialSales();
+        };
+    }
+
+    private List<DaySales> findAllPartialSales() {
          var invoice = invoiceDao.findAllByPaymentsNotNullAndClosedIsNull();
          return invoice.stream()
                  .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()    ))
                  .collect(Collectors.toList());
     }
-    @Override
-    public List<DaySales> findAllDaySales() {
+
+    private List<DaySales> findAllDaySales() {
          var invoice = invoiceDao.findAllByClosedIsTrue();
          return invoice.stream()
                  .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()    ))
                  .collect(Collectors.toList());
     }
+
+
 //    @Override
     public List<DaySales> findAllDaySales1() {
 
@@ -62,8 +72,8 @@ public class ReportServiceImpl implements IReportService {
     public List<DaySales> findAllDaySalesByDate(Instant date, ReportSaleTypes type) {
         List<Invoice> invoices = null;
         switch (type){
-            case TODAY_SALES -> invoices= invoiceDao.findAllByClosedIsTrueAndClosedDateBetween(date,date.plus(86_399 , ChronoUnit.SECONDS));
-            case PARTIAL_SALES -> invoices=  invoiceDao.findAllByClosedIsNullAndCreateDateBetween(date,date.plus(86_399 , ChronoUnit.SECONDS));
+            case TODAY_SALES -> invoices= invoiceDao.findAllByClosedIsTrueAndClosedDateBetween(date,date.plus(SECONDS_OF_DAY , ChronoUnit.SECONDS));
+            case PARTIAL_SALES -> invoices=  invoiceDao.findAllByClosedIsNullAndCreateDateBetween(date,date.plus(SECONDS_OF_DAY, ChronoUnit.SECONDS));
         }
 
         return invoices.stream()
@@ -74,7 +84,6 @@ public class ReportServiceImpl implements IReportService {
     public List<Payment> findAllPaymentByAccountClosing(Long id) {
 
         return paymentDao.findAllByInvoiceId(id);
-
     }
 
     @Override
@@ -101,6 +110,7 @@ public class ReportServiceImpl implements IReportService {
 //        var account=i.getPayments().stream().map(p -> p.getAccountingClosing().getId()).collect(Collectors.toSet());
 ////        List<AccountingClosing> c= (List<AccountingClosing>) closingDao.findAllById(account);
 //        c.stream().map(ac -> new DaySales(ac.getId(),ac.getClosedDate(),ac.))
-        return invoices.stream().map( i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund())).collect(Collectors.toList());
+        return invoices.stream().map( i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()))
+                .collect(Collectors.toList());
     }
 }

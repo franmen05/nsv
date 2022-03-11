@@ -59,10 +59,8 @@ public class AccountingClosingController {
     @GetMapping(value={"/rep-salesToday/{type}"})
     public String homeReport(@PathVariable ReportSaleTypes type,Model model) {
 
-        switch (type){
-            case TODAY_SALES -> model.addAttribute("daySales", reportService.findAllDaySales());
-            case PARTIAL_SALES -> model.addAttribute("daySales", reportService.findAllPartialSales());
-        }
+
+        model.addAttribute("daySales", reportService.findAllSales(type));
 
         model.addAttribute("reportSaleTypes", type);
         model.addAttribute("rd", new SalesTodayDTO("", 0L, type));
