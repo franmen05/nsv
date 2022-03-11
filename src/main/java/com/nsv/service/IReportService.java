@@ -5,6 +5,7 @@
  */
 package com.nsv.service;
 
+import com.nsv.controller.dto.ReportSaleTypes;
 import com.nsv.domain.Invoice;
 import com.nsv.domain.Payment;
 import com.nsv.domain.report.DaySales;
@@ -19,8 +20,9 @@ import java.util.List;
 public interface IReportService {
 
     List<DaySales> findAllDaySales();
-    List<DaySales> findAllDaySalesByDate(Instant date);
+    List<DaySales> findAllPartialSales();
+    List<DaySales> findAllDaySalesByDate(Instant date, ReportSaleTypes type);
     List<Payment> findAllPaymentByAccountClosing(Long id);
     Invoice findInvoiceById(Long id);
-    List<DaySales> findAllByAccountingClosingId(Long accountingClosingId);
+    List<DaySales> findAllByAccountingClosingId(Long accountingClosingId,ReportSaleTypes type);
 }

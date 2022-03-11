@@ -1,6 +1,7 @@
 package com.nsv.controller;
 
 import com.nsv.config.SecurityConfig;
+import com.nsv.controller.dto.ReportSaleTypes;
 import com.nsv.controller.dto.SalesTodayDTO;
 import com.nsv.domain.AccountingClosing;
 import com.nsv.exception.NSVException;
@@ -45,20 +46,35 @@ public class AccountingClosingController {
     }
 
 
-    @GetMapping(value={"/rep-salesToday"})
-    public String homeReport(Model model) {
+//    @GetMapping(value={"/rep-sales-partial"})
+//    public String homeReportPartial(Model model) {
+//
+//        model.addAttribute("partialDaySales", reportService.findAllDaySales());
+//        model.addAttribute("rd", new SalesTodayDTO("", 0L));
+//
+//        return RSP;
+//    }
 
-        model.addAttribute("daySales", reportService.findAllDaySales());
-        model.addAttribute("rd", new SalesTodayDTO("", 0L));
-        
+
+    @GetMapping(value={"/rep-salesToday/{type}"})
+    public String homeReport(@PathVariable ReportSaleTypes type,Model model) {
+
+        switch (type){
+            case TODAY_SALES -> model.addAttribute("daySales", reportService.findAllDaySales());
+            case PARTIAL_SALES -> model.addAttribute("daySales", reportService.findAllPartialSales());
+        }
+
+        model.addAttribute("reportSaleTypes", type);
+        model.addAttribute("rd", new SalesTodayDTO("", 0L, type));
+
         return RD;
     }
 
 
 //    @Secured( {SecurityConfig.ROLE_ACCOUNTING_OPENER})
-    @PostMapping("/rep-salesToday")
-    public String selectedDate(@Valid SalesTodayDTO salesToday, BindingResult result, Model model,
-                               RedirectAttributes flash) {
+    @PostMapping("/rep-salesToday/{type}")
+    public String selectedDate(@Valid SalesTodayDTO salesToday,@PathVariable ReportSaleTypes type,
+                               BindingResult result, Model model,RedirectAttributes flash) {
 
 
         if (salesToday==null || (!StringUtils.hasText(salesToday.date())  &&  null ==salesToday.accountingClosingId()) ){
@@ -68,12 +84,14 @@ public class AccountingClosingController {
 
         if (ControllerUtil.hasErrros(result, flash) ) return REDIRECT_RD;
 
-        if(StringUtils.hasText(salesToday.date()))
-            model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(salesToday.date())));
-        else
-            model.addAttribute("daySales", reportService.findAllByAccountingClosingId( salesToday.accountingClosingId()));
 
-        model.addAttribute("rd",  new SalesTodayDTO("", 0L));
+        if(StringUtils.hasText(salesToday.date()))
+            model.addAttribute("daySales", reportService.findAllDaySalesByDate( DateUtil.getInstant(salesToday.date()),type));
+        else
+            model.addAttribute("daySales", reportService.findAllByAccountingClosingId( salesToday.accountingClosingId(),type));
+
+        model.addAttribute("rd",  new SalesTodayDTO("", 0L, ReportSaleTypes.TODAY_SALES));
+        model.addAttribute("reportSaleTypes", type);
 
 //        reportService.findAllDaySales()
 
@@ -87,7 +105,7 @@ public class AccountingClosingController {
 
         model.addAttribute("paymentDetails", reportService.findAllPaymentByAccountClosing(idInvoice));
         model.addAttribute("invoice", reportService.findInvoiceById(idInvoice));
-        model.addAttribute("rd", new SalesTodayDTO("", 0L));
+        model.addAttribute("rd", new SalesTodayDTO("", 0L, ReportSaleTypes.TODAY_SALES));
 
 //        reportService.findAllDaySales()
 

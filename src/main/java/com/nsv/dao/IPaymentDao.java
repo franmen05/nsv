@@ -19,5 +19,6 @@ public interface IPaymentDao extends PagingAndSortingRepository<Payment, Long> {
     List<Payment> findAllByInvoiceId(Long id);
     List<Payment> findAllByAccountingClosing_Id(Long id);
 
+
     
 }

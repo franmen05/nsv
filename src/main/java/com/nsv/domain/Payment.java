@@ -1,5 +1,8 @@
 package com.nsv.domain;
 
+import com.nsv.exception.NSVException2;
+import org.springframework.util.StringUtils;
+
 import javax.persistence.*;
 
 /**
@@ -31,7 +34,24 @@ public class Payment   extends AbstractBaseEntity{
     @Column(nullable = false,name = "invoice_id")
     private Long invoiceId;
 
+    public void add( Double value, String voucher, PaymentType paymentType,
+                                 Long invoiceId) {
+        this.paymentType = paymentType;
+        this.value = value;
+        this.invoiceId = invoiceId;
 
+        if(paymentType.getName().equals(PaymentType.CAST))
+            this.voucher = voucher;
+        else {
+            if (StringUtils.hasText(voucher))
+                this.voucher = voucher;
+            else {
+                //                            model.addAttribute("error", "Error: Voucher no encontrado!");
+                throw new NSVException2("Voucher Solo puede ser nulo para pagos en efectivo");
+            }
+        }
+
+    }
 
     public Payment() { }
 

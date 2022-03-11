@@ -51,9 +51,9 @@
 
                                 <button  th:if="${not ac.open}"  class="btn btn-warning " > <span class="glyphicon glyphicon-ok"></span> Abrir</button>
 
-
                                 <a href="#" class="btn btn-danger " th:onclick="'itemsHelper.inactiveItem();'"><span class="glyphicon glyphicon-remove"></span> Cerrar</a>
-                                <a href="/accountingclosing/rep-salesToday" class="btn btn-facebook " > <span class="glyphicon glyphicon-ok"></span> Reporte Ventas Dia</a>
+                                <a href="/accountingclosing/rep-salesToday/TODAY_SALES" class="btn btn-facebook " > <span class="glyphicon glyphicon-ok"></span> Reporte Ventas Dia</a>
+                                <a href="/accountingclosing/rep-salesToday/PARTIAL_SALES" class="btn btn-warning " > <span class="glyphicon glyphicon-ok"></span> Reporte Ventas Dia Parciales</a>
                             </div>
                         </div>
                         </form>
@@ -71,12 +71,9 @@
                                     <td  th:text="${item.id}"></td>
                                     <td th:text="${item.getCreateDate()}"></td>
                                     <td th:text="${item.closedDate}"></td>
-
                                 </tr>
                             </tbody>
                         </table>
-                    
-
                 </div>
             </div>
         </div>

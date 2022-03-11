@@ -395,21 +395,11 @@ public class InvoiceController {
 
                     pay.setAccountingClosing(ac);
 
-                    invoiceService.findPaymentType(itemTypePayment[i]).ifPresent((t) -> {
+                    invoiceService.findPaymentType(itemTypePayment[i]).ifPresent((paymentType) -> {
 
-                        pay.setPaymentType(t);
-                        pay.setValue( value);
-                        if(t.getName().equals(PaymentType.CAST))
-                            pay.setVoucher(voucher);
-                        else {
-                            if (StringUtils.hasText(voucher))
-                                pay.setVoucher(voucher);
-                            else {
-    //                            model.addAttribute("error", "Error: Voucher no encontrado!");
-                                throw new NSVException2("Voucher Solo puede ser nulo para pagos en efectivo");
-                            }
-                        }
+                        pay.add(value,voucher,paymentType,invoice.getId());
                         invoice.addPayment(pay);
+
                     });
                 } catch (NSVException2 ex) {
                     ex.printStackTrace();

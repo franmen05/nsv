@@ -20,7 +20,7 @@
                            th:text="'&laquo; volver'"></a>
                     </h4>
 <!--                    id="date"-->
-                    <form  id="form-ac" th:action="@{/accountingclosing/rep-salesToday}" th:object="${rd}" method="post">
+                    <form  id="form-ac" th:action="@{/accountingclosing/rep-salesToday} + '/'+ ${reportSaleTypes}" th:object="${rd}" method="post">
                         
                         <div class="form-group row">
                             <label th:for="date" class="col-sm-2 col-form-label" th:text="'Fecha'"></label>
