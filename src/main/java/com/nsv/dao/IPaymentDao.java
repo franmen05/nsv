@@ -1,6 +1,7 @@
 package com.nsv.dao;
 
 import com.nsv.domain.Payment;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,9 @@ public interface IPaymentDao extends PagingAndSortingRepository<Payment, Long> {
     List<Payment> findAllByInvoiceId(Long id);
     List<Payment> findAllByAccountingClosing_Id(Long id);
 
+
+    @Query("select sum(i.value) from Payment i where i.accountingClosing.id = :id")
+    Double totalPaymentByAccountingClosing(Long id);
 
     
 }

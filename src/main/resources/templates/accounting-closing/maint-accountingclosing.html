@@ -64,13 +64,15 @@
                                     <th>Id</th>
                                     <th>Fecha Apertuda</th>
                                     <th>Fecha Cierre</th>
-                                </tr>   
+                                    <th>Total Ventas</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="item: ${acs}">
                                     <td  th:text="${item.id}"></td>
                                     <td th:text="${item.getCreateDate()}"></td>
                                     <td th:text="${item.closedDate}"></td>
+                                    <td th:text="${item.totalSales}"></td>
                                 </tr>
                             </tbody>
                         </table>

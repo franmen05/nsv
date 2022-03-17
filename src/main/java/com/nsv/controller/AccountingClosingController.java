@@ -61,7 +61,6 @@ public class AccountingClosingController {
 
 
         model.addAttribute("daySales", reportService.findAllSales(type));
-
         model.addAttribute("reportSaleTypes", type);
         model.addAttribute("rd", new SalesTodayDTO("", 0L, type));
 

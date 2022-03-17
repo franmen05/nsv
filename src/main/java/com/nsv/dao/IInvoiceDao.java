@@ -21,6 +21,7 @@ import java.util.List;
 public interface IInvoiceDao extends CrudRepository<Invoice, Long> {
 
 
+
     List<Invoice> findAllByClosedIsTrue();
     List<Invoice> findAllByPaymentsNotNullAndClosedIsNull();
 //    @Query("select t from Invoice t where t.closed= true and DATE_FORMAT(t.closedDate,'%Y-%m-%d') =?1 ")
@@ -40,6 +41,8 @@ public interface IInvoiceDao extends CrudRepository<Invoice, Long> {
      */
     List<Invoice> findAllByIdInAndClosedIsNull(Collection<Long> id);
 //    List<Invoice> findAllById(Long closedDate);
+
+
 
     
 }

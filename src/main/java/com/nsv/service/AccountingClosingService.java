@@ -1,6 +1,7 @@
 package com.nsv.service;
 
 import com.nsv.dao.AccountingClosingDao;
+import com.nsv.dao.IPaymentDao;
 import com.nsv.domain.AccountingClosing;
 import com.nsv.exception.NSVException;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,11 @@ public class AccountingClosingService implements IAccountingClosingService {
     public static final String MSJ_ERROR_IS_NOT_OPEN = "Se no ha abierto la caja ";
 
     private final AccountingClosingDao closingDao;
+    private final IPaymentDao paymentDao;
 
-    public AccountingClosingService(AccountingClosingDao closingDao) {
+    public AccountingClosingService(AccountingClosingDao closingDao, IPaymentDao paymentDao) {
         this.closingDao = closingDao;
+        this.paymentDao = paymentDao;
     }
 
     @Override
@@ -31,7 +34,8 @@ public class AccountingClosingService implements IAccountingClosingService {
             throw new NSVException(MSJ_ERROR);
 
         ac = closingDao.findById(ac.getId()).orElseThrow(() -> new NSVException(MSJ_ERROR));
-        closingDao.save(AccountingClosing.doClose(ac));
+        var totalSales = paymentDao.totalPaymentByAccountingClosing(ac.getId());
+        closingDao.save(AccountingClosing.doClose(ac,totalSales));
 
     }
 
