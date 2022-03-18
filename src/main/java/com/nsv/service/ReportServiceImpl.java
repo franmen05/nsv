@@ -48,26 +48,26 @@ public class ReportServiceImpl implements IReportService {
     private List<DaySales> findAllPartialSales() {
          var invoice = invoiceDao.findAllByPaymentsNotNullAndClosedIsNull();
          return invoice.stream()
-                 .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()    ))
+                 .map(this::buildDaySales)
                  .collect(Collectors.toList());
     }
 
     private List<DaySales> findAllDaySales() {
          var invoice = invoiceDao.findAllByClosedIsTrue();
          return invoice.stream()
-                 .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()    ))
+                 .map(this::buildDaySales)
                  .collect(Collectors.toList());
     }
 
 
 //    @Override
-    public List<DaySales> findAllDaySales1() {
-
-         var invoice = invoiceDao.findAllByClosedIsTrueAndClosedDateBetween(Instant.now().minus(20, ChronoUnit.DAYS),Instant.now());
-         return invoice.stream()
-                 .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()))
-                 .collect(Collectors.toList());
-    }
+//    public List<DaySales> findAllDaySales1() {
+//
+//         var invoice = invoiceDao.findAllByClosedIsTrueAndClosedDateBetween(Instant.now().minus(20, ChronoUnit.DAYS),Instant.now());
+//         return invoice.stream()
+//                 .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()))
+//                 .collect(Collectors.toList());
+//    }
 
     public List<DaySales> findAllDaySalesByDate(Instant date, ReportSaleTypes type) {
         List<Invoice> invoices = null;
@@ -77,10 +77,15 @@ public class ReportServiceImpl implements IReportService {
         }
 
         return invoices.stream()
-                .map(i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()))
+                .map(this::buildDaySales)
                 .collect(Collectors.toList());
 
     }
+
+    private DaySales buildDaySales(Invoice i) {
+        return new DaySales(i.getId(), i.getClosedDate(), i.getTotal(), i.calculeTotalWithoutTaxes(), i.getTotalRefund(), i.owed());
+    }
+
     public List<Payment> findAllPaymentByAccountClosing(Long id) {
 
         return paymentDao.findAllByInvoiceId(id);
@@ -110,7 +115,8 @@ public class ReportServiceImpl implements IReportService {
 //        var account=i.getPayments().stream().map(p -> p.getAccountingClosing().getId()).collect(Collectors.toSet());
 ////        List<AccountingClosing> c= (List<AccountingClosing>) closingDao.findAllById(account);
 //        c.stream().map(ac -> new DaySales(ac.getId(),ac.getClosedDate(),ac.))
-        return invoices.stream().map( i -> new DaySales(i.getId(),i.getClosedDate(),i.getTotal(),i.calculeTotalWithoutTaxes(),i.getTotalRefund()))
+        return invoices.stream()
+                .map(this::buildDaySales)
                 .collect(Collectors.toList());
     }
 }

@@ -64,7 +64,8 @@
                                     <th>Id</th>
                                     <th>Fecha Apertuda</th>
                                     <th>Fecha Cierre</th>
-                                    <th>Total Ventas</th>
+                                    <th>Total Pagos</th>
+<!--                                    <th>Total Deudas</th>-->
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,7 +73,8 @@
                                     <td  th:text="${item.id}"></td>
                                     <td th:text="${item.getCreateDate()}"></td>
                                     <td th:text="${item.closedDate}"></td>
-                                    <td th:text="${item.totalSales}"></td>
+                                    <td th:text="${item.totalPayment}"></td>
+<!--                                    <td th:text="${item.totalOwed}"></td>-->
                                 </tr>
                             </tbody>
                         </table>

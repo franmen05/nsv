@@ -215,19 +215,19 @@ public class Invoice extends  AbstractBaseEntity {
         
     }
 
-    public void setTotal(Double total) {
-        this.total = total;
-    } 
-    
     public void clear() {
         payments.clear();
-        
+
         this.items.clear();
         this.addtionalExpensesItems.clear();
         this.taxItems.clear();
     }
-    
-    
+
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
     
     public void addAllPayment(List<Payment> p) {
         payments.addAll(p);

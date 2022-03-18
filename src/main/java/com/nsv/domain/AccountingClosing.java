@@ -29,17 +29,18 @@ public class AccountingClosing extends AbstractBaseEntity{
 
     private Boolean open;
     private Instant openDate;
-    private Double totalSales;
+    private Double totalPayment;
+//    private Double totalOwed;
 
 
     public AccountingClosing() { }
 
-    public static AccountingClosing doClose(AccountingClosing ac, Double totalSales) {
+    public static AccountingClosing doClose(AccountingClosing ac, Double totalPayment) {
 //        final var ac= new AccountingClosing();
         ac.close = true;
         ac.open = false;
         ac.closedDate = Instant.now();
-        ac.totalSales = totalSales;
+        ac.totalPayment = totalPayment;
 
         return ac;
     }
@@ -76,7 +77,11 @@ public class AccountingClosing extends AbstractBaseEntity{
         return openDate;
     }
 
-    public Double getTotalSales() {
-        return totalSales;
+    public Double getTotalPayment() {
+        return totalPayment;
     }
+
+//    public Double getTotalOwed() {
+//        return totalOwed;
+//    }
 }
