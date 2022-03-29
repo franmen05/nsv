@@ -2,6 +2,7 @@ package com.nsv.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serial;
 
 /**
  *
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "subsidiaries")
 public class Subsidiary  extends AbstractBaseEntity {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     @Id

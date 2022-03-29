@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 public class ControllerUtil {    
     
-    private static Log log = LogFactory.getLog(ControllerUtil.class);
+    private static final Log log = LogFactory.getLog(ControllerUtil.class);
     
     public static boolean hasErrros(BindingResult result, RedirectAttributes flash) {
         if (result.hasErrors()) {
