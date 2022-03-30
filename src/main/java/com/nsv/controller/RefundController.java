@@ -12,12 +12,13 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  *
@@ -40,25 +41,26 @@ public class RefundController {
 
 
 
-//
-//    @RequestMapping(value={"/",""})
-//    public String home(Model model) {
-//        model.addAttribute("company", new Company());
-//        model.addAttribute("companies",companyService.findAllByStatus(GenericStatus.ACTIVE));
-//        model.addAttribute("allCompanies",companyService.findAll());
-//        model.addAttribute("currencies", currencyService.findAll());
-//        return "company/maint-company";
-//    }
 
-    @ResponseBody
-    @GetMapping(value={"/",""})
-    public List<Refund> home(Model model) {
+    @RequestMapping(value={"/",""})
+    public String home(Model model) {
 //        model.addAttribute("company", new Company());
+        model.addAttribute("refund", new Refund());
 //        model.addAttribute("companies",companyService.findAllByStatus(GenericStatus.ACTIVE));
 //        model.addAttribute("allCompanies",companyService.findAll());
 //        model.addAttribute("currencies", currencyService.findAll());
-        return refundService.findAll();
+        return "refund/refund";
     }
+
+//    @ResponseBody
+//    @GetMapping(value={"/",""})
+//    public List<Refund> home(Model model) {
+////        model.addAttribute("company", new Company());
+////        model.addAttribute("companies",companyService.findAllByStatus(GenericStatus.ACTIVE));
+////        model.addAttribute("allCompanies",companyService.findAll());
+////        model.addAttribute("currencies", currencyService.findAll());
+//        return refundService.findAll();
+//    }
 
 //    public String getCompany(@PathVariable(name = "id") Long id,Model model) {
 //        model.addAttribute("company", inventoryService.find(id));
