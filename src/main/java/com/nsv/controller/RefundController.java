@@ -19,6 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  *
@@ -46,6 +47,12 @@ public class RefundController {
     public String home(Model model) {
 //        model.addAttribute("company", new Company());
         model.addAttribute("refund", new Refund());
+        var items =new ArrayList<Refund>();
+
+        items.add(new Refund(1L));
+        items.add(new Refund(2L));
+
+        model.addAttribute("partsAtribute", items);
 //        model.addAttribute("companies",companyService.findAllByStatus(GenericStatus.ACTIVE));
 //        model.addAttribute("allCompanies",companyService.findAll());
 //        model.addAttribute("currencies", currencyService.findAll());

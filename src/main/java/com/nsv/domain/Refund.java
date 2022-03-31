@@ -23,6 +23,10 @@ public class Refund extends AbstractBaseEntity {
     @JoinColumn(name = "refund_id")
     private List<RefundItem> items;
 
+    public Refund(Long id) {
+        this.id = id;
+    }
+
     public Refund() {
         this.items= new ArrayList<>();
     }
