@@ -80,6 +80,11 @@ public class InvoiceServiceImpl implements IInvoiceService {
     }
 
     @Override
+    public Optional<Invoice> findInvoice(Long id, Customer cu) {
+        return invoiceDao.findByIdAndCustomer_Id(id,cu.getId());
+    }
+
+    @Override
     public void deleteInvoice(Long id) {
         invoiceDao.deleteById(id);
     }

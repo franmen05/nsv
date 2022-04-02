@@ -54,7 +54,11 @@ public class Customer  extends AbstractBaseEntity {
     public Customer() {
 //        invoices = new ArrayList<>();
     }
-    
+
+    public Customer(Long id) {
+        this.id = id;
+    }
+
     public void addInvoice(Invoice invoice){
         invoices.add(invoice);
     }

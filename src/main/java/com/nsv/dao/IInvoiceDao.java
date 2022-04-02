@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -40,7 +41,10 @@ public interface IInvoiceDao extends CrudRepository<Invoice, Long> {
      * @param id ID Invovice
      */
     List<Invoice> findAllByIdInAndClosedIsNull(Collection<Long> id);
-//    List<Invoice> findAllById(Long closedDate);
+
+
+
+    Optional<Invoice> findByIdAndCustomer_Id(Long id, Long cId);
 
 
 

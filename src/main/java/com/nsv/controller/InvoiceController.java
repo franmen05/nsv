@@ -50,8 +50,7 @@ public class InvoiceController {
     private final IQuotationService quotationService;
     private final AccountingClosingService accountingClosingService;
 
-    
-    
+
     private Invoice invoice;
 
     public InvoiceController(ICustomerService customerService, IInvoiceService invoiceService,
@@ -139,6 +138,12 @@ public class InvoiceController {
 //            return i;
 
         return invoiceService.findInvoiceById(id);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/loadInvoice/{id}/customer/{cid}", produces = {"application/json"})
+    public Object loadInvoice(@PathVariable Long id,@PathVariable Long cid) {
+        return invoiceService.findInvoice(id,new Customer(cid));
     }
     
     @GetMapping("/form/edit/{idInvoice}")

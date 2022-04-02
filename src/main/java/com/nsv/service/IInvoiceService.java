@@ -21,6 +21,7 @@ public interface IInvoiceService {
 
     Invoice saveInvoice(Invoice invoice) throws NSVException;
     Invoice findInvoiceById(Long id);
+    Optional<Invoice> findInvoice(Long id,Customer cu);
     void deleteInvoice(Long id);
 
     List<Tax> findTaxesByTaxGroup(Long aLong);

@@ -60,7 +60,7 @@ public class RefundController {
     }
 
 //    @ResponseBody
-//    @GetMapping(value={"/",""})
+//    @GetMapping(value={"/id",""})
 //    public List<Refund> home(Model model) {
 ////        model.addAttribute("company", new Company());
 ////        model.addAttribute("companies",companyService.findAllByStatus(GenericStatus.ACTIVE));
