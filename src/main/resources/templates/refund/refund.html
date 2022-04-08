@@ -20,7 +20,7 @@
                            th:text="'&laquo; volver'"></a>
                     </h4>
 
-                    <form  id="form-ac" th:action="@{/refund}" th:object="${refund}" method="post">
+                    <form  id="form-refund" th:action="@{/refund}" th:object="${refund}" method="post">
 
 <!--                        <input th:field="${ac.status}" type="hidden" class="form-control" />-->
                         <!--<input th:field="${ac.createDate}" type="hidden" class="form-control" />-->
@@ -32,21 +32,24 @@
                             </div>
                         </div>
                         <div  th:if="${refund.id!=0}" class="form-group row">
-                            <label th:for="customer" class="col-sm-2 col-form-label" th:text="'Cliente'"></label>
+                            <label for="id" class="col-sm-2 col-form-label" th:text="'Cliente'"></label>
                             <div class="col-sm-6">
-                                <input th:field="${refund.invoiceId}" readonly="true" class="form-control" />
+                                <input th:value="${customer.name} + ' ' + ${customer.lastName}" readonly="true" class="form-control" />
                             </div>
+                                <input th:value="${customer.id}" type="hidden" id="customerId" class="form-control" />
                         </div>
                         <div  th:if="${refund.id!=0}" class="form-group row">
-                            <label for="id" class="col-sm-2 col-form-label" th:text="'ID Factura'"></label>
-                            <div class="col-sm-6">
-                                <input th:field="${refund.customer}" readonly="true" class="form-control" />
+                            <label th:for="customer" class="col-sm-2 col-form-label" th:text="'ID Factura'"></label>
+                            <div class="col-sm-4">
+                                <input th:field="${refund.invoiceId}" type="number"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                       class="form-control" />
                             </div>
+                            <button id="find-invoice"  class="btn btn-primary">  Buscar Factura</button>
                         </div>
                         <div  th:if="${refund.id!=0}" class="form-group row">
                             <label for="items" class="col-sm-2 col-form-label" th:text="'ID Factura item'"></label>
                             <div class="col-sm-6">
-                                <select multiple class="form-control" th:field="*{items}" >
+                                <select  multiple class="form-control" th:field="*{items}" >
                                     <option th:each="part : ${partsAtribute}"
                                             th:field="*{items}"
                                             th:value="${part.id}"
@@ -66,10 +69,8 @@
                         
                         <div class="form-group row">
                             <div class="col-sm-12">
-
-                                <button  class="btn btn-warning " > <span class="glyphicon glyphicon-ok"></span> Someter</button>
-                                <a href="#" class="btn btn-danger " th:onclick="'itemsHelper.inactiveItem();'"><span class="glyphicon glyphicon-remove"></span> Cerrar</a>
-
+                                <button  class="btn btn-facebook " > <span class="glyphicon glyphicon-ok"></span> Someter</button>
+                                <a href="#" class="btn btn-danger " th:onclick="'itemsHelper.inactiveItem();'"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
                             </div>
                         </div>
                         </form>
@@ -106,7 +107,6 @@
         </div>
 
         <footer th:replace="layout/mainLayout2 :: footer"></footer>
-        <!--<script th:replace="invoice/autocomplete-ac :: javascript"></script>-->
         <script src="../../static/js/app/refund.js" th:src="@{/js/app/refund.js}"></script>
 
         <script>

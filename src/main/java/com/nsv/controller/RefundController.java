@@ -4,14 +4,15 @@ import com.nsv.domain.Company;
 import com.nsv.domain.GenericStatus;
 import com.nsv.domain.Refund;
 import com.nsv.service.ICompanyService;
+import com.nsv.service.ICustomerService;
 import com.nsv.service.IRefundService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -34,23 +35,23 @@ public class RefundController {
     private static final Log log = LogFactory.getLog(RefundController.class);
     private static final String REDIRECT_COMPANY = "redirect:/company/";
     
-    @Autowired
-    private ICompanyService companyService;
-    
-    @Autowired
-    private IRefundService refundService;
+    private final ICompanyService companyService;
+    private final IRefundService refundService;
+    private final ICustomerService customerService;
+
+    public RefundController(ICompanyService companyService, IRefundService refundService, ICustomerService customerService) {
+        this.companyService = companyService;
+        this.refundService = refundService;
+        this.customerService = customerService;
+    }
 
 
-
-
-    @RequestMapping(value={"/",""})
-    public String home(Model model) {
+    @RequestMapping(value={"/{customerId}",""})
+    public String home(@PathVariable(name = "customerId") Long cId, Model model) {
 //        model.addAttribute("company", new Company());
         model.addAttribute("refund", new Refund());
+        model.addAttribute("customer",customerService.find(cId));
         var items =new ArrayList<Refund>();
-
-        items.add(new Refund(1L));
-        items.add(new Refund(2L));
 
         model.addAttribute("partsAtribute", items);
 //        model.addAttribute("companies",companyService.findAllByStatus(GenericStatus.ACTIVE));

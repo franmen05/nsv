@@ -120,7 +120,7 @@ public class InvoiceController {
 
             i.setTaxItems(invoiceService.findTaxesByTaxGroup(1L).stream().map(TaxItem::new).collect(Collectors.toList()));
             i.calculeTotalWithTaxes();
-//            i.setTotalWithTaxes(i.getTotalWithoutTaxes()+ i.totalTaxes());
+//            i.setTotalWphone 11ithTaxes(i.getTotalWithoutTaxes()+ i.totalTaxes());
         }
 
         model.addAttribute("invoice", i);
@@ -142,8 +142,8 @@ public class InvoiceController {
 
     @ResponseBody
     @GetMapping(value = "/loadInvoice/{id}/customer/{cid}", produces = {"application/json"})
-    public Object loadInvoice(@PathVariable Long id,@PathVariable Long cid) {
-        return invoiceService.findInvoice(id,new Customer(cid));
+    public Invoice loadInvoice(@PathVariable Long id, @PathVariable Long cid) throws NSVException {
+        return invoiceService.findInvoice(id,new Customer(cid)).orElseThrow(()->new NSVException("No se encontraron resultados"));
     }
     
     @GetMapping("/form/edit/{idInvoice}")

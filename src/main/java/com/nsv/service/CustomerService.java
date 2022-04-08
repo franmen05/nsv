@@ -9,13 +9,14 @@ import com.nsv.dao.ICustomerDao;
 import com.nsv.dao.IInvoiceDao;
 import com.nsv.dao.IProductDao;
 import com.nsv.domain.Customer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -52,10 +53,7 @@ public class CustomerService implements ICustomerService {
     public Customer find(Long id) {
         
         Optional<Customer> c = customerDao.findById(id);
-        if(c.isPresent())
-            return c.get();
-        
-        return null;
+        return c.orElse(null);
     }
 
     @Override

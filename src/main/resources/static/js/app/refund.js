@@ -8,7 +8,7 @@
 $(document).ready(function () {
 
 //    var events = $('#events');
-    var table = $('#itemsCurrency').DataTable({
+    var table = $('#itemsRefund').DataTable({
         "scrollY": "400px",
         "scrollCollapse": true,
         "paging": false,
@@ -31,38 +31,49 @@ $(document).ready(function () {
         itemsHelper.clearForm();
     });
 
-    $("#find_product").click({
+    $("#find-invoice").click((e)=>{
 
-        source: function (request, response) {
-            $.ajax({
-                url: "/invoice/loadInvoice/" + request.term +"/customer/"+ request.term,
-                dataType: "json",
-                data: {
-                    term: request.term
-                },
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        return {
-                            value: item.id,
-                            label: item.name,
-                            precio: item.price,
-                        };
-                    }));
-                },
-            });
-        },
-        select: function (event, ui) {
-            return addProduct(ui.item.value,ui.item.label,ui.item.precio);
-        }
+        e.preventDefault();
+        $("#items").empty();
+
+        $.ajax({
+            url: "/invoice/loadInvoice/" +getValueFromInputElement("#invoiceId")+"/customer/"+  $("#customerId").val(),
+            dataType: "json",
+            success: (d)=>{
+                console.debug("success")
+                console.debug(d)
+                d.items.forEach((item)=>{
+                    $("#items").append('<option value=' + item.id + '>' + item.description +'</option>');
+                })
+
+
+            },
+            error:(resp)=> {
+                alert(resp.responseJSON.message)
+                // console.debug(xhr.responseJSON.message)
+
+            },
+        });
+        // $("#meeting_ranch_location").selectpicker('refresh');
+
     });
 
 });
+
+function getValueFromInputElement(elementIdentity){
+    const v=$(elementIdentity).val() ;
+
+     if(v)
+         return v;
+     else
+         return 0;
+}
 
 
 
 var itemsHelper = {
     inactiveItem: function () {
-        var form =$("#form-ac");
+        var form =$("#form-refund");
         form.attr("action","/accountingclosing/doClose").submit();
 //        alert( id);
     },

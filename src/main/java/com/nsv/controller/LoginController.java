@@ -25,16 +25,12 @@ import java.security.Principal;
 @SessionAttributes({"customer","company"})
 public class LoginController {
     
-    private static Log log = LogFactory.getLog(LoginController.class);
+    private static final Log log = LogFactory.getLog(LoginController.class);
     
     @Autowired
     private IUserService userService;
     
-    
-//    @RequestMapping(value={"/",""})
-//    public String page(Model model) {
-//        return "login/login";
-//    }
+
     
     @GetMapping(value={"/",""})
     public String login(@RequestParam(value = "error", required = false) String error,
