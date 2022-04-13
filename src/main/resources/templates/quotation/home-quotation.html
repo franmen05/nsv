@@ -16,8 +16,9 @@
                 <div class="card-body">
                     <div class="form-group row" >
                          <div class="col-sm-12">
-                             <a th:if="${not isCustomer}" class="btn btn-warning btn-xs"th:href="@{'/quotation/new'}">Cotizaciones (para cliente  sin registrar)</a>
-                             <a th:if="${isCustomer}" class="btn btn-warning btn-xs"th:href="@{'/quotation/new/' + ${customerId}}">Cotizaciones</a>
+                             <button class="btn btn-light btn-xs" onclick="history.back()" >&laquo; volver</button>
+                             <a th:if="${not isCustomer}" class="btn btn-warning btn-xs"th:href="@{'/quotation/new'}">Crear Cotizacion (para cliente  sin registrar)</a>
+                             <a th:if="${isCustomer}" class="btn btn-warning btn-xs"th:href="@{'/quotation/new/' + ${customerId}}">Crear Cotizacion</a>
                          </div>
                      </div>
                     <div class="form-group row bg-dark ">

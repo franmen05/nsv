@@ -14,7 +14,9 @@
             <div class="card bg-light">
                 <div class="card-header" th:text="${titulo}"></div>
                 <div class="card-body">
-
+                    <h4 class="card-title">
+                        <button class="btn btn-light btn-xs" onclick="history.back()" >&laquo; volver</button>
+                    </h4>
                     <form id="form-quotation" th:action="@{/quotation/save/}" th:object="${quotation}" method="post">
 
                         <input type="hidden" th:field="${quotation.id}" id="id-quotation" class="form-control" />

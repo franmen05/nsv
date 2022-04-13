@@ -15,9 +15,7 @@
                 <div class="card-header"> Reembosos </div>
                 <div class="card-body">
                     <h4 class="card-title">
-                        <button class="btn btn-light btn-xs"
-                           onclick="history.back()"
-                           th:text="'&laquo; volver'"></button>
+                        <button class="btn btn-light btn-xs" onclick="history.back()" >&laquo; volver</button>
                     </h4>
 
                     <form  id="form-refund" th:action="@{/refund}" th:object="${refund}" method="post">
