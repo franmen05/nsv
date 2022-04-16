@@ -69,9 +69,10 @@
 
                             </div>
                         </div>
-
                         <div class="container ">
                             <div class="row">
+
+                                <label for="items" class="col-sm-2 col-form-label" th:text="'Items Factura '"></label>
                                 <div class='col-sm-6'>
                                     <select  multiple class="form-control" th:field="*{items}" >
                                         <option th:each="part : ${partsAtribute}"

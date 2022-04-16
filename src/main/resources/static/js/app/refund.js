@@ -43,9 +43,8 @@ $(document).ready(function () {
                 console.debug("success")
                 console.debug(d)
                 d.items.forEach((item)=>{
-                    $("#items").append('<option value=' + item.id + '>' + item.description +'</option>');
+                    $("#items").append(`<option value=${item.id}  >  (${item.quantity}) ${item.description} </option>`);
                 })
-
 
             },
             error:(resp)=> {
@@ -56,6 +55,17 @@ $(document).ready(function () {
         });
         // $("#meeting_ranch_location").selectpicker('refresh');
 
+    });
+
+    $("#items").on('change', function(){
+        // e.preventDefault();
+
+        // alert( this.value );
+
+        const qts=this.value
+        for(let i = 0; i <= qts; i++){
+            $("#itemQuantity").append(`<option value=${i+1}  >   ${i+1} </option>`);
+        }
     });
 
 });
