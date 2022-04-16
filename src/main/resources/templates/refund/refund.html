@@ -47,6 +47,7 @@
                         <div  th:if="${refund.id!=0}" class="form-group row">
                             <label for="items" class="col-sm-2 col-form-label" th:text="'ID Factura item'"></label>
                             <div class="col-sm-6">
+                                <label th:for="items" class=" col-form-label" >item : </label>
                                 <select  multiple class="form-control" th:field="*{items}" >
                                     <option th:each="part : ${partsAtribute}"
                                             th:field="*{items}"
@@ -54,13 +55,30 @@
                                             th:text="${part.id}">Part name</option>
                                 </select>
 
+                                <div class="col-sm-12 row">
+
+                                    <select  class="col-sm-6 form-control" id="itemQuantity" >
+                                        <option th:each="part : ${partsAtribute}"
+                                                th:field="*{items}"
+                                                th:value="${part.id}"
+                                                th:text="${part.id}">Part name</option>
+                                    </select>
+                                    <button  class="col-sm-2  btn btn-facebook btn-xs " > <span class="glyphicon glyphicon-ok"></span> ADD</button>
+                                </div>
+
+
                             </div>
                         </div>
 
-                        <div class="container">
+                        <div class="container ">
                             <div class="row">
                                 <div class='col-sm-6'>
-
+                                    <select  multiple class="form-control" th:field="*{items}" >
+                                        <option th:each="part : ${partsAtribute}"
+                                                th:field="*{items}"
+                                                th:value="${part.id}"
+                                                th:text="${part.id}">Part name</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

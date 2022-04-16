@@ -27,7 +27,7 @@ $(document).ready(function () {
         $("#email").val(rowData[0][3]);
     })
     .on('deselect', function (e, dt, type, index) {
-        
+        // ,''
         itemsHelper.clearForm();
     });
 
