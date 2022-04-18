@@ -62,7 +62,8 @@ $(document).ready(function () {
 
         // alert( this.value );
 
-        const qts=this.value
+        $("#itemQuantity").empty();
+        const qts=this.value;
         for(let i = 0; i <= qts; i++){
             $("#itemQuantity").append(`<option value=${i+1}  >   ${i+1} </option>`);
         }
