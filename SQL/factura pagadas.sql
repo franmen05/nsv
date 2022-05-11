@@ -15,7 +15,7 @@ WHERE p.invoice_id = i.id
 
 
  select invoice0_.id as id1_9_, invoice0_.create_date as create_d2_9_, invoice0_.created_by as created_3_9_, invoice0_.last_update_date as last_upd4_9_, invoice0_.closed as closed5_9_, invoice0_.closed_date as closed_d6_9_, invoice0_.comment as comment7_9_, invoice0_.company_id as company18_9_, invoice0_.currency_id as currenc19_9_, invoice0_.customer_id as custome20_9_, invoice0_.description as descript8_9_, invoice0_.discount as discount9_9_, invoice0_.has_ncf as has_ncf10_9_, invoice0_.has_tax as has_tax11_9_, invoice0_.payment_type_id as payment21_9_, invoice0_.status as status12_9_, invoice0_.subsidiary_id as subsidi22_9_, invoice0_.total as total13_9_, invoice0_.total_payment as total_p14_9_, invoice0_.total_refund as total_r15_9_, invoice0_.total_with_taxes as total_w16_9_, invoice0_.total_without_taxes as total_w17_9_, invoice0_.user_id as user_id23_9_ from invoices invoice0_ left outer join payments payments1_ on invoice0_.id=payments1_.invoice_id
- WHERE (payments1_.id is not null) and invoice0_.closed IS null
+ WHERE (payments1_.id is not null) and invoice0_.closed IS NULL;
  
  
  

@@ -1,19 +1,9 @@
 package com.nsv.domain;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
 
 /**
  *
@@ -62,7 +52,15 @@ public class AdditionalExpense  implements Serializable{
     public void preUpdate(){
         lastUpdateDate= new Date();
     }
-    
+    public AdditionalExpense inactive(){
+        this.setStatus(GenericStatus.INACTIVE);
+        return this;
+    }
+    public AdditionalExpense active(){
+        this.setStatus(GenericStatus.ACTIVE);
+        return this;
+    }
+
 
     public Long getId() {
         return id;

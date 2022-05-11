@@ -47,7 +47,7 @@ public class ProductController {
     public String save(@Valid Product product, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
         
-        if (hasErrros(result, flash)) return "redirect:/product/";
+        if (hasErrors(result, flash)) return "redirect:/product/";
         
         if(product.getStatus()==null)
             product.setStatus(GenericStatus.ACTIVE);
@@ -63,7 +63,7 @@ public class ProductController {
     public String inactive(@Valid Product product, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (hasErrros(result, flash)) return "redirect:/product/";
+        if (hasErrors(result, flash)) return "redirect:/product/";
         
         product.setStatus(GenericStatus.INACTIVE);
         inventoryService.saveProduct(product);
@@ -78,7 +78,7 @@ public class ProductController {
     public String reactive(@Valid Product product, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (hasErrros(result, flash)) return "redirect:/product/";
+        if (hasErrors(result, flash)) return "redirect:/product/";
         
         product.setStatus(GenericStatus.ACTIVE);
         inventoryService.saveProduct(product);
@@ -89,7 +89,7 @@ public class ProductController {
         return "redirect:/product/" ;
     }
 
-    private boolean hasErrros(BindingResult result, RedirectAttributes flash) {
+    private boolean hasErrors(BindingResult result, RedirectAttributes flash) {
         if (result.hasErrors()) {
             flash.addFlashAttribute("success", "Se encontraron errores, favor verificar !");
             return true;

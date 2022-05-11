@@ -58,15 +58,25 @@ $(document).ready(function () {
     });
 
     $("#items").on('change', function(){
-        // e.preventDefault();
-
-        // alert( this.value );
 
         $("#itemQuantity").empty();
         const qts=this.value;
         for(let i = 0; i <= qts; i++){
             $("#itemQuantity").append(`<option value=${i+1}  >   ${i+1} </option>`);
         }
+    });
+
+    $("#b-add").click((e)=>{
+
+        e.preventDefault();
+        $("#items").empty();
+
+        console.debug("success")
+        console.debug(d)
+        d.items.forEach((item)=>{
+            $("#items").append(`<option value=${item.id}  >  (${item.quantity}) ${item.description} </option>`);
+        });
+
     });
 
 });
@@ -76,8 +86,8 @@ function getValueFromInputElement(elementIdentity){
 
      if(v)
          return v;
-     else
-         return 0;
+
+     return 0;
 }
 
 

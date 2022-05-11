@@ -1,7 +1,6 @@
 package com.nsv.controller;
 
 import com.nsv.domain.AdditionalExpense;
-import com.nsv.domain.GenericStatus;
 import com.nsv.service.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -60,7 +59,7 @@ public class AdditionalExprenseController {
         if (ControllerUtil.hasErrros(result, flash)) return MAIN_REDIRECT;
         
         if(additionalExpense.getStatus()==null)
-            additionalExpense.setStatus(GenericStatus.ACTIVE);
+            additionalExpense.active();
         
         invoiceService.saveAdditionalExpense(additionalExpense);
         status.setComplete();
@@ -74,9 +73,8 @@ public class AdditionalExprenseController {
             RedirectAttributes flash, SessionStatus status) {
 
         if (ControllerUtil.hasErrros(result, flash)) return MAIN_REDIRECT;
-        
-        additionalExpense.setStatus(GenericStatus.INACTIVE);
-        invoiceService.saveAdditionalExpense(additionalExpense);
+
+        invoiceService.saveAdditionalExpense(additionalExpense.inactive());
 //        status.setComplete();
 
         flash.addFlashAttribute("success", "El item fue inactivado con éxito!");
@@ -90,9 +88,8 @@ public class AdditionalExprenseController {
             RedirectAttributes flash, SessionStatus status) {
 
         if (ControllerUtil.hasErrros(result, flash)) return MAIN_REDIRECT;
-        
-        additionalExpense.setStatus(GenericStatus.ACTIVE);
-        invoiceService.saveAdditionalExpense(additionalExpense);
+
+        invoiceService.saveAdditionalExpense(additionalExpense.active());
 //        status.setComplete();
 
         flash.addFlashAttribute("success", "El item fue activado con éxito!");
