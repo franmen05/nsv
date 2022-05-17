@@ -58,7 +58,7 @@ public class CompanyController {
     public String save(@Valid Company company, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
         
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_COMPANY;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_COMPANY;
         
         
         if(company.getStatus()==null)
@@ -76,7 +76,7 @@ public class CompanyController {
     public String inactive(@Valid Company company, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_COMPANY;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_COMPANY;
         
         company.setStatus(GenericStatus.INACTIVE);
         companyService.save(company);
@@ -91,7 +91,7 @@ public class CompanyController {
     public String reactive(@Valid Company company, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_COMPANY;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_COMPANY;
         
         company.setStatus(GenericStatus.ACTIVE);
         companyService.save(company);

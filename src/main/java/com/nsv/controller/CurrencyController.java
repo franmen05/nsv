@@ -49,7 +49,7 @@ public class CurrencyController {
     public String save(@Valid Currency c, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
         
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_COMPANY;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_COMPANY;
         
         if(c.getStatus()==null)
             c.setStatus(GenericStatus.ACTIVE);
@@ -66,7 +66,7 @@ public class CurrencyController {
     public String inactive(@Valid Currency c, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_COMPANY;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_COMPANY;
         
         c.setStatus(GenericStatus.INACTIVE);
         currencyService.save(c);
@@ -81,7 +81,7 @@ public class CurrencyController {
     public String reactive(@Valid Currency c, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_COMPANY;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_COMPANY;
         
         c.setStatus(GenericStatus.ACTIVE);
         currencyService.save(c);

@@ -79,7 +79,7 @@ public class AccountingClosingController {
             return REDIRECT_RD;
         }
 
-        if (ControllerUtil.hasErrros(result, flash) ) return REDIRECT_RD;
+        if (ControllerUtil.hasErrors(result, flash) ) return REDIRECT_RD;
 
 
         if(StringUtils.hasText(salesToday.date()))
@@ -126,7 +126,7 @@ public class AccountingClosingController {
     public String doOpen(@Valid AccountingClosing ac, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_;
 
         try {
             closingService.doOpen();
@@ -145,7 +145,7 @@ public class AccountingClosingController {
     public String doClose( AccountingClosing ac, BindingResult result, Model model,
                           RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_;
 
         try {
             closingService.doClose(ac);

@@ -84,7 +84,7 @@ public class CustomerController {
     public String save(@Valid Customer c, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
         
-        if (ControllerUtil.hasErrros(result, flash)) 
+        if (ControllerUtil.hasErrors(result, flash))
             return REDIRECT_CUSTOMER;
         
         if(c.getStatus()==null)
@@ -102,7 +102,7 @@ public class CustomerController {
     public String inactive(@Valid Customer c, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_CUSTOMER;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_CUSTOMER;
         
         c.setStatus(GenericStatus.INACTIVE);
         customerService.save(c);
@@ -117,7 +117,7 @@ public class CustomerController {
     public String reactive(@Valid Customer c, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_CUSTOMER;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_CUSTOMER;
         
         c.setStatus(GenericStatus.ACTIVE);
         customerService.save(c);

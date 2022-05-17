@@ -53,8 +53,8 @@ public class ProductController {
 
         inventoryService.saveProduct(product);
         status.setComplete();
+        ControllerUtil.displayMsg(flash, "Producto fue guardado con éxito!");
 
-        flash.addFlashAttribute("success", "Producto fue guardado con éxito!");
         return "redirect:/product/" ;
     }
     
@@ -68,7 +68,7 @@ public class ProductController {
         inventoryService.saveProduct(product);
 //        status.setComplete();
 
-        flash.addFlashAttribute("success", "Producto fue inactivado con éxito!");
+        ControllerUtil.displayMsg(flash, "Producto fue inactivado con éxito!");
 
         return "redirect:/product/" ;
     }
@@ -83,16 +83,18 @@ public class ProductController {
         inventoryService.saveProduct(product);
 //        status.setComplete();
 
-        flash.addFlashAttribute("success", "Producto fue activado con éxito!");
+        ControllerUtil.displayMsg(flash, "Producto fue activado con éxito!");
 
         return "redirect:/product/" ;
     }
 
     private boolean hasErrors(BindingResult result, RedirectAttributes flash) {
         if (result.hasErrors()) {
-            flash.addFlashAttribute("success", "Se encontraron errores, favor verificar !");
+            ControllerUtil.displayError(flash,"Se encontraron errores, favor verificar !");
             return true;
         }
         return false;
     }
+
+
 }

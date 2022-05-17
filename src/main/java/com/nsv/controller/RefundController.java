@@ -80,7 +80,7 @@ public class RefundController {
     public String save(@Valid Company company, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
         
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_COMPANY;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_COMPANY;
         
         
         if(company.getStatus()==null)

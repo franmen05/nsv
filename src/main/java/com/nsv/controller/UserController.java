@@ -52,17 +52,14 @@ public class UserController {
                        @RequestParam(name = "rol", required = false) String rol,
                        RedirectAttributes flash, SessionStatus status) {
         
-        if (ControllerUtil.hasErrros(result, flash))  return REDIRECT_USER;
+        if (ControllerUtil.hasErrors(result, flash))  return REDIRECT_USER;
         
         if(user.getEnabled()==null)
             user.setEnabled(true);
 
         user.clearRol();
 
-        roles.stream().filter(ro->ro.getAuthority().equalsIgnoreCase(rol)).findFirst().ifPresent((r )->{
-
-            user.addRol(r);
-        });
+        roles.stream().filter(ro->ro.getAuthority().equalsIgnoreCase(rol)).findFirst().ifPresent(user::addRol);
 
         
         userService.save(user);
@@ -76,7 +73,7 @@ public class UserController {
     public String inactive(@Valid User user, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return REDIRECT_USER;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_USER;
         
         user.setEnabled(false);
         userService.save(user);
@@ -92,7 +89,7 @@ public class UserController {
     public String reactive(@Valid User user, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash))
+        if (ControllerUtil.hasErrors(result, flash))
             return REDIRECT_USER;
         
         user.setEnabled(true);

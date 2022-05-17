@@ -13,17 +13,23 @@ public class ControllerUtil {
     
     private static final Log log = LogFactory.getLog(ControllerUtil.class);
     
-    public static boolean hasErrros(BindingResult result, RedirectAttributes flash) {
+    public static boolean hasErrors(BindingResult result, RedirectAttributes flash) {
         if (result.hasErrors()) {
             
             flash.addFlashAttribute("error", "Se encontraron errores, favor verificar !");
-            result.getFieldErrors().forEach((t) -> {
-               
-                log.info(t.getObjectName()+" :: "+t.getField()+" :: "+t.getDefaultMessage());
-            });
+            result.getFieldErrors().forEach((t) ->
+                log.info(t.getObjectName()+" :: "+t.getField()+" :: "+t.getDefaultMessage())
+            );
             
             return true;
         }
         return false;
+    }
+
+    public static void displayMsg(RedirectAttributes flash,  String text) {
+        flash.addFlashAttribute("success", text);
+    }
+    public static void displayError(RedirectAttributes flash, String text) {
+        flash.addFlashAttribute("error", text);
     }
 }

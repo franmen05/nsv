@@ -56,7 +56,7 @@ public class AdditionalExprenseController {
     public String save(@Valid AdditionalExpense additionalExpense, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
         
-        if (ControllerUtil.hasErrros(result, flash)) return MAIN_REDIRECT;
+        if (ControllerUtil.hasErrors(result, flash)) return MAIN_REDIRECT;
         
         if(additionalExpense.getStatus()==null)
             additionalExpense.active();
@@ -72,7 +72,7 @@ public class AdditionalExprenseController {
     public String delete(@Valid AdditionalExpense additionalExpense, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return MAIN_REDIRECT;
+        if (ControllerUtil.hasErrors(result, flash)) return MAIN_REDIRECT;
 
         invoiceService.saveAdditionalExpense(additionalExpense.inactive());
 //        status.setComplete();
@@ -87,7 +87,7 @@ public class AdditionalExprenseController {
     public String reactive(@Valid AdditionalExpense additionalExpense, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
 
-        if (ControllerUtil.hasErrros(result, flash)) return MAIN_REDIRECT;
+        if (ControllerUtil.hasErrors(result, flash)) return MAIN_REDIRECT;
 
         invoiceService.saveAdditionalExpense(additionalExpense.active());
 //        status.setComplete();

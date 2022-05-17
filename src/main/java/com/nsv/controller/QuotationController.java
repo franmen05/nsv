@@ -203,9 +203,9 @@ public class QuotationController {
                                     Float[] discount, Long[] aeItemId, Double[] aeCost) throws NSVException {
 
         for (int i = 0; i < itemId.length; i++) {
-            Product product = inventoryService.findProduct(itemId[i]);
+            var product = inventoryService.findProduct(itemId[i]);
 
-            QuotationItem item = new QuotationItem();
+            var item = new QuotationItem();
             item.setQuantity(cantidad[i]);
             item.setDiscount(discount[i]/100);
             item.addProduct(product);
@@ -217,8 +217,8 @@ public class QuotationController {
         if (!ArrayUtils.isEmpty(aeItemId)) {
             for (int i = 0; i < aeItemId.length; i++) {
 
-                AdditionalExpense ae = invoiceService.findAdditionalExpense(aeItemId[i]);
-                QuotationItem item = new QuotationItem();
+                var ae = invoiceService.findAdditionalExpense(aeItemId[i]);
+                var item = new QuotationItem();
                 item.setQuantity(cantidad[i]);
                 item.addAdditionalExpense(ae, aeCost[i]);
                 _quotation.addItem(item);
@@ -237,10 +237,7 @@ public class QuotationController {
     @RequestMapping("/print/{idQuotation}")
     public String print(@PathVariable(name = "idQuotation") Long id, Model model) {
 
-        quotationService.findById(id).ifPresent((t) -> {
-            genericInit(model, t, false);
-        });
-
+        quotationService.findById(id).ifPresent((t) -> genericInit(model, t, false));
         return "quotation/print-quotation";
     }
 
