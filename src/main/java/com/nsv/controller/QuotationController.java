@@ -1,6 +1,7 @@
 package com.nsv.controller;
 
 import com.nsv.domain.*;
+import com.nsv.exception.NSVException;
 import com.nsv.service.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -178,10 +179,14 @@ public class QuotationController {
         }
 
         _quotation.clear();
-
-        saveQuotation(_quotation, itemId, cantidad,dicounts, aeItemId, aeCost);
-//        status.setComplete();
-        
+        try{
+            saveQuotation(_quotation, itemId, cantidad,dicounts, aeItemId, aeCost);
+    //        status.setComplete();
+        } catch (NSVException e) {
+            e.printStackTrace();
+            flash.addFlashAttribute("error", e.getMessage());
+            return "quotation/new-quotation";
+        }
 
         flash.addFlashAttribute("success", "Cotizacion creada con éxito!");
         
@@ -195,7 +200,7 @@ public class QuotationController {
     }
 
     private Quotation saveQuotation(Quotation _quotation, Long[] itemId, Long[] cantidad,
-                                    Float[] discount, Long[] aeItemId, Double[] aeCost) {
+                                    Float[] discount, Long[] aeItemId, Double[] aeCost) throws NSVException {
 
         for (int i = 0; i < itemId.length; i++) {
             Product product = inventoryService.findProduct(itemId[i]);

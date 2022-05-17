@@ -17,4 +17,5 @@ public class NscApplication {
 	public PasswordEncoder getEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 }

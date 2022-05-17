@@ -6,15 +6,15 @@
 package com.nsv.service;
 
 import com.nsv.dao.ICustomerDao;
-import com.nsv.dao.IInvoiceDao;
 import com.nsv.dao.IProductDao;
-import com.nsv.domain.Customer;
 import com.nsv.domain.Product;
-import java.util.List;
+import com.nsv.exception.NSVException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *
@@ -42,13 +42,21 @@ public class InventoryServiceImpl implements IInventoryService {
     }
 
     @Override
-    public void saveProduct(Product p) {
-        productDao.save(p);
+    public void saveProduct(Product product) {
+        productDao.findById(product.getId()).ifPresentOrElse(p -> {
+            p.setStatus(product.getStatus());
+            p.setPrice(product.getPrice());
+            p.setName(product.getName());
+            p.setDescription(product.getDescription());
+            productDao.save(p);
+
+        },() ->productDao.save(product));
+
     }
 
     @Override
-    public Product findProduct(Long id) {
-        return productDao.findById(id).get();
+    public Product findProduct(Long id) throws NSVException {
+        return productDao.findById(id).orElseThrow( () -> new NSVException("Producto no fue encontrado"));
     }
 
     @Override

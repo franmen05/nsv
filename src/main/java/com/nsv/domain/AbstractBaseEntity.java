@@ -22,18 +22,18 @@ public abstract  class AbstractBaseEntity implements Serializable {
     private String createdBy;
 
     @CreatedDate
-    private Instant createDate= Instant.now();
+    private Instant createDate;
 
     @LastModifiedDate
-    private Instant lastUpdateDate = Instant.now();
+    private Instant lastUpdateDate;
 
     public Instant getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Instant createDate) {
-        this.createDate = createDate;
-    }
+//    public void setCreateDate(Instant createDate) {
+//        this.createDate = createDate;
+//    }
 
     public Instant getLastUpdateDate() {
         return lastUpdateDate;

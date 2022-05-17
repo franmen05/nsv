@@ -6,8 +6,6 @@
 package com.nsv.service;
 
 import com.nsv.dao.INCFDao;
-import com.nsv.dao.INCFSerieDao;
-import com.nsv.dao.INCFTypeDao;
 import com.nsv.domain.Invoice;
 import com.nsv.domain.NCF;
 import com.nsv.domain.NCFSerie;
@@ -18,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,14 +26,15 @@ import java.util.Optional;
 @Service
 public class NCFServiceImpl implements INCFService {
     
-    Log log= LogFactory.getLog(this.getClass());
+    final Log log= LogFactory.getLog(this.getClass());
     
     @Autowired
     private INCFDao ncfDao;
     @Autowired
-    private INCFTypeDao typeDao;
+    private CrudRepository<NCFType, String> typeDao;
+
     @Autowired
-    private INCFSerieDao serieDao;
+    private CrudRepository<NCFSerie, String> seriesDao2;
 
     @Override
     public List<NCF> findAll() {
@@ -77,9 +77,9 @@ public class NCFServiceImpl implements INCFService {
 
     @Override
     public List<NCF> generateSequence(NCF ncf) {
-        
-        System.out.println("####generateSequence()::"+ncf.toString());
-        List<NCF> l= new  ArrayList<>();
+
+        log.info("####generateSequence()::" + ncf.toString());
+        var l= new  ArrayList<NCF>();
         for(long i=ncf.getFrom();i<=ncf.getTo();i++){
             String sequence = String.format("%08d", i);
             try {
@@ -103,7 +103,7 @@ public class NCFServiceImpl implements INCFService {
 
     @Override
     public List<NCFSerie> findAllSeries() {
-        return (List<NCFSerie>) serieDao.findAll();
+        return (List<NCFSerie>) seriesDao2.findAll();
     }
 
     @Override
@@ -113,10 +113,10 @@ public class NCFServiceImpl implements INCFService {
 
     @Override
     public void addInvoice(Invoice invoice) throws NSVException {
-        Optional<NCF> ncf = ncfDao.findFirstByInvoiceIsNull();
+        var ncf = ncfDao.findFirstByInvoiceIsNull();
         
         if(ncf.isPresent()){
-            NCF n=ncf.get();
+            var n=ncf.get();
             n.setInvoice(invoice);
             save(n);
         }else{

@@ -5,11 +5,12 @@
  */
 package com.nsv.service;
 
-import com.nsv.domain.Customer;
 import com.nsv.domain.Product;
-import java.util.List;
+import com.nsv.exception.NSVException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  *
@@ -23,7 +24,7 @@ public interface IInventoryService {
     
     void saveProduct(Product p) ;
 
-    Product findProduct(Long id);
+    Product findProduct(Long id) throws NSVException;
     
     List<Product> findProductByName(String term) ;
 

@@ -7,6 +7,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +20,7 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled=true)
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
@@ -92,5 +95,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return firewall;
     }
 
+	@Bean
+	public AuditorAware<String> auditorAware(){
+		return new SpringSecurityAuditorAware();
+	}
 
 }

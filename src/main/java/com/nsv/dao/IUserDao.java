@@ -4,8 +4,6 @@ import com.nsv.domain.User;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  *
  * @author you_k
@@ -13,7 +11,7 @@ import java.util.List;
 @Repository
 public interface IUserDao extends PagingAndSortingRepository<User, Long> {
     
-    List<User> findByNameContainingIgnoreCase(String term);
+//    List<User> findByNameContainingIgnoreCase(String term);
     User findByUsername(String term);
     
 }

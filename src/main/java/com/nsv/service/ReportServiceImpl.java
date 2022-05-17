@@ -109,9 +109,6 @@ public class ReportServiceImpl implements IReportService {
             case PARTIAL_SALES -> invoices=  invoiceDao.findAllByIdInAndClosedIsNull(invoiceIds);
         }
 
-
-
-
 //        var account=i.getPayments().stream().map(p -> p.getAccountingClosing().getId()).collect(Collectors.toSet());
 ////        List<AccountingClosing> c= (List<AccountingClosing>) closingDao.findAllById(account);
 //        c.stream().map(ac -> new DaySales(ac.getId(),ac.getClosedDate(),ac.))
