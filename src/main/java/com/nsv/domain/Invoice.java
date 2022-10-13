@@ -75,7 +75,7 @@ public class Invoice extends  AbstractBaseEntity {
 
 
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "applications"})
     @ManyToOne(fetch = FetchType.LAZY)
     private Currency currency;      
     
