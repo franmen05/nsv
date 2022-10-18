@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
 @Table(name = "customers")
 public class Customer  extends AbstractBaseEntity {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     @Id
