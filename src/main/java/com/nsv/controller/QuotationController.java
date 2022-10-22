@@ -241,4 +241,11 @@ public class QuotationController {
         return "quotation/print-quotation";
     }
 
+    @RequestMapping("/edit/{idQuotation}")
+    public String edit(@PathVariable(name = "idQuotation") Long id, Model model) {
+
+        quotationService.findById(id).ifPresent((t) -> genericInit(model, t, false));
+        return "quotation/new-quotation";
+    }
+
 }
