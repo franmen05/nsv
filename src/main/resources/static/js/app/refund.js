@@ -43,7 +43,7 @@ $(document).ready(function () {
                 console.debug("success")
                 console.debug(d)
                 d.items.forEach((item)=>{
-                    $("#items").append(`<option value=${item.id}  >  (${item.quantity}) ${item.description} </option>`);
+                    $("#items").append(`<option value=${item.quantity}  >  (${item.quantity}) ${item.description} </option>`);
                 })
 
             },
@@ -61,8 +61,9 @@ $(document).ready(function () {
 
         $("#itemQuantity").empty();
         const qts=this.value;
-        for(let i = 0; i <= qts; i++){
-            $("#itemQuantity").append(`<option value=${i+1}  >   ${i+1} </option>`);
+        // console.debug(qts)
+        for(let i = 1; i <= qts; i++){
+            $("#itemQuantity").append(`<option value=${i}  >   ${i} </option>`);
         }
     });
 
