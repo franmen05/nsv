@@ -51,6 +51,9 @@
                                 <td>
                                     <a class="btn btn-warning btn-xs"
                                        th:href="@{'/quotation/print/' + ${item.id}}" >Imprimir</a>
+
+                                    <a class="btn btn-warning btn-xs" th:if="${ not isCustomer}"
+                                       th:href="@{'/quotation/edit/' + ${item.id}}" >Editar</a>
                                 
                                     <a class="btn btn-danger btn-xs " th:if="${isCustomer}"
                                        th:href="@{'/invoice/initFromQuotation/' + ${item.id}}"

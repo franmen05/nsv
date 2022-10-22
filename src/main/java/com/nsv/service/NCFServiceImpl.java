@@ -77,13 +77,13 @@ public class NCFServiceImpl implements INCFService {
 
     @Override
     public List<NCF> generateSequence(NCF ncf) {
-
         log.info("####generateSequence()::" + ncf.toString());
+
         var l= new  ArrayList<NCF>();
         for(long i=ncf.getFrom();i<=ncf.getTo();i++){
             String sequence = String.format("%08d", i);
             try {
-                System.out.println(""+i);
+                log.debug(""+i);
                 ncf.setSequence(sequence);
                 l.add(ncf.clone());
 //            l.add(ncf.getType().getId()+i);
