@@ -2,13 +2,12 @@ package com.nsv.dao;
 
 import com.nsv.domain.NCFSerie;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author you_k
  */
-@Repository
+//@Repository
 public interface INCFSerieDao extends PagingAndSortingRepository<NCFSerie, String> {
     
     

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class RefundController {
     
     private static final Log log = LogFactory.getLog(RefundController.class);
-    private static final String REDIRECT_COMPANY = "redirect:/company/";
+    private static final String REDIRECT = "redirect:/refund/";
     
     private final ICompanyService companyService;
     private final IRefundService refundService;
@@ -80,7 +80,7 @@ public class RefundController {
     public String save(@Valid Company company, BindingResult result, Model model,
             RedirectAttributes flash, SessionStatus status) {
         
-        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT_COMPANY;
+        if (ControllerUtil.hasErrors(result, flash)) return REDIRECT;
         
         
         if(company.getStatus()==null)
@@ -90,7 +90,7 @@ public class RefundController {
         status.setComplete();
 
         flash.addFlashAttribute("success", "Guardado con éxito!");
-        return REDIRECT_COMPANY;
+        return REDIRECT;
     }
     
 //
@@ -122,13 +122,5 @@ public class RefundController {
 //        flash.addFlashAttribute("success", "El item fue activado con éxito!");
 //
 //        return REDIRECT_COMPANY ;
-//    }
-    
-//    private boolean hasErrros(BindingResult result, RedirectAttributes flash) {
-//        if (result.hasErrors()) {
-//            flash.addFlashAttribute("success", "Se encontraron errores, favor verificar !");
-//            return true;
-//        }
-//        return false;
 //    }
 }

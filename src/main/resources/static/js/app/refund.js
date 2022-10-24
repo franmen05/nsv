@@ -43,40 +43,45 @@ $(document).ready(function () {
                 console.debug("success")
                 console.debug(d)
                 d.items.forEach((item)=>{
-                    $("#items").append(`<option value=${item.quantity}  >  (${item.quantity}) ${item.description} </option>`);
+                    $("#items").append(`<option value="${item.id}_${item.quantity}_${item.description}"  >  (${item.quantity}) ${item.description} </option>`);
                 })
-
             },
             error:(resp)=> {
                 alert(resp.responseJSON.message)
                 // console.debug(xhr.responseJSON.message)
-
             },
         });
         // $("#meeting_ranch_location").selectpicker('refresh');
-
     });
 
     $("#items").on('change', function(){
 
         $("#itemQuantity").empty();
-        const qts=this.value;
-        // console.debug(qts)
+        let split = this.value.split("_");
+
+        const invoiceItemId=split[0];
+        const qts=split[1];
+        const name=split[2];
+
         for(let i = 1; i <= qts; i++){
-            $("#itemQuantity").append(`<option value=${i}  >   ${i} </option>`);
+            $("#itemQuantity").append(`<option value="${invoiceItemId}_${i}_${name}">   ${i} </option>`);
         }
     });
 
     $("#b-add").click((e)=>{
 
         e.preventDefault();
-        $("#items").empty();
+        // $("#items").empty();
+        let split =  $("#itemQuantity").val().split("_");
+        const invoiceItemId=split[0];
+        const qts=split[1];
+        const name=split[2];
 
-        console.debug("success")
-        console.debug(d)
-        d.items.forEach((item)=>{
-            $("#items").append(`<option value=${item.id}  >  (${item.quantity}) ${item.description} </option>`);
-        });
+        console.debug( name)
+        console.debug( qts)
+        console.debug( invoiceItemId)
+
+        $("#itemsRefund2").append(`<option value="${invoiceItemId}_${qts}_${name}"  >  (${qts}) ${name} </option>`);
 
     });
 
