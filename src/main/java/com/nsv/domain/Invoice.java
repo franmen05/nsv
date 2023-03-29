@@ -1,7 +1,6 @@
 package com.nsv.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -60,13 +59,13 @@ public class Invoice extends  AbstractBaseEntity {
     private User user;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    private PaymentType paymentType; 
-    
+    private PaymentType paymentType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
-    
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonManagedReference
+//    @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
     
@@ -75,7 +74,7 @@ public class Invoice extends  AbstractBaseEntity {
 
 
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "applications"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     private Currency currency;      
     
