@@ -1,27 +1,36 @@
     /* Populate tables */
 -- INSERT INTO customers(id,comment,create_date,email,last_name,last_update_date,name) VALUES(1,'comentario', '2017-08-28', 'profesor@bolsadeideas.com','Andres Apellido', '2017-08-28', 'Andres');
-INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc) VALUES(1, 'Rosa Roja numero 232423', 'comentario', '2017-08-28 00:00:00', 'profesor@bolsadeideas.com', 'Andres Apellido', '2017-08-28 00:00:00', 'Andres', '222324242342', '809-34-2-421', '2312' );
-INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc) VALUES(2, 'Rosa Roja numero 232423', 'comentario', '2017-08-28 00:00:00', 'profesor@bolsadeideas.com', 'De Los Santos', '2017-08-28 00:00:00', 'Guillermo', '222324242342', '809-34-2-421', '2312' );
+INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc,status)
+VALUES(1, 'Rosa Roja numero 232423', 'comentario', '2017-08-28 00:00:00', 'client@micorreo.com', 'Andres Apellido', '2017-08-28 00:00:00', 'Andres', '222324242342', '809-342-4321', '2312' ,'ACTIVE');
+INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc,status)
+VALUES(2, 'Rosa Roja #232423', 'comentario', '2017-08-28 00:00:00', 'cliente@gmail.com', 'De Los Santos', '2017-08-28 00:00:00', 'Guillermo', '222324242342', '809-544-4213', '2312','ACTIVE' );
 /* Populate tabla productos */
 INSERT INTO products (name, price, create_date) VALUES('Flete', 250, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Apple iPod shuffle', 1499990, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Sony Notebook Z110', 37990, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Hewlett Packard Multifuncional F2280', 69990, NOW());
+INSERT INTO products (name, price, create_date) VALUES('Hewlett Packard  F2280', 69990, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Bianchi Bicicleta Aro 26', 69990, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Mica Comoda 5 Cajones', 299990, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Compra por Amazon', 123490, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Compra por Ebay', 123490, NOW());
 INSERT INTO products (name, price, create_date) VALUES('Compra en China', 123490, NOW());
 
+-- Insert currencies records
+    INSERT INTO currencies (name, code, symbol, create_date,status) VALUES ('Pesos Dominicanos', 'DOP ', 'RD$',NOW(),'ACTIVE');
+    INSERT INTO currencies (name, code, symbol, create_date,status) VALUES ('Dollars', 'USD', '$', NOW(),'ACTIVE');
+    INSERT INTO currencies (name, code, symbol, create_date,status) VALUES ('Euro', 'EUR', '€', NOW(),'ACTIVE');
+    INSERT INTO currencies (name, code, symbol, create_date,status) VALUES ('Yuan Renminbi', 'CNY', '¥', NOW(),'ACTIVE');
+
 
 INSERT INTO invoices (description, comment, customer_id,currency_id,  create_date) VALUES('Factura Bicicleta', 'Alguna nota importante!', 1,1, NOW());
+
 INSERT INTO invoice_items (quantity,cost, invoice_id, product_id,description) VALUES(3,139, 1, 1,'item de apple');
 INSERT INTO invoice_items (quantity,cost,discount, invoice_id, product_id,description) VALUES(3,250,0.1, 1, 2,'item de apple');
 
 
-INSERT INTO additional_expenses (name, create_date) VALUES('Gestion',  NOW());
-INSERT INTO additional_expenses (name, create_date) VALUES('Transporte',  NOW());
-INSERT INTO additional_expenses (name, create_date) VALUES('Abogado',  NOW());
+INSERT INTO additional_expenses (name, create_date, status) VALUES('Gestion',  NOW(),'ACTIVE');
+INSERT INTO additional_expenses (name, create_date, status) VALUES('Transporte',  NOW(),'ACTIVE');
+INSERT INTO additional_expenses (name, create_date, status) VALUES('Abogado',  NOW(),'ACTIVE');
 
 INSERT INTO taxes_group (name, create_date) VALUES('Generales',  NOW());
 INSERT INTO taxes_group (name, create_date) VALUES('Adiciones',  NOW());
@@ -50,11 +59,7 @@ INSERT INTO ncf_types (id,description, create_date) VALUES('03','Dolar US', NOW(
 
 
 
--- Insert currencies records
-INSERT INTO currencies (name, code, symbol, create_date) VALUES ('Pesos Dominicanos', 'DOP ', 'RD$',NOW());
-INSERT INTO currencies (name, code, symbol, create_date) VALUES ('Dollars', 'USD', '$', NOW());
-INSERT INTO currencies (name, code, symbol, create_date) VALUES ('Euro', 'EUR', '€', NOW());
-INSERT INTO currencies (name, code, symbol, create_date) VALUES ('Yuan Renminbi', 'CNY', '¥', NOW());
+
 
 --
 -- INSERT INTO currencies (name, code, symbol) VALUES ('Leke', 'ALL', 'Lek');
@@ -167,23 +172,24 @@ INSERT INTO currencies (name, code, symbol, create_date) VALUES ('Yuan Renminbi'
 -- INSERT INTO currencies (name, code, symbol) VALUES ('Zimbabwe Dollars', 'ZWD', 'Z$');
 
 
-INSERT INTO companies ( rnc, address, comment, create_date, email, last_update_date, name, status, currency_id) VALUES ( '383423-32101-01', 'rosa roja #25 / El Rosan', '', '2018-12-08 18:18:31', 'you_know08@hotmail.com', NULL, 'Andres S.A.', 'ACTIVE', 1);
-INSERT INTO companies ( rnc, address, comment, create_date, email, last_update_date, name, status, currency_id) VALUES ( '383423-32101-01', 'rosa roja #25 / El Rosan', '', '2018-12-08 18:18:31', 'you_know08@hotmail.com', NULL, 'Juan S.A.', 'ACTIVE', 1);
+INSERT INTO companies ( rnc, address, comment, create_date, email, last_update_date, name, status, currency_id) VALUES ( '383423-32101-01', 'rosa roja #25 / El Rosan', '', '2018-12-08 18:18:31', 'you_know08@hotmail.com', NULL, 'Importadora S.A.', 'ACTIVE', 1);
+INSERT INTO companies ( rnc, address, comment, create_date, email, last_update_date, name, status, currency_id) VALUES ( '383423-32101-01', 'rosa roja #25 / El Rosan', '', '2018-12-08 18:18:31', 'you_know08@hotmail.com', NULL, 'Gestiones Adunaras S.A.', 'ACTIVE', 1);
 
 --     12345
 INSERT INTO users (username, password, enabled) VALUES('andres', '$2a$10$O9wxmH/AeyZZzIS09Wp8YOEMvFnbRVJ8B4dmAMVSGloR62lj.yqXG', 1);
 INSERT INTO users (username, password, enabled) VALUES('admin', '$2a$10$DOMDxjYyfZ/e7RcBfUpzqeaCs8pLgcizuiQWXPkU35nOhZlFcE9MS', 1);
 
-INSERT INTO users_roles (user_id, rol) VALUES(1, 'ROLE_USER');
-INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_USER');
-INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ADMIN');
-INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ACCOUNTING_CLOSER');
-INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ACCOUNTING_OPENER');
+
+INSERT INTO  roles ( authority,authority_desc) VALUES( 'ROLE_ADMIN','Administrador');
+INSERT INTO  roles ( authority,authority_desc) VALUES( 'ROLE_USER','Usuario');
+INSERT INTO  roles ( authority,authority_desc) VALUES( 'ROLE_SALER','Venta');
+INSERT INTO  roles ( authority,authority_desc) VALUES( 'ROLE_OPERATIONS', 'Operaciones');
+INSERT INTO  roles ( authority,authority_desc) VALUES( 'ROLE_ACCOUNTING_OPENER','Rol Abrir Cuenta ');
+INSERT INTO  roles ( authority,authority_desc) VALUES( 'ROLE_ACCOUNTING_CLOSER','Rol Cerrar Cuenta ');
 
 
-INSERT INTO  roles ( authority) VALUES( 'ROLE_ADMIN');
-INSERT INTO  roles ( authority) VALUES( 'ROLE_USER');
-INSERT INTO  roles ( authority) VALUES( 'ROLE_SALER');
-INSERT INTO  roles ( authority) VALUES( 'ROLE_OPERATIONS');
-INSERT INTO  roles ( authority) VALUES( 'ROLE_ACCOUNTING_OPENER');
-INSERT INTO  roles ( authority) VALUES( 'ROLE_ACCOUNTING_CLOSER');
+    INSERT INTO users_roles (user_id, rol) VALUES(1, 'ROLE_USER');
+    INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_USER');
+    INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ADMIN');
+    INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ACCOUNTING_CLOSER');
+    INSERT INTO users_roles (user_id, rol) VALUES(2, 'ROLE_ACCOUNTING_OPENER');

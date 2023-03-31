@@ -22,13 +22,10 @@ $(document).ready(function () {
      
         $("#id").val(rowData[0][0]);
         $("#name").val(rowData[0][1]);
-        $("#RNC").val(rowData[0][2]);
-        $("#email").val(rowData[0][3]);
+        $("#code").val(rowData[0][2]);
+        $("#symbol").val(rowData[0][3]);
         $("#status").val(rowData[0][4]);
-        $("#createDate").val(rowData[0][5]);
-        $("#lastUpdateDate").val(rowData[0][6]);
-        $("#address").val(rowData[0][7]);
-        $("#comment").val(rowData[0][8]);
+
     })
     .on('deselect', function (e, dt, type, index) {
         
@@ -50,12 +47,9 @@ var itemsHelper = {
     clearForm:function (){
         $("#id").val("");
         $("#name").val("");
-        $("#RNC").val("");
+        $("#code").val("");
 //        $("#createDate").val("");
-        $("#status").val("");
-        $("#email").val("");
-        $("#address").val("");
-        $("#comment").val("");
+        $("#symbol").val("");
     }
 }
 //itemsCurrency
