@@ -1,19 +1,17 @@
     /* Populate tables */
 -- INSERT INTO customers(id,comment,create_date,email,last_name,last_update_date,name) VALUES(1,'comentario', '2017-08-28', 'profesor@bolsadeideas.com','Andres Apellido', '2017-08-28', 'Andres');
-INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc,status)
-VALUES(1, 'Rosa Roja numero 232423', 'comentario', '2017-08-28 00:00:00', 'client@micorreo.com', 'Andres Apellido', '2017-08-28 00:00:00', 'Andres', '222324242342', '809-342-4321', '2312' ,'ACTIVE');
-INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc,status)
-VALUES(2, 'Rosa Roja #232423', 'comentario', '2017-08-28 00:00:00', 'cliente@gmail.com', 'De Los Santos', '2017-08-28 00:00:00', 'Guillermo', '222324242342', '809-544-4213', '2312','ACTIVE' );
+INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc,status) VALUES(1, 'Rosa Roja numero 232423', 'comentario', '2017-08-28 00:00:00', 'client@micorreo.com', 'Andres Apellido', '2017-08-28 00:00:00', 'Andres', '222324242342', '809-342-4321', '2312' ,'ACTIVE');
+INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc,status) VALUES(2, 'Rosa Roja #232423', 'comentario', '2017-08-28 00:00:00', 'cliente@gmail.com', 'De Los Santos', '2017-08-28 00:00:00', 'Guillermo', '222324242342', '809-544-4213', '2312','ACTIVE' );
 /* Populate tabla productos */
-INSERT INTO products (name, price, create_date) VALUES('Flete', 250, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Apple iPod shuffle', 1499990, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Sony Notebook Z110', 37990, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Hewlett Packard  F2280', 69990, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Bianchi Bicicleta Aro 26', 69990, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Mica Comoda 5 Cajones', 299990, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Compra por Amazon', 123490, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Compra por Ebay', 123490, NOW());
-INSERT INTO products (name, price, create_date) VALUES('Compra en China', 123490, NOW());
+INSERT INTO products (name, price, create_date,status) VALUES('Flete', 250, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Apple iPod shuffle', 1499990, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Sony Notebook Z110', 37990, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Hewlett Packard  F2280', 69990, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Bianchi Bicicleta Aro 26', 69990, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Mica  5 Cajones', 299990, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Compra por Amazon', 123490, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Compra por Ebay', 123490, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Compra en China', 123490, NOW(),'ACTIVE');
 
 -- Insert currencies records
     INSERT INTO currencies (name, code, symbol, create_date,status) VALUES ('Pesos Dominicanos', 'DOP ', 'RD$',NOW(),'ACTIVE');
