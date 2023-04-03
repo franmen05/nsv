@@ -244,7 +244,7 @@ public class InvoiceController {
             return home(_invoice.getId(), "Factura",model);
         } catch (NSVException e) {
             e.printStackTrace();
-            flash.addFlashAttribute("error", e.getMessage());
+            model.addAttribute("error", e.getMessage());
             return "invoice/new-invoice";
         }
 //        model.addAttribute("invoice", invoice);
