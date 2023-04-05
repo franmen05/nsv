@@ -72,6 +72,22 @@ function hasTaxes() {
     }
 }
 
+function addTaxes(taxes) {
+    if (taxes === 0)
+        $.ajax({
+            url: "/invoice/loadTaxes",
+            dataType: "json",
+            success: (d) => {
+                taxes = d
+                let total = $("#total_invoice").html();
+                total = total * taxes;
+                $("#total_taxes").html(total)
+            },
+        });
+
+
+}
+
 $(document).ready(function () {
 
     let taxes = 0.0;
@@ -122,9 +138,9 @@ $(document).ready(function () {
         $.ajax({
             url: "/invoice/loadProduct/" + t,
             dataType: "json",
-            success: function (data) {
+            success:  (data)=> {
 //                alert(data);
-                $.map(data, function (item) {
+                $.map(data,  (item) => {
                     addProduct(item.id,item.name,item.price);
                 });
             },
@@ -203,17 +219,7 @@ $(document).ready(function () {
     $("#set_tax").change( () => hasTaxes());
 
     $("#total_invoice").on('DOMSubtreeModified', () => {
-
-        if(taxes===0.0)
-            $.ajax({
-                url: "/invoice/loadTaxes",
-                dataType: "json",
-                success: (d)=> taxes=d ,
-            });
-
-        let total=$("#total_invoice").html();
-        total = total*taxes;
-        $("#total_taxes").html(total)
+        addTaxes(taxes);
 
     });
 
