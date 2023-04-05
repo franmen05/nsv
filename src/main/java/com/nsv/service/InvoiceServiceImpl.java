@@ -55,14 +55,11 @@ public class InvoiceServiceImpl implements IInvoiceService {
     }
     @Override
     public Double totalTaxesByTaxGroup(Long id) {
-        return taxDao.findByTaxGroup(id)
+        return findTaxesByTaxGroup(id)
                 .stream()
-                .reduce((tax, tax2) -> {
-                      tax.setValue(tax.getValue()+tax2.getValue());
-                      return tax;
-                  })
-                .orElse(new Tax())
-                .getValue();
+                .map(Tax::getValue)
+                .reduce(Double::sum)
+                .orElse(0.0);
     }
     
     @Override

@@ -72,7 +72,7 @@ public class QuotationController {
             @PathVariable(name = "customerId") Long customerId,
             Model model) {
 
-        Quotation o = initQuotation(c);
+        var o = initQuotation(c);
         genericInit(model, o, true);
 //        model.addAttribute("quotations", quotationService.findByCustomerId(customerId));
         model.addAttribute("quotations", quotationService.findAll(customerId,c));
@@ -138,14 +138,14 @@ public class QuotationController {
 
         if (onInit) {
             model.addAttribute("currencies", currencyService.findAll());
-            model.addAttribute("titulo", "Cotizacion");
+            model.addAttribute("titulo", "Cotización");
         }
         model.addAttribute("quotation", o);
     }
 
     private Quotation initQuotation(Company c) {
         var o = new Quotation();
-        o.setDescription("Cotizacion");
+        o.setDescription("Cotización");
 //        o.setComment("Impuestos no incluidos");
         o.setCompany(c);
         
@@ -188,7 +188,7 @@ public class QuotationController {
             return "quotation/new-quotation";
         }
 
-        flash.addFlashAttribute("success", "Cotizacion creada con éxito!");
+        flash.addFlashAttribute("success", "Cotización creada con éxito!");
         
         if(!StringUtils.hasText(btnSave))
             return "redirect:/quotation/print/"+_quotation.getId();
@@ -228,7 +228,7 @@ public class QuotationController {
         }
         if(_quotation.getHasTax()){
             var taxes = invoiceService.totalTaxesByTaxGroup(1L);    //TODO cambiar este valor fijo
-            _quotation.setTotalWithTaxes(_quotation.getTotal()+taxes);
+            _quotation.addTotalWithTaxes(taxes);
         }
 
         return quotationService.save(_quotation);

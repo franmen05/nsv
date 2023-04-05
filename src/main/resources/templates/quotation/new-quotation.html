@@ -179,7 +179,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <h5>Total <span th:text="${#numbers.formatDecimal(quotation.calculateTotalAdtionalExpensive(),1,2)}"  id="ae_gran_total" class="badge badge-info">0</span></h5>
+                        <h5>Total <span th:text="${#numbers.formatDecimal(quotation.calculateTotalAdditionalExpensive(),1,2)}" id="ae_gran_total" class="badge badge-info">0</span></h5>
 
                         <div class="form-group row bg-dark ">
                             <label class="col-sm-12 col-form-label text-light">Total </label>
@@ -194,8 +194,13 @@
                         <h5 title="Total sin impuestos y descuentos" >Total sin impuestos &nbsp;&nbsp;:
                             <span class="badge badge-danger" id="total_invoice" th:text="${#numbers.formatDecimal(quotation.total,1,2)}" >0</span>
                         </h5>
-                        <h5 id="total_taxes_div" title="Total con impuestos y descuentos" >Total con impuestos :
-                            <span class="badge badge-danger" id="total_taxes"  th:text="${#numbers.formatDecimal(quotation.totalWithTaxes,1,2)}" >0</span>
+
+
+                        <h5 id="total_taxes_div">
+                            Impuestos :<span class="badge badge-danger"  id="total_taxes"  data-inputmask="'alias': 'currency'">0</span>
+                        </h5>
+                        <h5 id="total_div" title="Total con impuestos y descuentos" >Total :
+                            <span class="badge badge-danger" id="total"  th:text="${#numbers.formatDecimal(quotation.totalWithTaxes,1,2)}" >0</span>
                         </h5>
 
                         <div class="form-group row">

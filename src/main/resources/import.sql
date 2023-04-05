@@ -36,8 +36,8 @@ INSERT INTO taxes_group (name, create_date) VALUES('Adiciones',  NOW());
 
 
 INSERT INTO taxes (name, value, create_date,tax_group_id) VALUES('ITBIS', 0.18, NOW(),1);
-INSERT INTO taxes (name, value, create_date,tax_group_id) VALUES('Aduanas', 0.2, NOW(),1);
-INSERT INTO taxes (name, value, create_date,tax_group_id) VALUES('Impuestos diversos', 0.01, NOW(),2 );
+INSERT INTO taxes (name, value, create_date,tax_group_id) VALUES('Aduanas', 0.20, NOW(),1);
+INSERT INTO taxes (name, value, create_date,tax_group_id) VALUES('Impuestos diversos', 0.1, NOW(),2 );
 
 INSERT INTO payments_type (name, create_date) VALUES('Efectivo', NOW());
 INSERT INTO payments_type (name, create_date) VALUES('Tarjeta de Credito', NOW());

@@ -100,7 +100,7 @@ public class Quotation extends AbstractBaseEntity implements Serializable {
         return total;
     }
 
-    public Double calculateTotalAdtionalExpensive() {
+    public Double calculateTotalAdditionalExpensive() {
         return items.stream().filter(quotationItem -> quotationItem.getAdditionalExpense() != null)
                 .collect(Collectors.toSet())
                 .stream().map(QuotationItem::total).reduce(0.0, Double::sum);
@@ -109,6 +109,12 @@ public class Quotation extends AbstractBaseEntity implements Serializable {
     public Double calculateTotalItem() {
 //       Double _total=0;
         return items.stream().map(QuotationItem::total).reduce(0.0, Double::sum);
+    }
+    public void addTotalWithTaxes(Double taxes){
+
+        var totalWithoutTaxes= getTotal();
+        var _total = (totalWithoutTaxes * taxes);
+        setTotalWithTaxes(totalWithoutTaxes+_total);
     }
 
     public void setTotal(Double total) {

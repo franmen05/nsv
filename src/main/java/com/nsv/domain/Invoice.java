@@ -112,10 +112,9 @@ public class Invoice extends  AbstractBaseEntity {
                 .map(quotationItem -> AdditionalExpenseItem.build(quotationItem.getAdditionalExpense(),quotationItem.getCost()))
                 .collect(Collectors.toList());
 
-        i.setCurrency(q.getCurrency());
-        i.setCompany(q.getCompany());
-
-        i.hasTax=q.getHasTax();
+        i.currency=q.getCurrency();
+        i.company =q.getCompany();
+        i.hasTax  =q.getHasTax();
 //        i.calculeTotalWithoutTaxes();
         i.calculeTotalWithTaxes();
 

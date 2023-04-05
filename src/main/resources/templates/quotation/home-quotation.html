@@ -46,7 +46,7 @@
                                 <td th:text="${item.id}"></td>
                                 <td th:text="${item.description}"></td>
                                 <td th:text="${item.contact}"></td>
-                                <td th:text="${item.total}" data-inputmask="'alias': 'currency'"></td>
+                                <td th:text="${item.totalWithTaxes!=0.0?item.totalWithTaxes:item.total}" data-inputmask="'alias': 'currency'"></td>
                                 <td th:text="${item.createDate}"></td>
                                 <td>
                                     <a class="btn btn-warning btn-xs"

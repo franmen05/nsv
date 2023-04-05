@@ -105,6 +105,7 @@ $(document).ready(function () {
     $("form").submit(function () {
         $("#plantillaItemsFactura").remove();
         $("#templateItemsAdditionalExpense").remove();
+
         // return;
     });
 
@@ -202,6 +203,7 @@ $(document).ready(function () {
     $("#set_tax").change( () => hasTaxes());
 
     $("#total_invoice").on('DOMSubtreeModified', () => {
+
         if(taxes===0.0)
             $.ajax({
                 url: "/invoice/loadTaxes",
@@ -212,6 +214,7 @@ $(document).ready(function () {
         let total=$("#total_invoice").html();
         total = total*taxes;
         $("#total_taxes").html(total)
+
     });
 
     $("#total_taxes").on('DOMSubtreeModified', () => {
