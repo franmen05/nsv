@@ -48,12 +48,16 @@
                             <tr th:each="item: ${ncfs}">
                                 <td  th:text="${item.serie.id}+''+${item.type.id}+''+${item.sequence}"></td>   
                                 <td th:text="${item.createDate}"></td>
-                                <td th:if="${not #lists.isEmpty(item.invoice)}" ><a th:text="${item.invoice.id}" ></a></td>
+<!--                                invoice ID-->
+                                <td th:if="${not #lists.isEmpty(item.invoice)}" ><a th:href="'/invoice/ver/'+${item.invoice.id}" th:text="${item.invoice.id}" ></a></td>
                                 <td th:if="${#lists.isEmpty(item.invoice)}" ></td>
-                                <td > 
-                                    <a href="#" class="btn btn-danger " th:onclick="'itemsHelperNcf.deleteItem('+${item.id}+');'"><span class="glyphicon glyphicon-remove"></span> </a>
-                                    <!--<a href="#" class="btn btn-primary " th:onclick="'itemsHelperNcf.activeItem();'"><span class="glyphicon glyphicon-check"></span> Activar</a>-->
+<!--                                End invoice ID-->
+<!--                                Begin  ncf delete-->
+                                <td th:if="${not #lists.isEmpty(item.invoice)}" ></td>
+                                <td th:if="${#lists.isEmpty(item.invoice)}">
+                                    <a  href="#" class="btn btn-danger " th:onclick="'itemsHelperNcf.deleteItem('+${item.id}+');'"><span class="glyphicon glyphicon-remove"></span></a>
                                 </td>
+<!--                               End  ncf delete-->
                             </tr>
                         </tbody>
                     </table>
