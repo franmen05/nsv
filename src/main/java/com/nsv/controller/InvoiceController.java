@@ -474,7 +474,7 @@ public class InvoiceController {
         model.addAttribute("invoice", i);
         model.addAttribute("titulo", title);
         model.addAttribute("paymentsTypes", invoiceService.findAllPaymentType());   
-        ncfService.findByInovice(i).ifPresent((t) -> {
+        ncfService.findByInvoice(i).ifPresent((t) -> {
             model.addAttribute("ncf", t);   
         });
 

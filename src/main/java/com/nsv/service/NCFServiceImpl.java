@@ -40,6 +40,10 @@ public class NCFServiceImpl implements INCFService {
     public List<NCF> findAll() {
         return (List<NCF>) ncfDao.findAll();
     }
+    @Override
+    public List<NCF> findAllUnused() {
+        return ncfDao.findByInvoiceIsNull();
+    }
 
     @Override
     public Page<NCF> findAll(Pageable pageable) {
@@ -61,7 +65,7 @@ public class NCFServiceImpl implements INCFService {
     }
 
     @Override
-    public Optional<NCF> findByInovice(Invoice invoice) {
+    public Optional<NCF> findByInvoice(Invoice invoice) {
         return ncfDao.findById(invoice.getId());
     }
     

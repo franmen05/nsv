@@ -18,6 +18,7 @@ import java.util.Optional;
 public interface INCFService {
 
     List<NCF> findAll();
+    List<NCF> findAllUnused();
 
     Page<NCF> findAll(Pageable pageable);
     
@@ -26,7 +27,7 @@ public interface INCFService {
     
 
     Optional<NCF> find(Long id);
-    Optional<NCF> findByInovice(Invoice invoice);
+    Optional<NCF> findByInvoice(Invoice invoice);
     void delete(Long id);
     
     List<NCF> findByName(String term) ;

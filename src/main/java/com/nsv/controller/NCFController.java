@@ -2,7 +2,6 @@ package com.nsv.controller;
 
 import com.nsv.domain.NCF;
 import com.nsv.service.INCFService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +25,10 @@ public class NCFController {
 
     private static final String MAIN_REDIRECT = "redirect:/ncf/";
 
-    @Autowired
-    private INCFService ncfService;
+    private final INCFService ncfService;
 
-    public NCFController() {
+    public NCFController(INCFService ncfService) {
+        this.ncfService = ncfService;
     }
 
     @RequestMapping("")
@@ -44,8 +43,19 @@ public class NCFController {
 //        model.addAttribute("series", ncfService.findAllSeries());
         model.addAttribute("types", ncfService.findAllTypes());
         //        model.addAttribute("ncfs",ncfService.findAll());
-        
         return common(model);
+    }
+
+    @RequestMapping("/unused")
+    public String unused(Model model) {
+
+        model.addAttribute("ncf", new NCF());
+        model.addAttribute("types", ncfService.findAllTypes());
+        model.addAttribute("ncfs",ncfService.findAllUnused());
+        if(model.asMap().get("series")==null)
+            model.addAttribute("series", ncfService.findAllSeries());
+
+        return "ncf/maint-ncf";
     }
 
     private String common(Model model) {
@@ -55,7 +65,6 @@ public class NCFController {
         
 //        model.addAttribute("types", ncfService.findAllTypes());
         return "ncf/maint-ncf";
-
     }
 
     @PostMapping("/generate")
@@ -74,7 +83,7 @@ public class NCFController {
             model.addAttribute("ncf", ncf);
             return common(model);
         }
-//        if (ControllerUtil.hasErrros(result, flash)) return MAIN_REDIRECT;
+//        if (ControllerUtil.hasErrors(result, flash)) return MAIN_REDIRECT;
 
         model.addAttribute("sequences", ncfService.generateSequence(ncf));
 
