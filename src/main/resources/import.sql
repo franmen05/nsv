@@ -3,12 +3,8 @@
 INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc,status) VALUES(1, 'Rosa Roja numero 232423', 'comentario', '2017-08-28 00:00:00', 'client@micorreo.com', 'Andres Apellido', '2017-08-28 00:00:00', 'Andres', '222324242342', '809-342-4321', '2312' ,'ACTIVE');
 INSERT INTO customers (id, address, comment, create_date, email, last_name, last_update_date, name, passport, phone, rnc,status) VALUES(2, 'Rosa Roja #232423', 'comentario', '2017-08-28 00:00:00', 'cliente@gmail.com', 'De Los Santos', '2017-08-28 00:00:00', 'Guillermo', '222324242342', '809-544-4213', '2312','ACTIVE' );
 /* Populate tabla productos */
-INSERT INTO products (name, price, create_date,status) VALUES('Flete', 250, NOW(),'ACTIVE');
-INSERT INTO products (name, price, create_date,status) VALUES('Apple iPod shuffle', 1499990, NOW(),'ACTIVE');
-INSERT INTO products (name, price, create_date,status) VALUES('Sony Notebook Z110', 37990, NOW(),'ACTIVE');
-INSERT INTO products (name, price, create_date,status) VALUES('Hewlett Packard  F2280', 69990, NOW(),'ACTIVE');
-INSERT INTO products (name, price, create_date,status) VALUES('Bianchi Bicicleta Aro 26', 69990, NOW(),'ACTIVE');
-INSERT INTO products (name, price, create_date,status) VALUES('Mica  5 Cajones', 299990, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Colegiatura Anual', 12250, NOW(),'ACTIVE');
+INSERT INTO products (name, price, create_date,status) VALUES('Campamento de verano', 299990, NOW(),'ACTIVE');
 INSERT INTO products (name, price, create_date,status) VALUES('Compra por Amazon', 123490, NOW(),'ACTIVE');
 INSERT INTO products (name, price, create_date,status) VALUES('Compra por Ebay', 123490, NOW(),'ACTIVE');
 INSERT INTO products (name, price, create_date,status) VALUES('Compra en China', 123490, NOW(),'ACTIVE');
@@ -20,7 +16,7 @@ INSERT INTO products (name, price, create_date,status) VALUES('Compra en China',
     INSERT INTO currencies (name, code, symbol, create_date,status) VALUES ('Yuan Renminbi', 'CNY', '¥', NOW(),'ACTIVE');
 
 
-INSERT INTO invoices (description, comment, customer_id,currency_id,  create_date) VALUES('Factura Bicicleta', 'Alguna nota importante!', 1,1, NOW());
+INSERT INTO invoices (description, comment, customer_id,currency_id,  create_date) VALUES('Factura Colegiatura', 'Alguna nota importante!', 1,1, NOW());
 
 INSERT INTO invoice_items (quantity,cost, invoice_id, product_id,description) VALUES(3,139, 1, 1,'item de apple');
 INSERT INTO invoice_items (quantity,cost,discount, invoice_id, product_id,description) VALUES(3,250,0.1, 1, 2,'item de apple');

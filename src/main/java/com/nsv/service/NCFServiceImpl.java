@@ -44,6 +44,10 @@ public class NCFServiceImpl implements INCFService {
     public List<NCF> findAllUnused() {
         return ncfDao.findByInvoiceIsNull();
     }
+    @Override
+    public List<NCF> findAllUsed() {
+        return ncfDao.findByInvoiceIsNotNull();
+    }
 
     @Override
     public Page<NCF> findAll(Pageable pageable) {

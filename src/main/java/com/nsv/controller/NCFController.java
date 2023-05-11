@@ -46,6 +46,17 @@ public class NCFController {
         return common(model);
     }
 
+    @RequestMapping("/used")
+    public String used(Model model) {
+
+        model.addAttribute("ncf", new NCF());
+        model.addAttribute("types", ncfService.findAllTypes());
+        model.addAttribute("ncfs",ncfService.findAllUsed());
+        if(model.asMap().get("series")==null)
+            model.addAttribute("series", ncfService.findAllSeries());
+
+        return "ncf/maint-ncf";
+    }
     @RequestMapping("/unused")
     public String unused(Model model) {
 

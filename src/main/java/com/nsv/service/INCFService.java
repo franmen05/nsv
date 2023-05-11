@@ -19,6 +19,7 @@ public interface INCFService {
 
     List<NCF> findAll();
     List<NCF> findAllUnused();
+    List<NCF> findAllUsed();
 
     Page<NCF> findAll(Pageable pageable);
     
