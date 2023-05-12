@@ -116,7 +116,7 @@ public class NCFController {
     ) {
 
 //        HttpSession session = request.getSession();
-        List<NCF> sequences = (List<NCF>) model.asMap().get("sequences");
+        var sequences = (List<NCF>) model.asMap().get("sequences");
             
         ncfService.save(sequences);
         model.addAttribute("sequences",null);

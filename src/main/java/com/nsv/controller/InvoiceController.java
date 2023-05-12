@@ -374,7 +374,7 @@ public class InvoiceController {
             RedirectAttributes flash, SessionStatus status
     ) {
         this.invoice = (Invoice) model.asMap().get("invoice");
-        invoice.getPayments().clear();
+//        invoice.getPayments().clear();
 
 //        if (result.hasErrors()) {
 ////            model.addAttribute("titulo", "Crear Factura (tiene errores)");
