@@ -24,12 +24,6 @@ public class CompanyServiceImpl implements ICompanyService {
     @Autowired
     private ICompanyDao companyDao;
 
-//    @Autowired
-//    private IProductDao productDao;
-//
-//    @Autowired
-//    private IInvoiceDao invoiceDao;
-
     @Override
     public List<Company> findAll() {
         return (List<Company> )companyDao.findAll();
